@@ -21,6 +21,7 @@ Route::get('/',[HomeController::class, 'index'])->name('home');
 
 Route::get('seller-code',[SellerCodeController::class, 'index'])->name('seller.code');
 Route::post('email-verification/send',[SellerCodeController::class, 'SendVerifyMail'])->name('send.code');
+Route::post('email-verification/verify',[SellerCodeController::class, 'verifyCode'])->name('verify.code');
 
 Route::get('receive-payment',[PaymentReceiveController::class, 'index'])->name('receive-payment');
 Route::get('make-payment',[MakePaymentController::class, 'index'])->name('make.payment');

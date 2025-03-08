@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Mail\VerifyEmail;
+use App\Models\VerifyEmail as ModelsVerifyEmail;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
 
@@ -20,6 +22,12 @@ class SellerCodeController extends Controller
     {
         try {
             $code = rand(100000, 999999);
+            ModelsVerifyEmail::create([
+                'email' => $request->email,
+                'token' => $code,
+                'exp_at' =>  Carbon::now()->addMinutes(15),
+            ]);
+
             Mail::to($request->email)->send(new VerifyEmail($code));
             return response()->json([
                 'error' => false,
@@ -29,6 +37,21 @@ class SellerCodeController extends Controller
             return response()->json([
                 'error' => true,
                 'message' => $e->getMessage(),
+            ]);
+        }
+    }
+
+    public function verifyCode(Request $request){
+        $check = VerifyEmail::where('email',$request->email)->where('token',$request->token)->first();
+        if($check){
+            return response()->json([
+                'error' => false,
+                'message' => 'Email verified',
+            ]);
+        }else{
+            return response()->json([
+                'error' => true,
+                'message' => 'Incorrect verification code',
             ]);
         }
     }

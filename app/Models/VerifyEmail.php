@@ -11,6 +11,7 @@ class VerifyEmail extends Model
 
     protected $fillable=[
         'email',
-        'token'
+        'token',
+        'exp_at',
     ];
 }
