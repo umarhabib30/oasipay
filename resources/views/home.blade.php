@@ -1,4 +1,4 @@
-@extends('layout')
+@extends('layouts.app')
 @section('content')
 <main>
     <!-- Buy Follow Receive Section -->
@@ -21,19 +21,19 @@
             <div class="right-item">
                 <div class="buy-follow-receive__buttons">
                     <div class="btn-box1">
-                        <button onclick="window.location.href='./Generate-Seller-Code.html'"
+                        <button onclick="window.location.href='{{ route('seller.code') }}'"
                             class="buy-follow-receive__btn">
                             <p>Generate Seller Code </p>
                             <img src="{{ asset('assets/images/dna.png') }}" alt="" />
                         </button>
                     </div>
                     <div class="btn-box2">
-                        <button onclick="window.location.href='./Receive-Payment.html'"
+                        <button onclick="window.location.href='{{ route('receive-payment') }}'"
                             class="buy-follow-receive__btn">
                             <p>Receive a Payment</p>
                             <img src="{{ asset('assets/images/Icon-2.png') }}" alt="" />
                         </button>
-                        <button onclick="window.location.href='./Make-Payment.html'"
+                        <button onclick="window.location.href='{{ route('make.payment') }}'"
                             class="buy-follow-receive__btn">
                             <p> Make a Payment</p>
                             <img src="{{ asset('assets/images/Icon-3.png') }}" alt="" />
@@ -227,8 +227,5 @@
 
     </section>
 </main>
-<!-- Scroll to Top Button -->
-<button id="scrollToTopBtn" class="scroll-to-top">
-    <img src="{{ asset('assets/images/up-arrow.png') }}" alt="Scroll to Top" width="40" height="40">
-</button>
+
 @endsection

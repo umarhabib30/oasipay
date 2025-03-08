@@ -5,12 +5,19 @@
     <link rel="icon" href="{{ asset('assets/images/favicon.png') }}" type="image/x-icon" />
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+
     <link rel="stylesheet" href="{{ asset('assets/CSS/style.css') }}">
 
     <!-- Font Awesome CDN -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
-
-    <title>Oasipay</title>
+    {{-- jquert cdn --}}
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"
+        integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.1.4/toastr.min.js"></script>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.1.4/toastr.css" />
+    <title>{{ $title }}</title>
 
     @yield('style')
 
@@ -20,7 +27,7 @@
     <header class="header">
         <!-- Logo -->
         <div class="logo">
-            <a href="homepage.html">
+            <a href="{{ route('home') }}">
                 <img src="{{ asset('assets/images/Logo.png') }}" alt="Logo" />
             </a>
         </div>
@@ -74,7 +81,10 @@
     </header>
 
     @yield('content')
-
+    <!-- Scroll to Top Button -->
+    <button id="scrollToTopBtn" class="scroll-to-top">
+        <img src="{{ asset('assets/images/up-arrow.png') }}" alt="Scroll to Top" width="40" height="40">
+    </button>
 
     <!-- /*---------- footer ------------ */ -->
     <footer>
