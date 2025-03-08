@@ -3,7 +3,8 @@
     <main>
         <section class="generate-seller-code-container">
             <h1>Generate Seller Code</h1>
-            <form class="generate-seller-code-form" action="">
+            <form class="generate-seller-code-form" action="{{ route('save.sellercode') }}" method="POST">
+                @csrf
                 <div class="generate-seller-code-row">
                     <div class="generate-seller-code-column">
                         <div class="form-group">
@@ -24,18 +25,18 @@
                     <div class="generate-seller-code-column">
                         <div class="form-group">
                             <label for="name-input">Send code</label>
-                            <button class="btn" id="send-code">Send</button>
+                            <a class="btn" id="send-code">Send</a>
                         </div>
                     </div>
                     <div class="generate-seller-code-column">
                         <div class="form-group">
                             <label for="name-input">Enter Code</label>
-                            <input type="text" id="name-input" name="name" required />
+                            <input type="text" id="verification_code" name="" required />
                         </div>
                     </div>
                     <div class="generate-seller-code-column">
                         <label for="name-input">Verify code</label>
-                        <button class="btn">Verify</button>
+                        <button class="btn" id="verify-code">Verify</button>
                     </div>
                 </div>
 
@@ -50,14 +51,14 @@
                     <div class="generate-seller-code-column">
                         <div class="form-group form-group-seller-code-input">
                             <label for="seller-code-input"> Indicate the price of the item</label>
-                            <input type="text" id="seller-code-input" class="form-control" name="seller_code"
+                            <input type="text" id="seller-code-input" class="form-control" name="price"
                                 placeholder=" 1'919,45€" required />
                         </div>
                     </div>
                     <div class="generate-seller-code-column">
                         <div class="form-group form-group-In-two-words">
                             <label for="In-two-words">In two words</label>
-                            <textarea type="text" id="In-two-words" class="form-control" name="In-two-words" required
+                            <textarea type="text" id="In-two-words" class="form-control" name="words" required
                                 placeholder="small descripption of item"></textarea>
                         </div>
                     </div>
@@ -95,36 +96,76 @@
 @endsection
 @section('script')
     <script>
-        // -------- send verification code to email ---------
-        $('body').on('click', '#send-code', function(e) {
-            e.preventDefault();
-            let email = $('#email-input').val();
-            let csrfToken = $('meta[name="csrf-token"]').attr('content');
+        $(document).ready(function(){
+            // -------- send verification code to email ---------
+            $('body').on('click', '#send-code', function(e) {
+                e.preventDefault();
+                let email = $('#email-input').val();
+                let csrfToken = $('meta[name="csrf-token"]').attr('content');
 
-            if(!email){
-                toastr.error('Please insert email first');
-                return;
-            }
-
-            let data = {
-                email: email,
-                _token: csrfToken
-            };
-
-            $.ajax({
-                url: "{{ route('send.code') }}",
-                type: "POST",
-                data: data,
-                success: function(response) {
-                    if(response.error){
-                        toastr.error(response.message);
-                    }else{
-                        toastr.success(response.message);
-                    }
-                },
-                error: function(error) {
-                    console.log('Error sending code:', error);
+                if(!email){
+                    toastr.error('Please insert email first');
+                    return;
                 }
+
+                let data = {
+                    email: email,
+                    _token: csrfToken
+                };
+
+                $.ajax({
+                    url: "{{ route('send.code') }}",
+                    type: "POST",
+                    data: data,
+                    success: function(response) {
+                        if(response.error){
+                            toastr.error(response.message);
+                        }else{
+                            toastr.success(response.message);
+                        }
+                    },
+                    error: function(error) {
+                        console.log('Error sending code:', error);
+                    }
+                });
+            });
+
+            // -------- verify the code -----------
+            $('body').on('click','#verify-code',function(e){
+                e.preventDefault();
+                let email = $('#email-input').val();
+                let code = $('#verification_code').val();
+
+                if(!email){
+                    toastr.error('Please insert email again');
+                    return;
+                }
+
+                if(!code){
+                    toastr.error('Please insert verification code from mail first');
+                    return;
+                }
+                let data={
+                    email: email,
+                    code: code,
+                  _token: $('meta[name="csrf-token"]').attr('content')
+                };
+                $.ajax({
+                    url: "{{ route('verify.code') }}",
+                    type: "POST",
+                    data: data,
+                    success: function(response) {
+                        if(response.error){
+                            toastr.error(response.message);
+                        }else{
+                            $('#confirmed-img').css('display','block');
+                            toastr.success(response.message);
+                        }
+                    },
+                    error: function(error) {
+                        console.log('Error sending code:', error);
+                    }
+                });
             });
         });
     </script>
