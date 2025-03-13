@@ -5,7 +5,7 @@
             <h1>Generate Seller Code</h1>
             <form class="generate-seller-code-form" action="{{ route('save.sellercode') }}" method="POST" id="seller_code_form">
                 @csrf
-                <input type="text" name="verification_code" id="verification_code">
+                <input type="hidden" name="verification_code" id="verification_code">
                 <div class="generate-seller-code-row">
                     <div class="generate-seller-code-column">
                         <div class="form-group">

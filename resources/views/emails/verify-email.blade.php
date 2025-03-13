@@ -48,7 +48,7 @@
     <div class="container">
         <div class="header">Email Verification</div>
         <p>Click the button below to verify your email address:</p>
-        <a href="{{ route('verify.code', ['email' => $email, 'code' => $code]) }}" class="button">Verify Email</a>
+        <a href="{{ route('verify.code', ['email' => $email, 'code' => $code]) }}" class="button" style="color: white !important;">Verify Email</a>
         <p>If you didn't request this, you can ignore this email.</p>
         <div class="footer">&copy; 2025 oasipay. All rights reserved.</div>
     </div>
