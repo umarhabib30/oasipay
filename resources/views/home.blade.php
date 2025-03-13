@@ -55,7 +55,7 @@
                     <!-- Right Arrow -->
                     <div class="arrow-right">
                         <i class="fas fa-chevron-right"
-                            onclick="window.location.href='monitoring-transaction.html'"></i>
+                            onclick="window.location.href='{{ route('monitoring.transactions') }}'"></i>
                     </div>
                 </div>
 

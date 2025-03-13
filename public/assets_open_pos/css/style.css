@@ -1,0 +1,456 @@
+@import url('https://fonts.cdnfonts.com/css/open-sauce-one');
+
+/* Basic Reset */
+h1,
+h2,
+h3,
+input,
+button {
+  font-family: 'Open Sauce One', sans-serif; /* Fallback to sans-serif */
+  color: #235a86;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html, body {
+    height: 100%;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start; /* Ensure content starts from the top */
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+:root {
+    --light-blue: #25a7e4; /* Light blue color */
+    --primary-color: #235a86;
+    --white-color: #ffffff;
+}
+
+/* Header Styles */
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 30px;
+  background-color: var(--primary-color); /* Use primary color */
+  z-index: 9999; /* Make sure it's above all other content */
+}
+
+/* Logo styling */
+.logo img {
+  height: 40px; /* Adjust logo size */
+}
+
+/* Right-side container for toggler and language selector */
+.right-section {
+  display: flex; /* Align items in a row */
+  align-items: center;
+  gap: 20px; /* Spacing between toggler and language selector */
+  justify-content: center;
+}
+
+/* Language Selector */
+.language-selector {
+  position: relative;
+  display: inline-block;
+}
+
+/* Button to show flag */
+.language-selector .dropdown-btn {
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  transition: transform 0.3s ease; /* Smooth transition for button */
+  display: flex;
+}
+
+/* Flag styling */
+.language-selector .dropdown-btn img {
+  height: 27px; /* Adjust flag size */
+  transition: transform 0.3s ease; /* Smooth transition for the flag */ 
+}
+
+/* Dropdown Content */
+.language-selector .dropdown-content {
+  display: none; /* Hidden by default */
+  position: absolute;
+  background-color: var(--primary-color); /* White background for dropdown */
+  box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.2);
+  z-index: 1;
+  top: 45px; /* Position the dropdown below the flag */
+  right: -31px; /* Align the dropdown to the right */
+  width: 120px;
+  text-align: left;
+  opacity: 0; /* Initially invisible */
+  visibility: hidden; /* Hide the dropdown by default */
+  transform: translateY(-10px); /* Slightly off-screen for smooth entrance */
+  transition: opacity 0.3s ease, visibility 0s 0.3s, transform 0.3s ease; /* Smooth transition */
+  border-radius: 5px;
+}
+
+/* Style for each language item in the dropdown */
+.language-selector .dropdown-content a {
+  color: var(--white-color);
+  padding: 10px 15px;
+  text-decoration: none;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  font-size: 14px;
+  gap: 15px;
+}
+
+.language-selector .dropdown-content a:hover {
+  color: rgb(228, 228, 228);
+}
+
+.language-selector .dropdown-content a img {
+  height: 25px;
+}
+
+/* Show dropdown when button is clicked */
+.language-selector .show {
+  display: block; /* Show the dropdown */
+  opacity: 1; /* Make it visible */
+  visibility: visible;
+  transform: translateY(0); /* Move dropdown into place */
+}
+
+/* Menu Toggle */
+.menu-toggle {
+  display: flex;
+  flex-direction: column;
+  cursor: pointer;
+  transition: transform 0.3s ease; /* Smooth transition for the toggle */
+}
+
+.menu-toggle .bar {
+  background-color: var(--white-color); /* Use white color for bars */
+  width: 25px;
+  height: 3px;
+  margin: 3px 0;
+  transition: all 0.3s ease;
+  border-radius: 5px;
+}
+
+/* Menu Styles */
+.menu {
+  display: none; /* Initially hidden */
+  position: absolute;
+  top: 60px; /* Position below the header */
+  right: 0;
+  background-color: var(--primary-color);
+  padding: 15px;
+  width: 200px;
+  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+  opacity: 0; /* Initially invisible */
+  visibility: hidden; /* Hide the menu by default */
+  transform: translateY(-20px); /* Slide the menu from above */
+  transition: opacity 0.3s ease, visibility 0s 0.3s, transform 0.3s ease; /* Smooth transition */
+  border-radius: 5px;
+}
+
+.menu.show {
+  display: block; /* Show the menu when 'show' class is added */
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0); /* Move menu into place */
+}
+
+.menu ul {
+  list-style-type: none;
+}
+
+.menu ul li {
+  margin-bottom: 10px;
+}
+
+.menu ul li a {
+  color: var(--white-color); /* Use white color for text */
+  text-decoration: none;
+  font-size: 16px;
+}
+
+.menu ul li a:hover {
+  color: rgb(228, 228, 228);
+}
+
+/* For small screens (e.g., mobile devices), ensure dropdowns fit properly */
+@media (max-width: 768px) {
+  .header {
+    padding: 15px 20px;
+  }
+
+  .logo img {
+    height: 35px; /* Adjust logo size for smaller screens */
+  }
+
+  .right-section {
+    gap: 10px; /* Adjust spacing for smaller screens */
+  }
+
+  .language-selector .dropdown-btn img {
+    height: 25px; /* Adjust flag size for smaller screens */
+  }
+
+  .language-selector .dropdown-content {
+    right: -15px;
+  }
+
+  .menu {
+    width: 100%; /* Menu takes full width on smaller screens */
+  }
+}
+
+/* Main Section */
+main {
+  flex: 1;  /* This ensures the main section grows to fill the available space */
+  width: 100%; /* Ensure the main section is 100% width */
+  display: flex;
+  flex-direction: column;
+  justify-content: center; /* Center the content vertically */
+  align-items: center; /* Center the content horizontally */
+  padding: 2rem;
+  box-sizing: border-box; /* Prevent any unwanted overflow */
+}
+
+h1 {
+  text-align: left; /* Align text to the left */
+  font-size: 2.5rem; /* Increased font size */
+  width: auto; /* Ensure the width is auto */
+  margin: 0; /* Remove any margin */
+  padding-left: 2rem; /* Padding to the left */
+  margin-top: 1rem; /* Space below the navbar */
+  align-self: flex-start; /* Align <h1> to the left, overriding the flexbox center */
+}
+
+/* Container for Open Positions */
+.open-positions {
+  display: flex;
+  justify-content: center;
+  gap: 5rem; /* Increased spacing between elements */
+  flex-wrap: wrap;
+  padding: 2rem;
+  margin: 0; /* Ensure no margin pushes the section */
+  max-width: 100%; /* Prevent it from becoming wider than the viewport */
+  box-sizing: border-box; /* Ensure padding and border are included in width */
+}
+
+.new-tab {
+  text-align: center;
+  width: 100%; /* Allow width to be flexible */
+  max-width: 340px; /* Maintain max width */
+  transition: transform 0.3s ease;
+  /*pointer-events: auto; /* Ensure links are clickable */
+  pointer-events: none; /* Ensure links are NOT clickable when overlay is active*/
+  box-sizing: border-box; /* Ensure padding and border are included in width */
+}
+
+.new-tab-image {
+  height: auto;
+  max-width: 100%; /* Prevent overflow */
+  display: block;
+  border: 3px solid #235a86;
+  border-radius: 20px;
+  box-sizing: border-box; /* Ensure padding and border are included in width */
+}
+
+.new-tab-text {
+  margin-top: 15px;
+}
+
+.new-tab-text h2 {
+  color: #235a86;
+  font-size: 26px;
+  margin-bottom: 12px;
+  font-weight: bold;
+}
+
+.new-tab-text p {
+  color: #235a86;
+  line-height: 1.6;
+  font-size: 14px;
+  margin: 0;
+  font-weight: bold;
+}
+
+/* Open Positions Section */
+.positions {
+  flex: 1; /* Grow to fill the remaining space */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  padding: 0;
+}
+
+ .blur-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  max-width: 100%; /* Prevent it from becoming wider than the viewport */
+  background: rgba(255, 255, 255, 0.9); /* Adjust the transparency as needed (0.5 for 50% transparency) */
+  pointer-events: none; /* Disable interaction */
+} 
+
+/* Prevent text selection when the overlay is visible */
+.open-positions .new-tab-text,
+.open-positions .img-client {
+  user-select: none; /* Disable text selection */
+  pointer-events: none; /* Disable interactions */
+}
+
+/* When the overlay is active, disable text selection */
+.open-positions .new-tab-text {
+  user-select: none; /* Disable text selection */
+}
+
+.overlay-content {
+  position: absolute;
+  width: 100%; /* Ensure it takes up full width */
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+  z-index: 2;
+  color: #fff;
+}
+
+.overlay-content h2 {
+  font-size: 1rem;
+  margin-bottom: 3rem;
+}
+
+.overlay-content button:hover {
+  background-color: #1d4a70; /* Darker shade on hover */
+}
+
+h2 {
+  font-size: 2rem; /* Larger font size */
+  margin-bottom: 1rem;
+}
+
+.tabs {
+  display: flex;
+  gap: 4rem; /* Spacing between tabs */
+  justify-content: center;
+  margin-top: 2rem;
+}
+
+.tab {
+  text-align: center;
+  background-color: #fff;
+  border: 4px solid #235a86; /* Thicker border */
+  border-radius: 12px;
+  width: 220px;
+  height: 220px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden; /* Ensure content stays within borders */
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease;
+}
+
+.tab img {
+  width: 100%; /* Fully fill the container */
+  height: 100%;
+  object-fit: cover; /* Fit image without distortion */
+  border-radius: 8px; /* Smooth corners inside the border */
+}
+
+.tab p {
+  margin-top: 1rem;
+  font-size: 1.1rem;
+  color: #235a86;
+}
+
+.tab:hover {
+  transform: scale(1.05); /* Slight zoom effect on hover */
+}
+
+.no-underline {
+  text-decoration: none;
+  color: inherit; /* Maintain text color */
+}
+
+.no-underline:hover {
+  text-decoration: none; /* No underline on hover */
+}
+
+/* Button style */
+#uploadCvBtn {
+    font-family: 'Open Sans', sans-serif; /* Set font to Open Sans */
+    width: 180px;
+    text-align: center;
+    display: inline-flex;
+    justify-content: center; /* Center the text horizontally */
+    align-items: center;
+    font-size: 12px;
+    font-weight: bold; /* Text set to bold */
+    text-decoration: none; /* Remove underline */
+    border: 3px solid var(--light-blue) !important; /* Added border color and width */
+    height: 40px !important;
+    text-transform: uppercase !important;
+    padding: 0 10px;
+    background-color: transparent;
+    color: #235a86; /* Default text color is black */
+    cursor: pointer;
+    border-radius: 20px; /* Rounded edges */
+    transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+    position: relative; /* Needed to position the dot */
+}
+
+#uploadCvBtn::before {
+    content: '❯'; /* Bolder ">" Unicode character symbol */
+    font-size: 18px; /* Adjust size of the symbol */
+    color: white; /* Set symbol color to white */
+    width: 24px; /* Dot size */
+    height: 24px; /* Dot size */
+    background-color: var(--light-blue); /* Dot color */
+    border-radius: 50%; /* Make it circular */
+    position: absolute;
+    right: 5px; /* Move dot to the right side, 5px from the inner edge */
+    top: 50%;
+    transform: translateY(-50%) translateX(-2px); /* Adjust horizontal and vertical position */
+    display: flex;
+    justify-content: center; /* Center symbol horizontally */
+    align-items: center; /* Center symbol vertically */
+    padding-left: 2px; /* Fine-tune horizontal position of the symbol */
+    padding-top: -2px; /* Fine-tune vertical position of the symbol */
+}
+
+/* Hover effect */
+#uploadCvBtn:hover {
+    background-color: var(--light-blue) !important;
+    color: white !important; /* Change text color to white on hover */
+}
+
+#uploadCvBtn:hover::before {
+    background-color: white; /* Change dot to white on hover */
+    color: var(--light-blue); /* Change ">" symbol to light blue on hover */
+}
+
+/* Active effect */
+#uploadCvBtn:active {
+    filter: brightness(85%); /* Darken the button on click */
+    border-color: white !important; /* Change border color on active */
+}
+
+#uploadCvBtn:active::before {
+    background-color: var(--light-blue); /* Reset dot color to light blue when active */
+    color: white; /* Reset ">" symbol color to white when active */
+}
+
+

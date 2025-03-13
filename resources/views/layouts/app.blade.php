@@ -71,10 +71,10 @@
         <!-- Menu (Initially hidden) -->
         <nav id="menu" class="menu">
             <ul>
-                <li><a href="./homepage.html">Home</a></li>
-                <li><a href="./fees.html">Fees</a></li>
-                <li><a href="./faq.html">FAQ</a></li>
-                <li><a href="./contact-us.html">Contact</a></li>
+                <li><a href="{{ route('home') }}">Home</a></li>
+                <li><a href="{{ route('fee.index') }}">Fees</a></li>
+                <li><a href="{{ route('faq') }}">FAQ</a></li>
+                <li><a href="{{ route('contact-us') }}">Contact</a></li>
             </ul>
         </nav>
     </header>
@@ -91,12 +91,12 @@
             <a class="footer-copy" href="#">Terms & Conditions</a>
             <ul>
                 <li><a href="#">About</a></li>
-                <li><a href="contact-us.html">Contact Us</a></li>
-                <li><a href="fees.html">Fees</a></li>
+                <li><a href="{{ route('contact-us') }}">Contact Us</a></li>
+                <li><a href="{{ route('fee.index') }}">Fees</a></li>
             </ul>
             <ul>
-                <li><a href="faq.html">FAQ</a></li>
-                <li><a href="open_pos.html">Jobs</a></li>
+                <li><a href="{{ route('faq') }}">FAQ</a></li>
+                <li><a href="{{route('jobs')}}">Jobs</a></li>
                 <li><a href="#">Impressum</a></li>
             </ul>
             <a class="footer-copy">Copyright 2025 by Oasipay</a>
