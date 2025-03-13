@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('email');
             $table->string('token');
+            $table->boolean('is_verified');
             $table->timestamp('exp_at');
             $table->timestamps();
         });

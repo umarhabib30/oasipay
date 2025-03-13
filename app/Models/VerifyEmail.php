@@ -13,5 +13,6 @@ class VerifyEmail extends Model
         'email',
         'token',
         'exp_at',
+        'is_verified',
     ];
 }

@@ -26,14 +26,15 @@
             color: #333;
             font-weight: bold;
         }
-        .code {
-            font-size: 32px;
+        .button {
+            font-size: 18px;
             font-weight: bold;
-            color: #007bff;
-            background: #f8f9fa;
+            color: #ffffff;
+            background: #007bff;
             display: inline-block;
-            padding: 10px 20px;
+            padding: 12px 25px;
             border-radius: 5px;
+            text-decoration: none;
             margin: 20px 0;
         }
         .footer {
@@ -45,9 +46,9 @@
 </head>
 <body>
     <div class="container">
-        <div class="header">Email Verification Code</div>
-        <p>Use the following verification code to complete your Email verification:</p>
-        <div class="code">{{ $code }}</div>
+        <div class="header">Email Verification</div>
+        <p>Click the button below to verify your email address:</p>
+        <a href="{{ route('verify.code', ['email' => $email, 'code' => $code]) }}" class="button">Verify Email</a>
         <p>If you didn't request this, you can ignore this email.</p>
         <div class="footer">&copy; 2025 oasipay. All rights reserved.</div>
     </div>

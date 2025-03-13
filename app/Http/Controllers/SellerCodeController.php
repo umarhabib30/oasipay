@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Mail\SellerCodeMail;
 use App\Mail\VerifyEmailMail;
 use App\Models\SellerCode;
+use App\Models\Transaction;
 use App\Models\VerifyEmail;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -27,13 +28,19 @@ class SellerCodeController extends Controller
             VerifyEmail::create([
                 'email' => $request->email,
                 'token' => $code,
+                'is_verified' => false,
                 'exp_at' =>  Carbon::now()->addMinutes(15),
             ]);
 
-            Mail::to($request->email)->send(new VerifyEmailMail($code));
+            $data =[
+                'code' => $code,
+                'email' => $request->email,
+            ];
+
+            Mail::to($request->email)->send(new VerifyEmailMail($data));
             return response()->json([
                 'error' => false,
-                'message' => 'Verification code is sent to your mail please check',
+                'message' => 'Please check your email for verification',
             ]);
         } catch (\Exception $e) {
             return response()->json([
@@ -43,35 +50,31 @@ class SellerCodeController extends Controller
         }
     }
 
-    public function verifyCode(Request $request)
+    public function verifyCode($email, $code)
     {
-        $check = VerifyEmail::where('email', $request->email)->where('token', $request->code)->first();
+        $check = VerifyEmail::where('email', $email)->where('token', $code)->first();
         if ($check) {
             if (Carbon::now()->greaterThan($check->exp_at)) {
-                return response()->json(['error' => true, 'message' => 'Token has expired.']);
+                return view('emails.verify-confirmation',['error' => true, 'message' => 'Token has expired.']);
+            }else{
+                $check->update(['is_verified' => true]);
+                return view('emails.verify-confirmation',[ 'error' => false, 'message' => 'Email verified', ]);
             }
-            return response()->json([
-                'error' => false,
-                'message' => 'Email verified',
-            ]);
         } else {
-            return response()->json([
-                'error' => true,
-                'message' => 'Incorrect verification code',
-            ]);
+            return view('emails.verify-confirmation',[ 'error' => true, 'message' => 'Incorrect verification code', ]);
         }
     }
 
     public function submitCode(Request $request){
         $code = rand(100000, 999999);
-        SellerCode::create([
-            'name' => $request->name,
-            'email' => $request->email,
-            'code' => $request->seller_code,
+        Transaction::create([
+            'seller_name' => $request->name,
+            'seller_email' => $request->email,
+            'seller_code' => $code,
             'price' => $request->price,
             'currency' => 'euro',
             'words' => $request->words,
-            'rand_code' => $code,
+            'title' => $request->title,
         ]);
 
         Mail::to($request->email)->send(new SellerCodeMail($code));
