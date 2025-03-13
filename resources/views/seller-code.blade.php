@@ -1,103 +1,11 @@
 @extends('layouts.app')
 @section('content')
-    {{-- <main>
-        <section class="generate-seller-code-container">
-            <h1>Generate Seller Code</h1>
-            <form class="generate-seller-code-form" action="{{ route('save.sellercode') }}" method="POST">
-                @csrf
-                <div class="generate-seller-code-row">
-                    <div class="generate-seller-code-column">
-                        <div class="form-group">
-                            <label for="name-input">Name</label>
-                            <input type="text" id="name-input" name="name" required />
-                        </div>
-                    </div>
-
-                    <div class="generate-seller-code-column generate-seller-code-column-mail">
-                        <div class="form-group">
-                            <label for="email-input">E-mail</label>
-                            <input type="email" id="email-input" class="form-control" name="email" required />
-                        </div>
-                        <div class="generate-seller-code-form-right" style="display: none" id="confirmed-img">
-                            <a href="#"><img src="{{ asset('assets/images/confirm.png') }}" /></a>
-                        </div>
-                    </div>
-                    <div class="generate-seller-code-column">
-                        <div class="form-group">
-                            <label for="name-input">Send code</label>
-                            <a class="btn" id="send-code">Send</a>
-                        </div>
-                    </div>
-                    <div class="generate-seller-code-column">
-                        <div class="form-group">
-                            <label for="name-input">Enter Code</label>
-                            <input type="text" id="verification_code" name="" required />
-                        </div>
-                    </div>
-                    <div class="generate-seller-code-column">
-                        <label for="name-input">Verify code</label>
-                        <button class="btn" id="verify-code">Verify</button>
-                    </div>
-                </div>
-
-                <div class="generate-seller-code-row">
-                    <div class="generate-seller-code-column">
-                        <div class="form-group form-group-seller-code-input">
-                            <label for="seller-code-input">The code is for....</label>
-                            <input type="text" id="seller-code-input" class="form-control" name="title"
-                                placeholder="item for the code is made" required />
-                        </div>
-                    </div>
-                    <div class="generate-seller-code-column">
-                        <div class="form-group form-group-seller-code-input">
-                            <label for="seller-code-input"> Indicate the price of the item</label>
-                            <input type="text" id="seller-code-input" class="form-control" name="price"
-                                placeholder=" 1'919,45€" required />
-                        </div>
-                    </div>
-                    <div class="generate-seller-code-column">
-                        <div class="form-group form-group-In-two-words">
-                            <label for="In-two-words">In two words</label>
-                            <textarea type="text" id="In-two-words" class="form-control" name="words" required
-                                placeholder="small descripption of item"></textarea>
-                        </div>
-                    </div>
-
-                    <div class="generate-seller-code-column">
-                        <p class="generate-seller-code-seller-price">
-                            Indicate the price of the item
-                        </p>
-                        <p class="generate-seller-code-price make-a-payment-price01">
-                            1'919,45€
-                        </p>
-                        <input type="text" name="" id="" class="generate-seller-code-price make-a-payment-price01">
-                    </div>
-                </div>
-
-                <div class="generate-seller-code-row">
-                    <div class="generate-seller-code-column">
-                        <p class="generate-seller-code-text">
-                            Remember to check the form and verify that the item you are
-                            paying for is the right one!
-                        </p>
-                        <div class="buy-follow-receive__buttons">
-                            <div class="btn-box1">
-                                <button class="buy-follow-receive__btn">
-                                    <p>GENERATE CODE</p>
-                                    <img src="{{ asset('assets/images/fav.png') }}" alt="" />
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </form>
-        </section>
-    </main> --}}
-
     <main>
         <section class="generate-seller-code-container">
             <h1>Generate Seller Code</h1>
-            <form class="generate-seller-code-form" action="{{ route('save.sellercode') }}" method="POST">
+            <form class="generate-seller-code-form" action="{{ route('save.sellercode') }}" method="POST" id="seller_code_form">
+                @csrf
+                <input type="text" name="verification_code" id="verification_code">
                 <div class="generate-seller-code-row">
                     <div class="generate-seller-code-column">
                         <div class="form-group">
@@ -112,14 +20,14 @@
                             <input type="email" id="email-input" class="form-control" name="email" required />
                         </div>
                         <div class="generate-seller-code-form-right">
-                            <a  id="send-code"><img src="{{ asset('assets/images/confirm.png') }}" /></a>
+                            <a id="send-code"><img src="{{ asset('assets/images/confirm.png') }}" /></a>
                         </div>
                     </div>
 
                     <div class="generate-seller-code-column">
                         <div class="form-group form-group-seller-code-input">
                             <label for="seller-code-input">The code is for....</label>
-                            <input type="text" id="seller-code-input" class="form-control" name="title"
+                            <input type="text" id="title_input" class="form-control" name="title"
                                 placeholder="item for the code is made" required />
                         </div>
                     </div>
@@ -138,10 +46,20 @@
                         <p class="generate-seller-code-seller-price">
                             Indicate the price of the item
                         </p>
-                        <p class="generate-seller-code-price make-a-payment-price01">
-                            1'919,45€
-                        </p>
+                        <div style="display: flex; align-items: center; ">
+                            <input type="text" class="generate-seller-code-price make-a-payment-price01" value="0"
+                                name="price" id="price_input" style="height: 71px !important">
+                            <select class="generate-seller-code-price make-a-payment-price01" style="width: 20%;"
+                                id="currency_input">
+                                <option value="EUR" selected>€</option>
+                                <option value="USD">$</option>
+                                <option value="GBP">£</option>
+                                <option value="CHF">CHF</option>
+                                <option value="JPY">¥</option>
+                            </select>
+                        </div>
                     </div>
+
                 </div>
 
                 <div class="generate-seller-code-row">
@@ -152,7 +70,7 @@
                         </p>
                         <div class="buy-follow-receive__buttons">
                             <div class="btn-box1">
-                                <button class="buy-follow-receive__btn">
+                                <button class="buy-follow-receive__btn" id="verify-code">
                                     <p>GENERATE CODE</p>
                                     <img src="{{ asset('assets/images/fav.png') }}" alt="" />
                                 </button>
@@ -191,8 +109,10 @@
                     data: data,
                     success: function(response) {
                         if (response.error) {
+
                             toastr.error(response.message);
                         } else {
+                            $('#verification_code').val(response.code);
                             toastr.success(response.message);
                         }
                     },
@@ -207,30 +127,67 @@
                 e.preventDefault();
                 let email = $('#email-input').val();
                 let code = $('#verification_code').val();
+                let name = $('#name-input').val();
+                let title = $('#title_input').val();
+                let words = $('#In-two-words').val();
+                let price = $('#price_input').val();
+                let currency = $('#currency_input').val();
+
+                if (!name) {
+                    toastr.error('Please enter your name');
+                    return;
+                }
 
                 if (!email) {
-                    toastr.error('Please insert email again');
+                    toastr.error('Please insert email');
                     return;
                 }
 
                 if (!code) {
-                    toastr.error('Please insert verification code from mail first');
+                    toastr.error('Please click on confirm to verify your email');
                     return;
                 }
+
+                if (!title) {
+                    toastr.error('Please enter a title');
+                    return;
+                }
+
+                if (!words) {
+                    toastr.error('Please enter two words');
+                    return;
+                }
+
+                if (!price || price == 0) {
+                    toastr.error('Please enter a price more than 0');
+                    return;
+                }
+
+                if (!currency) {
+                    toastr.error('Please select a currency');
+                    return;
+                }
+
                 let data = {
-                    email: email,
                     code: code,
+                    name: name,
+                    email: email,
+                    title : title,
+                    price : price,
+                    currency : currency,
+                    words : words,
                     _token: $('meta[name="csrf-token"]').attr('content')
                 };
+                console.log(data);
                 $.ajax({
-                    url: "{{ route('verify.code') }}",
+                    url: "{{ route('save.sellercode') }}",
                     type: "POST",
                     data: data,
                     success: function(response) {
                         if (response.error) {
                             toastr.error(response.message);
                         } else {
-                            $('#confirmed-img').css('display', 'block');
+                            $('#seller_code_form')[0].reset();
                             toastr.success(response.message);
                         }
                     },

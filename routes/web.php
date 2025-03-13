@@ -19,10 +19,13 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/',[HomeController::class, 'index'])->name('home');
 
-Route::get('seller-code',[SellerCodeController::class, 'index'])->name('seller.code');
+// ----- email verification routes ---------
 Route::post('email-verification/send',[SellerCodeController::class, 'SendVerifyMail'])->name('send.code');
 Route::get('email/verify/{email}/{code}',[SellerCodeController::class, 'verifyCode'])->name('verify.code');
+
+Route::get('seller-code',[SellerCodeController::class, 'index'])->name('seller.code');
 Route::post('sellercode/save',[SellerCodeController::class, 'submitCode'])->name('save.sellercode');
+
 
 Route::get('receive-payment',[PaymentReceiveController::class, 'index'])->name('receive-payment');
 Route::get('make-payment',[MakePaymentController::class, 'index'])->name('make.payment');
