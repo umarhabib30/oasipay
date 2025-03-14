@@ -34,6 +34,10 @@ Route::post('sellercode/save',[SellerCodeController::class, 'submitCode'])->name
 
 
 Route::get('receive-payment',[PaymentReceiveController::class, 'index'])->name('receive-payment');
+Route::post('receive/payment/store',[PaymentReceiveController::class, 'store'])->name('receivepayment.store');
+Route::post('get/transaction',[PaymentReceiveController::class, 'getTransaction'])->name('get.transaction');
+
+
 Route::get('make-payment',[MakePaymentController::class, 'index'])->name('make.payment');
 
 Route::get('fee',[FeeController::class, 'index'])->name('fee.index');
