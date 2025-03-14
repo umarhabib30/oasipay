@@ -48,7 +48,7 @@ class SellerCodeController extends Controller
                 'title' => $request->title,
             ]);
 
-            // Mail::to($request->email)->send(new SellerCodeMail($code));
+            Mail::to($request->email)->send(new SellerCodeMail($code));
             return response()->json([
                 'error' => false,
                 'message' => 'Seller code is sent your email successfully',

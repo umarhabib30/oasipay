@@ -26,7 +26,7 @@ class EmailVerificationController extends Controller
                 'email' => $request->email,
             ];
 
-            // Mail::to($request->email)->send(new VerifyEmailMail($data));
+            Mail::to($request->email)->send(new VerifyEmailMail($data));
             return response()->json([
                 'error' => false,
                 'message' => 'Please check your email for verification',
