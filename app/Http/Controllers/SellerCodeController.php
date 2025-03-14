@@ -26,6 +26,14 @@ class SellerCodeController extends Controller
 
         $verification = VerifyEmail::where('email', $request->email)->where('token', $request->code)->first();
         if ($verification->is_verified) {
+            $fee_price = 0;
+            if ($request->price <= 10) {
+                $fee_price = 0.5;
+            } else if ($request->price > 10 || $request->price <= 1500) {
+                $fee_price = $request->price * 0.05;
+            } else {
+                $fee_price = 100;
+            }
 
             $code = rand(100000, 999999);
             Transaction::create([
@@ -33,12 +41,14 @@ class SellerCodeController extends Controller
                 'seller_email' => $request->email,
                 'seller_code' => $code,
                 'price' => $request->price,
+                'fee_price' => $fee_price,
                 'currency' => $request->currency,
+                'currency_symbol' => $request->currency_symbol,
                 'words' => $request->words,
                 'title' => $request->title,
             ]);
 
-            Mail::to($request->email)->send(new SellerCodeMail($code));
+            // Mail::to($request->email)->send(new SellerCodeMail($code));
             return response()->json([
                 'error' => false,
                 'message' => 'Seller code is sent your email successfully',

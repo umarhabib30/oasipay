@@ -37,6 +37,7 @@ Route::get('receive-payment',[PaymentReceiveController::class, 'index'])->name('
 Route::post('receive/payment/store',[PaymentReceiveController::class, 'store'])->name('receivepayment.store');
 Route::post('get/transaction',[PaymentReceiveController::class, 'getTransaction'])->name('get.transaction');
 
+Route::get('monitoring-transactions/{id}',[MonitoringTransactionController::class, 'index'])->name('monitoring.transactions');
 
 Route::get('make-payment',[MakePaymentController::class, 'index'])->name('make.payment');
 
@@ -44,4 +45,3 @@ Route::get('fee',[FeeController::class, 'index'])->name('fee.index');
 Route::get('faq',[FaqController::class,'index'])->name('faq');
 Route::get('contact-us',[ContactUsController::class, 'index'])->name('contact-us');
 Route::get('open-positions',[OpenPositionController::class, 'index'])->name('jobs');
-Route::get('monitoring-transactions',[MonitoringTransactionController::class, 'index'])->name('monitoring.transactions');

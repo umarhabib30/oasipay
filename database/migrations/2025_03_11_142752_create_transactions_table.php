@@ -21,6 +21,7 @@ return new class extends Migration
             $table->string('price')->nullable();
             $table->string('fee_price')->nullable();
             $table->string('currency')->nullable();
+            $table->string('currency_symbol')->nullable();
             $table->string('words')->nullable();
             $table->string('seller_code')->nullable();
             $table->string('bank_type')->nullable();
@@ -28,7 +29,7 @@ return new class extends Migration
             $table->string('iban')->nullable();
             $table->string('bic_swift')->nullable();
             $table->string('paypal_link')->nullable();
-
+            $table->string('shipping_code')->nullable();
             $table->timestamps();
         });
     }

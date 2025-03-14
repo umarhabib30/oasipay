@@ -17,6 +17,7 @@ class Transaction extends Model
         'price',
         'fee_price',
         'currency',
+        'currency_symbol',
         'words',
         'seller_code',
         'bank_type',
@@ -24,5 +25,6 @@ class Transaction extends Model
         'iban',
         'bic_swift',
         'paypal_link',
+        'shipping_code',
     ];
 }

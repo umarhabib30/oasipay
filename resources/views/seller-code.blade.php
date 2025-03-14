@@ -132,6 +132,7 @@
                 let words = $('#In-two-words').val();
                 let price = $('#price_input').val();
                 let currency = $('#currency_input').val();
+                let currencySymbol = $('#currency_input option:selected').text();
 
                 if (!name) {
                     toastr.error('Please enter your name');
@@ -175,6 +176,7 @@
                     title : title,
                     price : price,
                     currency : currency,
+                    currency_symbol : currencySymbol,
                     words : words,
                     _token: $('meta[name="csrf-token"]').attr('content')
                 };

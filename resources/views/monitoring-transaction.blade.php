@@ -7,17 +7,17 @@
                 <div class="monitoring-transaction-column">
                     <div class="form-group">
                         <label for="The-payment-is-for">You receive a payment for...</label>
-                        <input type="text" id="The-payment-is-for" class="form-control" name="The-payment-is-for" required
+                        <input type="text" id="The-payment-is-for" class="form-control" name="The-payment-is-for" value="{{ @$transaction->title }}" readonly
                             placeholder="Item for which you pay" />
                     </div>
                     <div class="form-group">
                         <label for="In-two-words">In two words</label>
-                        <textarea type="text" id="In-two-words" class="form-control" name="In-two-words" required
-                            placeholder="small descripption of item"></textarea>
+                        <textarea type="text" id="In-two-words" class="form-control" name="In-two-words" readonly
+                            placeholder="small descripption of item"> {{ @$transaction->words }}</textarea>
                     </div>
 
                     <p class="monitoring-transaction-title">Transaction amount</p>
-                    <p class="monitoring-transaction-amount">1'919,45€</p>
+                    <p class="monitoring-transaction-amount">{{ $transaction->price }} {{ $transaction->currency_symbol }}</p>
                     <p class="monitoring-transaction-text">
                         the price does not include taxes, the total amount is visible only
                         to the buyer

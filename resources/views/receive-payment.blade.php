@@ -51,7 +51,7 @@
                     <div class="form-group">
                         <label for="The-payment-is-for">You receive a payement for...</label>
                         <input type="text" id="The-payment-is-for" class="form-control" name="The-payment-is-for"
-                            required placeholder="Item for which you pay"  readonly/>
+                            required placeholder="Item for which you pay" readonly />
                     </div>
                     <div class="form-group">
                         <label for="In-two-words">In two words</label>
@@ -72,7 +72,8 @@
                     <h5 class="receive-payment-msize">How do you want to receive payment</h5>
                     <div class="receive-payment-radio-options">
                         <label>
-                            <input type="radio" name="receive_payment" id="swift" value="bank" /><span class="custom-radio"></span>
+                            <input type="radio" name="receive_payment" id="swift" value="bank" /><span
+                                class="custom-radio"></span>
                             <img src="{{ asset('assets/images/iban.png') }}"></label>
                     </div>
 
@@ -98,8 +99,7 @@
                     <div class="form-group form-group-f">
                         <label for="Insert-buyer-code">Insert your link for recive payment
                         </label>
-                        <input type="text" id="Insert-buyer-code" class="form-control" name="paypal_link"
-                            required />
+                        <input type="text" id="Insert-buyer-code" class="form-control" name="paypal_link" required />
                     </div>
                     <div class="buy-follow-receive__buttons">
                         <div class="btn-box1">
@@ -149,57 +149,121 @@
             });
 
             // -------------- get transaction data --------------
-            $('body').on('click','#confirm-code',function(e){
+            $('body').on('click', '#confirm-code', function(e) {
                 e.preventDefault();
                 let seller_code = $('#Insert-buyer-cod').val();
-                if(!seller_code){
+                if (!seller_code) {
                     toastr.error('Please insert buyer code first');
-                }else{
+                } else {
                     let csrfToken = $('meta[name="csrf-token"]').attr('content');
-                    let data ={
-                        seller_code : seller_code,
+                    let data = {
+                        seller_code: seller_code,
                         _token: csrfToken
                     };
 
                     $.ajax({
-                    url: "{{ route('get.transaction') }}",
+                        url: "{{ route('get.transaction') }}",
+                        type: "POST",
+                        data: data,
+                        success: function(response) {
+                            if (response.error) {
+                                toastr.error(response.message);
+                            } else {
+                                $('#buyer_pay_data').html(response.transaction.price + response
+                                    .transaction.currency_symbol);
+                                $('#receive_pay_data').html(parseInt(response.transaction.fee_price) + parseInt(response.transaction.price) +
+                                    response.transaction.currency_symbol);
+                                $('#The-payment-is-for').val(response.transaction.title);
+                                $('#In-two-words').html(response.transaction.words);
+                                toastr.success(response.message);
+                            }
+                        },
+                        error: function(error) {
+                            console.log('Error sending code:', error);
+                        }
+                    });
+                }
+            });
+
+            // ----------- store payment form ----------
+            $('body').on('click', '#receive_payment_btn', function(e) {
+                e.preventDefault();
+                let verification_code = $('#verification_code').val();
+                let name = $('#name').val();
+                let email = $('#email-input').val();
+                let title = $('#The-payment-is-for').val();
+                let buyer_code = $('#Insert-buyer-cod').val();
+                let bank_transfer = $('#swift').val();
+                let account_holder = $('#account-holder').val();
+                let iban = $('#IBAN').val();
+                let swift_code = $('#BIC-Swift').val();
+                let paypal_radio = $('#paypalRadio').val();
+                let paypal_link = $('#Insert-buyer-code').val();
+
+                if (!email) {
+                    toastr.error('Please insert your email');
+                    return;
+                }
+                if (!verification_code) {
+                    toastr.error('Please verify your email first');
+                    return;
+                }
+                if (!name) {
+                    toastr.error('Please insert your name');
+                    return;
+                }
+                if (!buyer_code) {
+                    toastr.error('Please insert buyer code first');
+                    return;
+                }
+                if (!title) {
+                    toastr.error('Please hit the confirm code button');
+                    return;
+                }
+
+                if (!$('#swift').is(':checked') && !$('#paypalRadio').is(':checked')) {
+                    toastr.error('Please select a payment method');
+                    return;
+                }
+
+                if ($('#swift').is(':checked')) {
+                    if (!account_holder) {
+                        toastr.error('Please insert Account holder name');
+                        return;
+                    }
+                    if (!iban) {
+                        toastr.error('Please insert IBAN');
+                        return;
+                    }
+                    if (!swift_code) {
+                        toastr.error('Please insert BIC-Swift');
+                        return;
+                    }
+                }
+
+                if ($('#paypalRadio').is(':checked')) {
+                    if (!paypal_link) {
+                        toastr.error('Please insert your link for recive payment');
+                        return;
+                    }
+                }
+                let data = $('#receive_payment_form').serialize();
+                $.ajax({
+                    url: "{{ route('receivepayment.store') }}",
                     type: "POST",
                     data: data,
                     success: function(response) {
                         if (response.error) {
                             toastr.error(response.message);
                         } else {
-                            $('#buyer_pay_data').html(response.transaction.price + response.transaction.currency);
-                            $('#receive_pay_data').html(response.transaction.price + response.transaction.currency);
-                            $('#The-payment-is-for').val(response.transaction.title);
-                            $('#In-two-words').html(response.transaction.words);
+                            $('#receive_payment_form')[0].reset();
+                            $('#buyer_pay_data').html('00 €');
+                            $('#receive_pay_data').html('00 €');
+                            $('#In-two-words').html('');
                             toastr.success(response.message);
                         }
                     },
                     error: function(error) {
-                        console.log('Error sending code:', error);
-                    }
-                });
-                }
-            });
-
-            // ----------- store payment form ----------
-            $('body').on('click','#receive_payment_btn',function(e){
-                e.preventDefault();
-                let data = $('#receive_payment_form').serialize();
-                $.ajax({
-                    url : "{{ route('receivepayment.store') }}",
-                    type : "POST",
-                    data : data,
-                    success:function(response){
-                        if (response.error) {
-                            toastr.error(response.message);
-                        }else{
-                            $('#receive_payment_form')[0].reset();
-                            toastr.success(response.message);
-                        }
-                    },
-                    error : function(error){
                         console.log('Error sending code:', error);
                     }
                 });
