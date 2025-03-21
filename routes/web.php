@@ -10,6 +10,7 @@ use App\Http\Controllers\MonitoringTransactionController;
 use App\Http\Controllers\OpenPositionController;
 use App\Http\Controllers\PaymentReceiveController;
 use App\Http\Controllers\SellerCodeController;
+use App\Http\Controllers\TellUsController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -38,8 +39,16 @@ Route::post('receive/payment/store',[PaymentReceiveController::class, 'store'])-
 Route::post('get/transaction',[PaymentReceiveController::class, 'getTransaction'])->name('get.transaction');
 
 Route::get('monitoring-transactions/{id}',[MonitoringTransactionController::class, 'index'])->name('monitoring.transactions');
+Route::get('cancel-transaction/{seller_code}',[MonitoringTransactionController::class, 'cancel'])->name('transaction.cancel');
+Route::post('cancel-transaction/store',[MonitoringTransactionController::class, 'cancelStore'])->name('transaction.cancel.store');
+Route::post('transaction/confirm-code',[MonitoringTransactionController::class,'confirmCode'])->name('transaction.confirm.code');
+Route::post('transaction/shipping-code/store',[MonitoringTransactionController::class, 'shippingCode'])->name('transaction.shipping.store');
+
+Route::get('tell-us/{seller_code}',[TellUsController::class,'index'])->name('tellus');
+Route::post('tell-us/store',[TellUsController::class, 'store'])->name('tell-us.store');
 
 Route::get('make-payment',[MakePaymentController::class, 'index'])->name('make.payment');
+Route::get('pay-without-code',[MakePaymentController::class, 'paywithoutcode'])->name('make.payment.withoutcode');
 
 Route::get('fee',[FeeController::class, 'index'])->name('fee.index');
 Route::get('faq',[FaqController::class,'index'])->name('faq');

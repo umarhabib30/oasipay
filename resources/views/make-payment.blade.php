@@ -4,6 +4,7 @@
         <section class="make-a-payment-container">
             <h1>Make a Payment</h1>
             <form class="make-a-payment-form" action="">
+                <input type="hidden" name="verification_code" id="verification_code">
                 <div class="make-a-payment-column">
                     <div class="make-a-payment-form-main">
                         <div class="make-a-payment-form-left">
@@ -24,18 +25,18 @@
                             </div>
                         </div>
                         <div class="make-a-payment-form-right">
-                            <a href="#"><img src="{{ asset('assets/images/confirm.png')}}" /></a>
+                            <a href="#" id="send-code"><img src="{{ asset('assets/images/confirm.png')}}" /></a>
                         </div>
                     </div>
-                    <a href="#" style="margin-top: 10px" class="btn">CONFIRM CODE</a>
+                    <a href="#" style="margin-top: 10px" class="btn" id="confirm-code">CONFIRM CODE</a>
 
                     <p class="make-a-payment-text">
                         Remember to check the form and verify that the item you are paying
                         for is the right one!
                     </p>
                     <div class="make-a-payment-btn-box">
-                        <a href="pay-without-code.html" class="btn">I PAY WITHOUT CODE</a>
-                        <a href="Generate-Seller-Code.html" class="btn">I WANT SELLER CODE</a>
+                        <a href="{{ route('make.payment.withoutcode') }}" class="btn">I PAY WITHOUT CODE</a>
+                        <a href="{{ route('seller.code') }}" class="btn">I WANT SELLER CODE</a>
                     </div>
                     <p class="make-a-payment-text">
                         What you are paying includes our taxes (5%) and shipping costs if
@@ -70,15 +71,15 @@
                     </div>
 
                     <p class="make-a-payment-seller-price">Seller Price</p>
-                    <p class="make-a-payment-price">1'919,45€</p>
+                    <p class="make-a-payment-price" id="seller_price_field">00 €</p>
                     <div class="make-a-payment-price-details">
                         <p class="make-a-payment-fee-details">
                             The fees amount
-                            <span class="make-a-payment-fee-details-span">95,97€</span>
+                            <span class="make-a-payment-fee-details-span" id="fee_field">00 €</span>
                         </p>
                     </div>
                     <p class="make-a-payment-seller-price">You will pay</p>
-                    <p class="make-a-payment-price make-a-payment-price01">2'030,42€</p>
+                    <p class="make-a-payment-price make-a-payment-price01" id="you_pay_field">00 €</p>
                     <div class="buy-follow-receive__buttons">
                         <div class="btn-box1">
                             <button class="buy-follow-receive__btn">
@@ -91,4 +92,77 @@
             </form>
         </section>
     </main>
+@endsection
+@section('script')
+    <script>
+        $(document).ready(function(){
+
+             // ------------ email verification ------------
+             $('body').on('click', '#send-code', function(e) {
+                e.preventDefault();
+                let email = $('#email-input').val();
+                let csrfToken = $('meta[name="csrf-token"]').attr('content');
+                if (!email) {
+                    toastr.error('Please insert email first');
+                    return;
+                }
+                let data = {
+                    email: email,
+                    _token: csrfToken
+                };
+                $.ajax({
+                    url: "{{ route('send.code') }}",
+                    type: "POST",
+                    data: data,
+                    success: function(response) {
+                        if (response.error) {
+                            toastr.error(response.message);
+                        } else {
+                            $('#verification_code').val(response.code);
+                            toastr.success(response.message);
+                        }
+                    },
+                    error: function(error) {
+                        console.log('Error sending code:', error);
+                    }
+                });
+            });
+
+             // -------------- get transaction data --------------
+             $('body').on('click', '#confirm-code', function(e) {
+                e.preventDefault();
+                let seller_code = $('#seller-code-input').val();
+                if (!seller_code) {
+                    toastr.error('Please insert seller code first');
+                } else {
+                    let csrfToken = $('meta[name="csrf-token"]').attr('content');
+                    let data = {
+                        seller_code: seller_code,
+                        _token: csrfToken
+                    };
+
+                    $.ajax({
+                        url: "{{ route('get.transaction') }}",
+                        type: "POST",
+                        data: data,
+                        success: function(response) {
+                            if (response.error) {
+                                toastr.error(response.message);
+                            } else {
+                                $('#seller_price_field').html(response.transaction.price + response.transaction.currency_symbol);
+                                $('#fee_field').html(response.transaction.fee_price + response.transaction.currency_symbol);
+                                $('#you_pay_field').html(parseInt(response.transaction.fee_price) + parseInt(response.transaction.price) +  response.transaction.currency_symbol);
+                                $('#The-payment-is-for').val(response.transaction.title);
+                                $('#In-two-words').html(response.transaction.words);
+                                toastr.success(response.message);
+                            }
+                        },
+                        error: function(error) {
+                            console.log('Error sending code:', error);
+                        }
+                    });
+                }
+            });
+        });
+    </script>
 @endsection

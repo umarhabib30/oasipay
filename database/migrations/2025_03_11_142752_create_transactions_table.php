@@ -30,6 +30,7 @@ return new class extends Migration
             $table->string('bic_swift')->nullable();
             $table->string('paypal_link')->nullable();
             $table->string('shipping_code')->nullable();
+            $table->boolean('is_cancelled')->default(false);
             $table->timestamps();
         });
     }

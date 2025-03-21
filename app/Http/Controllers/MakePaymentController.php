@@ -12,4 +12,11 @@ class MakePaymentController extends Controller
         ];
         return view('make-payment',$data);
     }
+
+    public function paywithoutcode(){
+        $data=[
+            'title' => 'Make Payment'
+        ];
+        return view('pay-without-code',$data);
+    }
 }

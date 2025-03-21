@@ -26,5 +26,6 @@ class Transaction extends Model
         'bic_swift',
         'paypal_link',
         'shipping_code',
+        'is_cancelled'
     ];
 }
