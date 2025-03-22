@@ -5,18 +5,18 @@
             <h1>Receive a Payment</h1>
             <form class="receive-payment-form" action="" id="receive_payment_form">
                 @csrf
-                <input type="hidden" name="verification_code" id="verification_code">
+                <input type="hidden" name="verification_code" id="verification_code" @if (isset($code)) value="{{ $code }}" @endif>
                 <div class="receive-payment-column">
                     <div class="receive-payment-form-main">
                         <div class="receive-payment-form-left">
                             <div class="form-group">
                                 <label for="name-input">Name</label>
-                                <input type="text" id="name" name="name" required />
+                                <input type="text" id="name" name="name" required @if (isset($name) ) value="{{ $name }}" @endif />
                             </div>
 
                             <div class="form-group">
                                 <label for="email-input">Email</label>
-                                <input type="email" id="email-input" class="form-control" name="email" required />
+                                <input type="email" id="email-input" class="form-control" name="email" required @if (isset($email) ) value="{{ $email }}" @endif />
                             </div>
 
                             <div class="form-group">
@@ -121,6 +121,7 @@
             $('body').on('click', '#send-code', function(e) {
                 e.preventDefault();
                 let email = $('#email-input').val();
+                let name = $('#name-input').val();
                 let csrfToken = $('meta[name="csrf-token"]').attr('content');
                 if (!email) {
                     toastr.error('Please insert email first');
@@ -128,6 +129,8 @@
                 }
                 let data = {
                     email: email,
+                    name : name,
+                    source : 'receive_payment',
                     _token: csrfToken
                 };
                 $.ajax({

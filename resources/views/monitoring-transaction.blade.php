@@ -249,7 +249,7 @@
             // ----- contact oasipay to update the code ----------
             $('body').on('click','#contact_oasipay_alert',function(e){
                 e.preventDefault();
-                toastr.error('Oasipay team to change it');
+                toastr.error('Contact Oasipay team to change it');
             });
 
             // --------- store the seller code -------------

@@ -50,6 +50,8 @@
         <p>Click the button below to verify your email address:</p>
         @if ($source == 'other')
         <a href="{{ route('verify.code', ['email' => $email, 'code' => $code]) }}" class="button" style="color: white !important;">Verify Email</a>
+        @elseif ($source == 'receive_payment')
+        <a href="{{ route('verify.code.receivepayment', ['email' => $email, 'code' => $code]) }}" class="button" style="color: white !important;">Verify Email</a>
         @else
         <a href="{{ route('verify.code.seller', ['email' => $email, 'code' => $code,'name'=>$name]) }}" class="button" style="color: white !important;">Verify Email</a>
         @endif
