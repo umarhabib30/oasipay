@@ -5,19 +5,19 @@
             <h1>Generate Seller Code</h1>
             <form class="generate-seller-code-form" action="{{ route('save.sellercode') }}" method="POST" id="seller_code_form">
                 @csrf
-                <input type="hidden" name="verification_code" id="verification_code">
+                <input type="hidden" name="verification_code" id="verification_code" @if (isset($code)) value="{{ $code }}" @endif>
                 <div class="generate-seller-code-row">
                     <div class="generate-seller-code-column">
                         <div class="form-group">
                             <label for="name-input">Name</label>
-                            <input type="text" id="name-input" name="name" required />
+                            <input type="text" id="name-input" name="name" @if (isset($name) ) value="{{ $name }}" @endif required />
                         </div>
                     </div>
 
                     <div class="generate-seller-code-column generate-seller-code-column-mail">
                         <div class="form-group">
                             <label for="email-input">E-mail</label>
-                            <input type="email" id="email-input" class="form-control" name="email" required />
+                            <input type="email" id="email-input" class="form-control" name="email" @if (isset($email) ) value="{{ $email }}" @endif  required />
                         </div>
                         <div class="generate-seller-code-form-right">
                             <a id="send-code"><img src="{{ asset('assets/images/confirm.png') }}" /></a>
