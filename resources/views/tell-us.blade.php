@@ -100,14 +100,7 @@
                 }
 
                 // Validate file upload
-                let fileInput = $('#custom-file-input')[0].files[0];
-                if (!fileInput) {
-                    toastr.error('Please upload a photo of the article.');
-                    isValid = false;
-                } else if (fileInput.size > 1.5 * 1024 * 1024) { // 1.5MB size limit
-                    toastr.error('File size must be less than 1.5MB.');
-                    isValid = false;
-                }
+              
 
                 // Validate textarea
                 if ($('#In-two-words').val().trim() === "") {

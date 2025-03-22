@@ -128,11 +128,17 @@
                                 </p>
 
                                 <div class="buy-follow-receive__buttons">
-
-                                    <button class="buy-follow-receive__btn">
+                                    @if ($transaction->shipping_code)
+                                    <button class="buy-follow-receive__btn" id="contact_oasipay_alert">
                                         <p>INSERT CODE</p>
                                         <img src="{{ asset('assets/images/truck.png') }}" alt="" />
                                     </button>
+                                    @else
+                                    <button class="buy-follow-receive__btn" id="buy-follow-receive__btn">
+                                        <p>INSERT CODE</p>
+                                        <img src="{{ asset('assets/images/truck.png') }}" alt="" />
+                                    </button>
+                                    @endif
                                 </div>
 
                             </div>
@@ -229,7 +235,7 @@
     <script>
         $(document).ready(function() {
             // -----  open seller mail model --------
-            $('body').on('click', '.buy-follow-receive__btn', function(e) {
+            $('body').on('click', '#buy-follow-receive__btn', function(e) {
                 e.preventDefault();
                 let shipping_code = $('#shipping-code').val();
                 if (!shipping_code) {
@@ -238,6 +244,12 @@
                     var modal = document.getElementById("myModal");
                     modal.style.display = "block";
                 }
+            });
+
+            // ----- contact oasipay to update the code ----------
+            $('body').on('click','#contact_oasipay_alert',function(e){
+                e.preventDefault();
+                toastr.error('Oasipay team to change it');
             });
 
             // --------- store the seller code -------------

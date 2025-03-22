@@ -24,6 +24,8 @@ class EmailVerificationController extends Controller
             $data = [
                 'code' => $code,
                 'email' => $request->email,
+                'name' => $request->name,
+                'source' => $request->source ?? 'other',
             ];
 
             Mail::to($request->email)->send(new VerifyEmailMail($data));
@@ -53,5 +55,9 @@ class EmailVerificationController extends Controller
         } else {
             return view('emails.verify-confirmation', ['error' => true, 'message' => 'Incorrect verification code',]);
         }
+    }
+
+    public function verifySellerMail($email,$code,$name){
+        dd($email);
     }
 }

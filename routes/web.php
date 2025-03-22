@@ -29,6 +29,7 @@ Route::get('/',[HomeController::class, 'index'])->name('home');
 // ----- email verification routes ---------
 Route::post('email-verification/send',[EmailVerificationController::class, 'SendVerifyMail'])->name('send.code');
 Route::get('email/verify/{email}/{code}',[EmailVerificationController::class, 'verifyCode'])->name('verify.code');
+Route::get('email/verify/{email}/{code}/{name}',[EmailVerificationController::class, 'verifySellerMail'])->name('verify.code.seller');
 
 Route::get('seller-code',[SellerCodeController::class, 'index'])->name('seller.code');
 Route::post('sellercode/save',[SellerCodeController::class, 'submitCode'])->name('save.sellercode');

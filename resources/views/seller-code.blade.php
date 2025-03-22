@@ -47,7 +47,7 @@
                             Indicate the price of the item
                         </p>
                         <div style="display: flex; align-items: center; ">
-                            <input type="text" class="generate-seller-code-price make-a-payment-price01" value="0"
+                            <input type="number" class="generate-seller-code-price make-a-payment-price01" value="0"
                                 name="price" id="price_input" style="height: 71px !important">
                             <select class="generate-seller-code-price make-a-payment-price01" style="width: 20%;"
                                 id="currency_input">
@@ -92,6 +92,7 @@
                 e.preventDefault();
                 let email = $('#email-input').val();
                 let csrfToken = $('meta[name="csrf-token"]').attr('content');
+                let name = $('#name-input').val();
 
                 if (!email) {
                     toastr.error('Please insert email first');
@@ -100,6 +101,8 @@
 
                 let data = {
                     email: email,
+                    name : name,
+                    source : 'seller',
                     _token: csrfToken
                 };
 
