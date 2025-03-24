@@ -82,12 +82,28 @@ class EmailVerificationController extends Controller
         } else {
             $check->update(['is_verified' => true]);
             $data = [
-                'title' => 'Seller Code',
+                'title' => 'Receive Payment',
                 'email' => $email,
                 'name' => $name,
                 'code' => $code
             ];
             return view('receive-payment', $data);
+        }
+    }
+
+    public function verifyMakePaymentMail($email, $code, $name){
+        $check = VerifyEmail::where('email', $email)->where('token', $code)->first();
+        if (Carbon::now()->greaterThan($check->exp_at)) {
+            return view('emails.verify-confirmation', ['error' => true, 'message' => 'Token expired you have again verify your email']);
+        } else {
+            $check->update(['is_verified' => true]);
+            $data = [
+                'title' => 'Make Payment',
+                'email' => $email,
+                'name' => $name,
+                'code' => $code
+            ];
+            return view('make-payment', $data);
         }
     }
 }

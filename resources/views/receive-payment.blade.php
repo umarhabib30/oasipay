@@ -11,7 +11,7 @@
                         <div class="receive-payment-form-left">
                             <div class="form-group">
                                 <label for="name-input">Name</label>
-                                <input type="text" id="name" name="name" required @if (isset($name) ) value="{{ $name }}" @endif />
+                                <input type="text" id="name-input" name="name" required @if (isset($name) ) value="{{ $name }}" @endif />
                             </div>
 
                             <div class="form-group">
@@ -192,7 +192,7 @@
             $('body').on('click', '#receive_payment_btn', function(e) {
                 e.preventDefault();
                 let verification_code = $('#verification_code').val();
-                let name = $('#name').val();
+                let name = $('#name-input').val();
                 let email = $('#email-input').val();
                 let title = $('#The-payment-is-for').val();
                 let buyer_code = $('#Insert-buyer-cod').val();

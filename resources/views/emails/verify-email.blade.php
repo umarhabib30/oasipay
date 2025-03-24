@@ -58,7 +58,10 @@
             <a href="{{ route('verify.code', ['email' => $email, 'code' => $code]) }}" class="button"
                 style="color: white !important;">Verify Email</a>
         @elseif ($source == 'receive_payment')
-            <a href="{{ route('verify.code.seller', ['email' => $email, 'code' => $code, 'name' => $name]) }}"
+            <a href="{{ url('email/verify/receivepayment', ['email' => $email, 'code' => $code, 'name' => $name]) }}"
+                class="button" style="color: white !important;">Verify Email</a>
+        @elseif ($source == 'make_payment')
+            <a href="{{ url('email/verify/makepayment', ['email' => $email, 'code' => $code, 'name' => $name]) }}"
                 class="button" style="color: white !important;">Verify Email</a>
         @else
             <a href="{{ route('verify.code.seller', ['email' => $email, 'code' => $code, 'name' => $name]) }}"

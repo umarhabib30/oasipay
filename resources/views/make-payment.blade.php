@@ -101,6 +101,7 @@
              $('body').on('click', '#send-code', function(e) {
                 e.preventDefault();
                 let email = $('#email-input').val();
+                let name = $('#name-input').val();
                 let csrfToken = $('meta[name="csrf-token"]').attr('content');
                 if (!email) {
                     toastr.error('Please insert email first');
@@ -108,6 +109,8 @@
                 }
                 let data = {
                     email: email,
+                    name : name,
+                    source : 'make_payment',
                     _token: csrfToken
                 };
                 $.ajax({

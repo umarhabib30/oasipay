@@ -23,6 +23,6 @@
 
     <p>If you have any questions, feel free to contact us.</p>
 
-    <p>Best Regards, <br> Your Company Team</p>
+    <p>Best Regards, <br> Oasipay</p>
 </body>
 </html>

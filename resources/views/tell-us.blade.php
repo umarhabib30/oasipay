@@ -74,6 +74,13 @@
 @section('script')
     <script>
         $(document).ready(function() {
+
+            document.getElementById('custom-file-input').addEventListener('change', function(event) {
+                let fileName = event.target.files.length ? event.target.files[0].name :
+                    "add photo of the article max 1.5 MB";
+                document.querySelector('.custom-placeholder-text').textContent = fileName;
+            });
+
             $(".tell-us-item").click(function() {
                 var selectedReason = $(this).text(); // Get the text of the clicked <li>
                 $("#selected_reason").val(selectedReason); // Update the input value
@@ -100,7 +107,7 @@
                 }
 
                 // Validate file upload
-              
+
 
                 // Validate textarea
                 if ($('#In-two-words').val().trim() === "") {
