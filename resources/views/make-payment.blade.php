@@ -32,9 +32,9 @@
                         </div>
                     </div>
                     @if (isset($code))
-                        <a href="#" style="margin-top: 10px" class="btn" id="confirm-code-first">CONFIRM CODE</a>
-                    @else
                         <a href="#" style="margin-top: 10px" class="btn" id="confirm-code">CONFIRM CODE</a>
+                    @else
+                        <a href="#" style="margin-top: 10px" class="btn" id="confirm-code-first">CONFIRM CODE</a>
                     @endif
 
                     <p class="make-a-payment-text">
@@ -104,7 +104,7 @@
     <script>
         $(document).ready(function() {
 
-            $('body').on('click','#confirm-code-first',function(e){
+            $('body').on('click', '#confirm-code-first', function(e) {
                 e.preventDefault();
                 toastr.error('Please verify your name and email first');
             });
