@@ -4,18 +4,18 @@
         <section class="make-a-payment-container">
             <h1>Make a Payment</h1>
             <form class="make-a-payment-form" action="">
-                <input type="hidden" name="verification_code" id="verification_code">
+                <input type="hidden" name="verification_code" id="verification_code" @if (isset($code)) value="{{ $code }}" @endif>
                 <div class="make-a-payment-column">
                     <div class="make-a-payment-form-main">
                         <div class="make-a-payment-form-left">
                             <div class="form-group">
                                 <label for="name-input">Name</label>
-                                <input type="text" id="name-input" name="name" required />
+                                <input type="text" id="name-input" name="name" @if (isset($name) ) value="{{ $name }}" @endif required />
                             </div>
 
                             <div class="form-group">
                                 <label for="email-input">Email</label>
-                                <input type="email" id="email-input" class="form-control" name="email" required />
+                                <input type="email" id="email-input" class="form-control" name="email" @if (isset($email) ) value="{{ $email }}" @endif required />
                             </div>
 
                             <div class="form-group">
