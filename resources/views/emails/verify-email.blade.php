@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html>
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -11,6 +12,7 @@
             margin: 0;
             padding: 0;
         }
+
         .container {
             width: 100%;
             max-width: 600px;
@@ -21,11 +23,13 @@
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
             text-align: center;
         }
+
         .header {
             font-size: 24px;
             color: #333;
             font-weight: bold;
         }
+
         .button {
             font-size: 18px;
             font-weight: bold;
@@ -37,6 +41,7 @@
             text-decoration: none;
             margin: 20px 0;
         }
+
         .footer {
             font-size: 14px;
             color: #777;
@@ -44,19 +49,24 @@
         }
     </style>
 </head>
+
 <body>
     <div class="container">
         <div class="header">Email Verification</div>
         <p>Click the button below to verify your email address:</p>
         @if ($source == 'other')
-        <a href="{{ route('verify.code', ['email' => $email, 'code' => $code]) }}" class="button" style="color: white !important;">Verify Email</a>
+            <a href="{{ route('verify.code', ['email' => $email, 'code' => $code]) }}" class="button"
+                style="color: white !important;">Verify Email</a>
         @elseif ($source == 'receive_payment')
-        <a href="{{ route('verify.code.receivepayment', ['email' => $email, 'code' => $code,'name'=>$name]) }}" class="button" style="color: white !important;">Verify Email</a>
+            <a href="{{ route('verify.code.seller', ['email' => $email, 'code' => $code, 'name' => $name]) }}"
+                class="button" style="color: white !important;">Verify Email</a>
         @else
-        <a href="{{ route('verify.code.seller', ['email' => $email, 'code' => $code,'name'=>$name]) }}" class="button" style="color: white !important;">Verify Email</a>
+            <a href="{{ route('verify.code.seller', ['email' => $email, 'code' => $code, 'name' => $name]) }}"
+                class="button" style="color: white !important;">Verify Email</a>
         @endif
         <p>If you didn't request this, you can ignore this email.</p>
         <div class="footer">&copy; 2025 oasipay. All rights reserved.</div>
     </div>
 </body>
+
 </html>
