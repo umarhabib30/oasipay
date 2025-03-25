@@ -4,7 +4,7 @@
     <title>Payment Confirmation</title>
 </head>
 <body>
-    <h2>Hello {{ $data['receiver_name'] }},</h2>
+    <h2>Hello {{ $data['seller_name'] }},</h2>
 
     <p>Your payment details have been successfully updated.</p>
 
