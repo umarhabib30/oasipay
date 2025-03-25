@@ -104,7 +104,10 @@
                     </div>
 
                     <p class="monitoring-transaction-title">Transaction amount</p>
-                    <p class="monitoring-transaction-amount">{{ $transaction->price }} {{ $transaction->currency_symbol }}
+                    <p class="monitoring-transaction-amount">
+                        {{ number_format($transaction->price, 2) }} {{ $transaction->currency_symbol }}
+                    </p>
+
                     </p>
                     <p class="monitoring-transaction-text">
                         the price does not include taxes, the total amount is visible only

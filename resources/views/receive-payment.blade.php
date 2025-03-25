@@ -198,8 +198,9 @@
                             if (response.error) {
                                 toastr.error(response.message);
                             } else {
-                                $('#receive_pay_data').html(response.transaction.price + response.transaction.currency_symbol);
-                                $('#buyer_pay_data').html(parseInt(response.transaction.fee_price) + parseInt(response.transaction.price) + response.transaction.currency_symbol);
+                             $('#receive_pay_data').html(parseFloat(response.transaction.price).toFixed(2) + response.transaction.currency_symbol);
+                            $('#buyer_pay_data').html((parseFloat(response.transaction.fee_price) + parseFloat(response.transaction.price)).toFixed(2) + response.transaction.currency_symbol);
+
                                 $('#The-payment-is-for').val(response.transaction.title);
                                 $('#In-two-words').html(response.transaction.words);
                                 toastr.success(response.message);

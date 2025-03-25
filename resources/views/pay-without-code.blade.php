@@ -35,9 +35,8 @@
                         remember that this price does not include shipping, contact the
                         seller to make an agreement!
                     </p>
-                    <p class="pay-without-code-price make-a-payment-price01">
-                        1'919,45€
-                    </p>
+                    <input type="number" class="pay-without-code-price make-a-payment-price01" name="price" value="0.00" style="height: 45px" id="price_input">
+
                     <p class="pay-without-code-text">
                         In this case OasiPay only takes care of the transaction, not the
                         shipping!
@@ -53,13 +52,9 @@
 
                 <div class="pay-without-code-column">
                     <p class="pay-without-code-seller-price">The fees amount</p>
-                    <p class="pay-without-code-price make-a-payment-price01">
-                        95,97€
-                    </p>
+                    <p class="pay-without-code-price make-a-payment-price01" id="the_fee_amount">0.00€</p>
                     <p class="pay-without-code-seller-price pay-without-code-seller-price01">You will pay</p>
-                    <p class="pay-without-code-price ">
-                        2'015.42€
-                    </p>
+                    <p class="pay-without-code-price" id="you_will_pay">0.00€</p>
 
                     <p class="pay-without-code-fee-text">
                         The price shown includes OasiPay 5% fees to insure the transaction
@@ -87,4 +82,31 @@
             </form>
         </section>
     </main>
+@endsection
+@section('script')
+
+<script>
+    document.getElementById("price_input").addEventListener("input", function() {
+        let price = parseFloat(this.value) || 0;
+        let fee_price = 0;
+
+        if (price <= 10) {
+            fee_price = 0.5;
+        } else if (price > 10 && price <= 1500) {
+            fee_price = price * 0.05;
+        } else {
+            fee_price = 100;
+        }
+
+        let total = price + fee_price;
+
+        // Format numbers with thousands separator and two decimal places
+        function formatCurrency(value) {
+            return value.toLocaleString("de-DE", { minimumFractionDigits: 2, maximumFractionDigits: 2 }) + "€";
+        }
+
+        document.getElementById("the_fee_amount").innerText  = formatCurrency(fee_price);
+        document.getElementById("you_will_pay").innerText  = formatCurrency(total);
+    });
+    </script>
 @endsection
