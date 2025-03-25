@@ -52,6 +52,8 @@ Route::post('tell-us/store',[TellUsController::class, 'store'])->name('tell-us.s
 
 Route::get('make-payment',[MakePaymentController::class, 'index'])->name('make.payment');
 Route::get('pay-without-code',[MakePaymentController::class, 'paywithoutcode'])->name('make.payment.withoutcode');
+Route::post('get/transaction',[MakePaymentController::class, 'getTransaction'])->name('get.transaction.make');
+
 
 Route::get('fee',[FeeController::class, 'index'])->name('fee.index');
 Route::get('faq',[FaqController::class,'index'])->name('faq');

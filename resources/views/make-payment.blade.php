@@ -31,6 +31,7 @@
                             <a href="#" id="send-code"><img src="{{ asset('assets/images/confirm.png') }}" /></a>
                         </div>
                     </div>
+                    {{-- <a href="#" style="margin-top: 10px" class="btn" id="confirm-code">CONFIRM CODE</a> --}}
                     @if (isset($code))
                         <a href="#" style="margin-top: 10px" class="btn" id="confirm-code">CONFIRM CODE</a>
                     @else
@@ -146,17 +147,29 @@
             $('body').on('click', '#confirm-code', function(e) {
                 e.preventDefault();
                 let seller_code = $('#seller-code-input').val();
+                let email = $('#email-input').val();
+                let name = $('#name-input').val();
+                if (!name) {
+                    toastr.error('Please enter name');
+                    return;
+                }
+                if (!email) {
+                    toastr.error('Please enter email');
+                    return;
+                }
                 if (!seller_code) {
                     toastr.error('Please insert seller code first');
                 } else {
                     let csrfToken = $('meta[name="csrf-token"]').attr('content');
                     let data = {
                         seller_code: seller_code,
+                        email:email,
+                        name:name,
                         _token: csrfToken
                     };
 
                     $.ajax({
-                        url: "{{ route('get.transaction') }}",
+                        url: "{{ route('get.transaction.make') }}",
                         type: "POST",
                         data: data,
                         success: function(response) {
