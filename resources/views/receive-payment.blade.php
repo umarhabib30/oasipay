@@ -5,18 +5,21 @@
             <h1>Receive a Payment</h1>
             <form class="receive-payment-form" action="" id="receive_payment_form">
                 @csrf
-                <input type="hidden" name="verification_code" id="verification_code" @if (isset($code)) value="{{ $code }}" @endif>
+                <input type="hidden" name="verification_code" id="verification_code"
+                    @if (isset($code)) value="{{ $code }}" @endif>
                 <div class="receive-payment-column">
                     <div class="receive-payment-form-main">
                         <div class="receive-payment-form-left">
                             <div class="form-group">
                                 <label for="name-input">Name</label>
-                                <input type="text" id="name-input" name="name" required @if (isset($name) ) value="{{ $name }}" @endif />
+                                <input type="text" id="name-input" name="name" required
+                                    @if (isset($name)) value="{{ $name }}" @endif />
                             </div>
 
                             <div class="form-group">
                                 <label for="email-input">Email</label>
-                                <input type="email" id="email-input" class="form-control" name="email" required @if (isset($email) ) value="{{ $email }}" @endif />
+                                <input type="email" id="email-input" class="form-control" name="email" required
+                                    @if (isset($email)) value="{{ $email }}" @endif />
                             </div>
 
                             <div class="form-group">
@@ -31,7 +34,12 @@
                     </div>
 
                     <div class="receive-payment-btn-box">
-                        <a href="#" class="btn" id="confirm-code">CONFIRM CODE</a>
+                        {{-- <a href="#" class="btn" id="confirm-code">CONFIRM CODE</a> --}}
+                        @if (isset($code))
+                            <a href="#" class="btn" id="confirm-code">CONFIRM CODE</a>
+                        @else
+                            <a href="#" class="btn" id="confirm-code-first">CONFIRM CODE</a>
+                        @endif
                         <a href="{{ route('seller.code') }}" class="btn">I WANT SELLER CODE</a>
 
                     </div>
@@ -117,6 +125,12 @@
 @section('script')
     <script>
         $(document).ready(function() {
+
+            $('body').on('click', '#confirm-code-first', function(e) {
+                e.preventDefault();
+                toastr.error('Please verify your email first');
+            });
+
             // ------------ email verification ------------
             $('body').on('click', '#send-code', function(e) {
                 e.preventDefault();
@@ -129,8 +143,8 @@
                 }
                 let data = {
                     email: email,
-                    name : name,
-                    source : 'receive_payment',
+                    name: name,
+                    source: 'receive_payment',
                     _token: csrfToken
                 };
                 $.ajax({
@@ -155,12 +169,24 @@
             $('body').on('click', '#confirm-code', function(e) {
                 e.preventDefault();
                 let seller_code = $('#Insert-buyer-cod').val();
+                let email = $('#email-input').val();
+                let name = $('#name-input').val();
+                if (!name) {
+                    toastr.error('Please enter name');
+                    return;
+                }
+                if (!email) {
+                    toastr.error('Please enter email');
+                    return;
+                }
                 if (!seller_code) {
                     toastr.error('Please insert buyer code first');
                 } else {
                     let csrfToken = $('meta[name="csrf-token"]').attr('content');
                     let data = {
                         seller_code: seller_code,
+                        name: name,
+                        email: email,
                         _token: csrfToken
                     };
 
@@ -172,10 +198,8 @@
                             if (response.error) {
                                 toastr.error(response.message);
                             } else {
-                                $('#buyer_pay_data').html(response.transaction.price + response
-                                    .transaction.currency_symbol);
-                                $('#receive_pay_data').html(parseInt(response.transaction.fee_price) + parseInt(response.transaction.price) +
-                                    response.transaction.currency_symbol);
+                                $('#receive_pay_data').html(response.transaction.price + response.transaction.currency_symbol);
+                                $('#buyer_pay_data').html(parseInt(response.transaction .fee_price) + parseInt(response.transaction.price) + response.transaction.currency_symbol);
                                 $('#The-payment-is-for').val(response.transaction.title);
                                 $('#In-two-words').html(response.transaction.words);
                                 toastr.success(response.message);

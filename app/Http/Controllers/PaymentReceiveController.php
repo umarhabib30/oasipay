@@ -22,6 +22,12 @@ class PaymentReceiveController extends Controller
     {
         try {
             $transaction = Transaction::where('seller_code', $request->seller_code)->first();
+            if(($transaction->seller_email != $request->email) || ($transaction->seller_name != $request->name) ){
+                return response()->json([
+                    'error' => true,
+                    'message' => 'Seller name or email does not match',
+                ]);
+            }
             if ($transaction) {
                 return response()->json([
                     'error' => false,
@@ -64,10 +70,7 @@ class PaymentReceiveController extends Controller
             ]);
         }
 
-        $paymentDetails = [
-            'receiver_name' => $request->name,
-            'receiver_email' => $request->email,
-        ];
+        $paymentDetails = [];
 
         if ($request->receive_payment == 'paypal') {
             $paymentDetails += [

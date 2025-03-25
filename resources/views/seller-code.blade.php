@@ -49,7 +49,7 @@
                         <div style="display: flex; align-items: center; ">
                             <input type="number" class="generate-seller-code-price make-a-payment-price01" value="0"
                                 name="price" id="price_input" style="height: 71px !important">
-                            <select class="generate-seller-code-price make-a-payment-price01" style="width: 20%;"
+                            <select class="generate-seller-code-price make-a-payment-price01" style="width: 25%;"
                                 id="currency_input">
                                 <option value="EUR" selected>€</option>
                                 <option value="USD">$</option>
