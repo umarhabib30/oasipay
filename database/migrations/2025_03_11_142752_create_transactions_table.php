@@ -31,6 +31,8 @@ return new class extends Migration
             $table->string('paypal_link')->nullable();
             $table->string('shipping_code')->nullable();
             $table->boolean('is_cancelled')->default(false);
+            $table->string('cancel_by_name')->nullable();
+            $table->string('cancel_by_email')->nullable();
             $table->timestamps();
         });
     }

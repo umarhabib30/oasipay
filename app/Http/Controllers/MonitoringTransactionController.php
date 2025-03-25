@@ -38,7 +38,15 @@ class MonitoringTransactionController extends Controller
     {
         try {
             $transaction = Transaction::where('seller_code', $request->seller_code)->first();
+            if($transaction->shipping_code){
+                return response()->json([
+                    'error' => true,
+                    'message' => 'Transaction cannot be cancelled now',
+                ]);
+            }
             $transaction->update([
+                'cancel_by_name' => $request->name,
+                'cancel_by_email' => $request->email,
                 'is_cancelled' => true
             ]);
             return response()->json([

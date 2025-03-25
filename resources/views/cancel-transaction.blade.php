@@ -9,20 +9,19 @@
                     <div class="cancel-transaction-column">
                         <div class="form-group">
                             <label for="name-input">Name</label>
-                            <input type="text" id="name-input" name="name" value="{{ $transaction->seller_name }}"
+                            <input type="text" id="name-input" name="name"
                                 required />
                         </div>
 
                         <div class="form-group">
                             <label for="enter-email-input">E-mail </label>
-                            <input type="text" id="enter-email-input" class="form-control" name="senter-email"
-                                value="{{ $transaction->seller_email }}" required />
+                            <input type="text" id="enter-email-input" class="form-control" name="email"
+                                 required />
                         </div>
                         <div class="form-group">
                             <label for="insert-transaction-code">Insert Transaction code
                             </label>
-                            <input type="text" id="insert-transaction-code" class="form-control"
-                                name="insert-transaction-code" required />
+                            <input type="text" id="insert-transaction-code" class="form-control" name="insert-transaction-code" value="{{ $transaction->seller_code }}" readonly required />
                         </div>
 
                         <div style="margin-top: 20px" class="confirm-transaction-btn-box">
