@@ -15,10 +15,16 @@ class MakePaymentController extends Controller
         return view('make-payment', $data);
     }
 
-    public function paywithoutcode()
+    public function paywithoutcode(Request $request)
     {
+        Transaction::create([
+            'receiver_name' => $request->name,
+            'receiver_email' => $request->email,
+        ]);
         $data = [
-            'title' => 'Make Payment'
+            'title' => 'Make Payment',
+            'name' => $request->name,
+            'email' => $request->email,
         ];
         return view('pay-without-code', $data);
     }

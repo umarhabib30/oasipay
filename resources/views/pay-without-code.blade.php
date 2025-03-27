@@ -11,11 +11,11 @@
 
                             <div class="form-group">
                                 <label for="email-input">E-mail</label>
-                                <input type="email" id="email-input" class="form-control" name="email" required />
+                            <input type="email" id="email-input" class="form-control" name="email" value="{{ $email }}" required />
                             </div>
                         </div>
                         <div class="pay-without-code-form-right">
-                            <a href="#"><img src="./assets/images/confirm.png" /></a>
+                            <a href="#"><img src="/assets/images/confirm.png" /></a>
                         </div>
                     </div>
                     <div class="form-group form-group-seller-code-input">
@@ -35,8 +35,19 @@
                         remember that this price does not include shipping, contact the
                         seller to make an agreement!
                     </p>
-                    <input type="number" class="pay-without-code-price make-a-payment-price01" name="price" value="0.00" style="height: 45px" id="price_input">
+                    <div style="display: flex; align-items: center; ">
+                        <input type="number" class="pay-without-code-price make-a-payment-price01" name="price"
+                            value="0" style="height: 45px; width: 67%" id="price_input">
+                        <select class="generate-seller-code-price make-a-payment-price01"
+                            style="width: 23%;height: 45px;font-size: 25px;" id="currency_input">
+                            <option value="EUR" selected>€</option>
+                            <option value="USD">$</option>
+                            <option value="GBP">£</option>
+                            <option value="CHF">CHF</option>
+                            <option value="JPY">¥</option>
+                        </select>
 
+                    </div>
                     <p class="pay-without-code-text">
                         In this case OasiPay only takes care of the transaction, not the
                         shipping!
@@ -52,9 +63,9 @@
 
                 <div class="pay-without-code-column">
                     <p class="pay-without-code-seller-price">The fees amount</p>
-                    <p class="pay-without-code-price make-a-payment-price01" id="the_fee_amount">0.00€</p>
+                    <p class="pay-without-code-price make-a-payment-price01" id="the_fee_amount">0€</p>
                     <p class="pay-without-code-seller-price pay-without-code-seller-price01">You will pay</p>
-                    <p class="pay-without-code-price" id="you_will_pay">0.00€</p>
+                    <p class="pay-without-code-price" id="you_will_pay">0€</p>
 
                     <p class="pay-without-code-fee-text">
                         The price shown includes OasiPay 5% fees to insure the transaction
@@ -84,29 +95,31 @@
     </main>
 @endsection
 @section('script')
+    <script>
+        document.getElementById("price_input").addEventListener("input", function() {
+            let price = parseFloat(this.value) || 0;
+            let fee_price = 0;
 
-<script>
-    document.getElementById("price_input").addEventListener("input", function() {
-        let price = parseFloat(this.value) || 0;
-        let fee_price = 0;
+            if (price <= 10) {
+                fee_price = 0.5;
+            } else if (price > 10 && price <= 1500) {
+                fee_price = price * 0.05;
+            } else {
+                fee_price = 100;
+            }
 
-        if (price <= 10) {
-            fee_price = 0.5;
-        } else if (price > 10 && price <= 1500) {
-            fee_price = price * 0.05;
-        } else {
-            fee_price = 100;
-        }
+            let total = price + fee_price;
 
-        let total = price + fee_price;
+            // Format numbers with thousands separator and two decimal places
+            function formatCurrency(value) {
+                return value.toLocaleString("de-DE", {
+                    minimumFractionDigits: 2,
+                    maximumFractionDigits: 2
+                }) + "€";
+            }
 
-        // Format numbers with thousands separator and two decimal places
-        function formatCurrency(value) {
-            return value.toLocaleString("de-DE", { minimumFractionDigits: 2, maximumFractionDigits: 2 }) + "€";
-        }
-
-        document.getElementById("the_fee_amount").innerText  = formatCurrency(fee_price);
-        document.getElementById("you_will_pay").innerText  = formatCurrency(total);
-    });
+            document.getElementById("the_fee_amount").innerText = formatCurrency(fee_price);
+            document.getElementById("you_will_pay").innerText = formatCurrency(total);
+        });
     </script>
 @endsection

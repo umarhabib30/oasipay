@@ -3,6 +3,12 @@
     <main>
         <section class="make-a-payment-container">
             <h1>Make a Payment</h1>
+
+            {{-- make payment without code form --}}
+            <form action="{{ route('make.payment.withoutcode') }}" method="POST" id="make_payment_without_code_form">
+                <input type="hidden" name="name" id=""  @if (isset($name)) value="{{ $name }}" @endif>
+                <input type="hidden" name="email" id=""  @if (isset($email)) value="{{ $email }}" @endif>
+            </form>
             <form class="make-a-payment-form" action="">
                 <input type="hidden" name="verification_code" id="verification_code"
                     @if (isset($code)) value="{{ $code }}" @endif>
@@ -43,7 +49,11 @@
                         for is the right one!
                     </p>
                     <div class="make-a-payment-btn-box">
-                        <a href="{{ route('make.payment.withoutcode') }}" class="btn">I PAY WITHOUT CODE</a>
+                        @if (isset($code))
+                            <a href="#" class="btn submit_without_code">I PAY WITHOUT CODE</a>
+                        @else
+                            <a href="#" class="btn pay_without_code">I PAY WITHOUT CODE</a>
+                        @endif
                         <a href="{{ route('seller.code') }}" class="btn">I WANT SELLER CODE</a>
                     </div>
                     <p class="make-a-payment-text">
@@ -109,12 +119,26 @@
                 e.preventDefault();
                 toastr.error('Please verify your name and email first');
             });
+
+
+            $('body').on('click', '.pay_without_code', function(e) {
+                e.preventDefault();
+                toastr.error('Please verify your name and email first');
+            });
+            $('body').on('click', '.submit_without_code', function(e) {
+                e.preventDefault();
+                $('#make_payment_without_code_form').submit();
+            });
             // ------------ email verification ------------
             $('body').on('click', '#send-code', function(e) {
                 e.preventDefault();
                 let email = $('#email-input').val();
                 let name = $('#name-input').val();
                 let csrfToken = $('meta[name="csrf-token"]').attr('content');
+                if (!name) {
+                    toastr.error('Please insert name');
+                    return;
+                }
                 if (!email) {
                     toastr.error('Please insert email first');
                     return;
@@ -163,8 +187,8 @@
                     let csrfToken = $('meta[name="csrf-token"]').attr('content');
                     let data = {
                         seller_code: seller_code,
-                        email:email,
-                        name:name,
+                        email: email,
+                        name: name,
                         _token: csrfToken
                     };
 
@@ -176,9 +200,15 @@
                             if (response.error) {
                                 toastr.error(response.message);
                             } else {
-                                $('#seller_price_field').html(parseFloat(response.transaction.price).toFixed(2) + response.transaction.currency_symbol);
-                                $('#fee_field').html(parseFloat(response.transaction.fee_price).toFixed(2) + response.transaction.currency_symbol);
-                                $('#you_pay_field').html((parseFloat(response.transaction.fee_price) + parseFloat(response.transaction.price)).toFixed(2) + response.transaction.currency_symbol);
+                                $('#seller_price_field').html(parseFloat(response.transaction
+                                        .price).toFixed(2) + response.transaction
+                                    .currency_symbol);
+                                $('#fee_field').html(parseFloat(response.transaction.fee_price)
+                                    .toFixed(2) + response.transaction.currency_symbol);
+                                $('#you_pay_field').html((parseFloat(response.transaction
+                                        .fee_price) + parseFloat(response.transaction
+                                        .price)).toFixed(2) + response.transaction
+                                    .currency_symbol);
                                 $('#The-payment-is-for').val(response.transaction.title);
                                 $('#In-two-words').html(response.transaction.words);
                                 toastr.success(response.message);

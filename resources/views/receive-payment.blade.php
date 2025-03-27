@@ -43,15 +43,20 @@
                         <a href="{{ route('seller.code') }}" class="btn">I WANT SELLER CODE</a>
 
                     </div>
-                    <p class="make-a-payment-seller-price">Buyer pay</p>
-                    <p class="receive-payment-price" id="buyer_pay_data">0€</p>
+                    {{-- <p class="make-a-payment-seller-price">Buyer pay</p>
+                    <p class="receive-payment-price" id="buyer_pay_data">0€</p> --}}
+                    <p class="make-a-payment-seller-price">You receive</p>
+                    <p class="receive-payment-price" id="receive_pay_data">0€</p>
+
                     <p class="receive-payment-text">
                         If the price is not consistent with the item offered for sale, do
                         not continue. Contact the seller and ask him to verify and redo
                         the correct payment!
                     </p>
-                    <p class="make-a-payment-seller-price">You receive</p>
-                    <p class="receive-payment-price" id="receive_pay_data">0€</p>
+                    {{-- <p class="make-a-payment-seller-price">You receive</p>
+                    <p class="receive-payment-price" id="receive_pay_data">0€</p> --}}
+                    <p class="make-a-payment-seller-price">Buyer pay</p>
+                    <p class="receive-payment-price" id="buyer_pay_data">0€</p>
 
                 </div>
 
@@ -137,6 +142,10 @@
                 let email = $('#email-input').val();
                 let name = $('#name-input').val();
                 let csrfToken = $('meta[name="csrf-token"]').attr('content');
+                if (!name) {
+                    toastr.error('Please insert name');
+                    return;
+                }
                 if (!email) {
                     toastr.error('Please insert email first');
                     return;

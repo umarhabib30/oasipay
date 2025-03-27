@@ -1,23 +1,36 @@
 @extends('layouts.app')
+@section('style')
+    <style>
+        input[type=number]::-webkit-inner-spin-button,
+        input[type=number]::-webkit-outer-spin-button {
+            -webkit-appearance: none;
+            margin: 0;
+        }
+    </style>
+@endsection
 @section('content')
     <main>
         <section class="generate-seller-code-container">
             <h1>Generate Seller Code</h1>
-            <form class="generate-seller-code-form" action="{{ route('save.sellercode') }}" method="POST" id="seller_code_form">
+            <form class="generate-seller-code-form" action="{{ route('save.sellercode') }}" method="POST"
+                id="seller_code_form">
                 @csrf
-                <input type="hidden" name="verification_code" id="verification_code" @if (isset($code)) value="{{ $code }}" @endif>
+                <input type="hidden" name="verification_code" id="verification_code"
+                    @if (isset($code)) value="{{ $code }}" @endif>
                 <div class="generate-seller-code-row">
                     <div class="generate-seller-code-column">
                         <div class="form-group">
                             <label for="name-input">Name</label>
-                            <input type="text" id="name-input" name="name" @if (isset($name) ) value="{{ $name }}" @endif required />
+                            <input type="text" id="name-input" name="name"
+                                @if (isset($name)) value="{{ $name }}" @endif required />
                         </div>
                     </div>
 
                     <div class="generate-seller-code-column generate-seller-code-column-mail">
                         <div class="form-group">
                             <label for="email-input">E-mail</label>
-                            <input type="email" id="email-input" class="form-control" name="email" @if (isset($email) ) value="{{ $email }}" @endif  required />
+                            <input type="email" id="email-input" class="form-control" name="email"
+                                @if (isset($email)) value="{{ $email }}" @endif required />
                         </div>
                         <div class="generate-seller-code-form-right">
                             <a id="send-code"><img src="{{ asset('assets/images/confirm.png') }}" /></a>
@@ -49,8 +62,8 @@
                         <div style="display: flex; align-items: center; ">
                             <input type="number" class="generate-seller-code-price make-a-payment-price01" value="0"
                                 name="price" id="price_input" style="height: 71px !important">
-                            <select class="generate-seller-code-price make-a-payment-price01" style="width: 25%;"
-                                id="currency_input">
+                            <select class="generate-seller-code-price make-a-payment-price01"
+                                style="width: 21%;height: 51px;font-size: 36px;" id="currency_input">
                                 <option value="EUR" selected>€</option>
                                 <option value="USD">$</option>
                                 <option value="GBP">£</option>
@@ -93,16 +106,20 @@
                 let email = $('#email-input').val();
                 let csrfToken = $('meta[name="csrf-token"]').attr('content');
                 let name = $('#name-input').val();
-
+                if (!name) {
+                    toastr.error('Please insert name');
+                    return;
+                }
                 if (!email) {
-                    toastr.error('Please insert email first');
+                    toastr.error('Please insert email');
                     return;
                 }
 
+
                 let data = {
                     email: email,
-                    name : name,
-                    source : 'seller',
+                    name: name,
+                    source: 'seller',
                     _token: csrfToken
                 };
 
@@ -176,11 +193,11 @@
                     code: code,
                     name: name,
                     email: email,
-                    title : title,
-                    price : price,
-                    currency : currency,
-                    currency_symbol : currencySymbol,
-                    words : words,
+                    title: title,
+                    price: price,
+                    currency: currency,
+                    currency_symbol: currencySymbol,
+                    words: words,
                     _token: $('meta[name="csrf-token"]').attr('content')
                 };
                 console.log(data);
