@@ -6,6 +6,7 @@
 
             {{-- make payment without code form --}}
             <form action="{{ route('make.payment.withoutcode') }}" method="POST" id="make_payment_without_code_form">
+                @csrf
                 <input type="hidden" name="name" id=""  @if (isset($name)) value="{{ $name }}" @endif>
                 <input type="hidden" name="email" id=""  @if (isset($email)) value="{{ $email }}" @endif>
             </form>
