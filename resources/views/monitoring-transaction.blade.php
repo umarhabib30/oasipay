@@ -149,7 +149,11 @@
 
                         <div class="monitoring-transaction__column">
                             <div class="receive-payment-btn-box">
+                                @if ($transaction->shipping_code)
+                                <a href="" class="btn has_shipping_code">CANCEL TRANSACTION</a>
+                                @else
                                 <a href="{{ route('transaction.cancel',$transaction->seller_code) }}" class="btn">CANCEL TRANSACTION</a>
+                                @endif
                                 <a href="{{ route('contact-us') }}" class="btn">CONTACT US</a>
 
                             </div>
@@ -237,6 +241,12 @@
 @section('script')
     <script>
         $(document).ready(function() {
+            // ------- cancel shipping code error ----------
+            $('body').on('click', '.has_shipping_code', function(e) {
+                e.preventDefault();
+                toastr.error('Contact Oasipay support to cancel the transaction');
+            });
+
             // -----  open seller mail model --------
             $('body').on('click', '#buy-follow-receive__btn', function(e) {
                 e.preventDefault();
