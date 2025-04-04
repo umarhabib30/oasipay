@@ -1,4 +1,13 @@
 @extends('layouts.app')
+@section('style')
+    <style>
+        input[type=number]::-webkit-inner-spin-button,
+        input[type=number]::-webkit-outer-spin-button {
+            -webkit-appearance: none;
+            margin: 0;
+        }
+    </style>
+@endsection
 @section('content')
     <main>
         <section class="pay-without-code-container">
