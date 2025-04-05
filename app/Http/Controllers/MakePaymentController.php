@@ -33,12 +33,12 @@ class MakePaymentController extends Controller
     {
         try {
             $transaction = Transaction::where('seller_code', $request->seller_code)->first();
-            if (($transaction->receiver_email != $request->email) || ($transaction->receiver_name != $request->name)) {
-                return response()->json([
-                    'error' => true,
-                    'message' => 'Buyer name or email does not match',
-                ]);
-            }
+            // if (($transaction->receiver_email != $request->email) || ($transaction->receiver_name != $request->name)) {
+            //     return response()->json([
+            //         'error' => true,
+            //         'message' => 'Buyer name or email does not match',
+            //     ]);
+            // }
             if ($transaction) {
                 return response()->json([
                     'error' => false,

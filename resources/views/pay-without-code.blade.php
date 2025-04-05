@@ -11,6 +11,7 @@
 @section('content')
     <main>
         <section class="pay-without-code-container">
+            
             <h1>I want to pay without code</h1>
             <form class="pay-without-code-form" action="">
                 <div class="pay-without-code-column">

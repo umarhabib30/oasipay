@@ -130,6 +130,7 @@
                 e.preventDefault();
                 $('#make_payment_without_code_form').submit();
             });
+
             // ------------ email verification ------------
             $('body').on('click', '#send-code', function(e) {
                 e.preventDefault();
