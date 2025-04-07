@@ -109,6 +109,53 @@
 
     <script src="{{ asset('assets/JS/main.js') }}"></script>
     @yield('script')
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const languageMenu = document.getElementById("language-menu");
+            const languageOptions = languageMenu.querySelectorAll("a");
+            const currentFlag = document.getElementById("current-flag");
+
+            languageOptions.forEach(option => {
+                option.addEventListener("click", async function (e) {
+                    e.preventDefault();
+
+                    const selectedLang = this.getAttribute("data-lang").toLowerCase();
+                    const selectedFlag = this.getAttribute("data-flag");
+
+                    currentFlag.src = selectedFlag;
+
+                    // Get current page HTML
+                    const htmlContent = document.documentElement.outerHTML;
+
+                    // Send to server for translation
+                    const response = await fetch('/translate-page', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                        },
+                        body: JSON.stringify({
+                            html: htmlContent,
+                            lang: selectedLang
+                        })
+                    });
+
+                    const data = await response.json();
+
+                    if (data.html) {
+                        // Replace entire document content
+                        document.open();
+                        document.write(data.html);
+                        document.close();
+                    } else {
+                        alert("Translation failed.");
+                    }
+                });
+            });
+        });
+    </script>
+
+
 
 </body>
 
