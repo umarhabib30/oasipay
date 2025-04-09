@@ -3,53 +3,99 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Seller Code</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #f4f4f4;
-            margin: 0;
-            padding: 0;
-        }
-        .container {
-            width: 100%;
-            max-width: 600px;
-            margin: 30px auto;
-            background: #ffffff;
-            padding: 20px;
-            border-radius: 8px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-            text-align: center;
-        }
-        .header {
-            font-size: 24px;
-            color: #333;
-            font-weight: bold;
-        }
-        .code {
-            font-size: 32px;
-            font-weight: bold;
-            color: #007bff;
-            background: #f8f9fa;
-            display: inline-block;
-            padding: 10px 20px;
-            border-radius: 5px;
-            margin: 20px 0;
-        }
-        .footer {
-            font-size: 14px;
-            color: #777;
-            margin-top: 20px;
-        }
-    </style>
+    <title>seller code email, generate seller code</title>
 </head>
-<body>
-    <div class="container">
-        <div class="header">Seller Code</div>
-        <p>Use the following seller code for your transaction:</p>
-        <div class="code">{{ $code }}</div>
-        <p>If you didn't request this, you can ignore this email.</p>
-        <div class="footer">&copy; 2025 oasipay. All rights reserved.</div>
-    </div>
+<body style="font-family: Arial, sans-serif; background-color: #f4f4f4;background-color: #ffffff; max-width: 900px; margin: 20px auto; border: 1px solid #ddd;padding: 0px 50px;">
+    <table width="100%" cellpadding="0" cellspacing="0" border="0" align="center" style="padding-top: 60px;">
+        <tr>
+            <td colspan="2" style="padding: 20px; text-align: center; font-size: 24px; font-weight: bold;">
+                seller code email, generate seller code
+            </td>
+        </tr>
+        <tr>
+            <td style="width: 50%;display: flex;align-items: start;">
+
+                <img src="{{ asset('assets/mail_images/email_logo.jpg') }}" alt="Logo" style="border-radius: 50%; width: 50px; height: 50px;">
+                <span style="margin: 0; font-size: 14px; margin-left: 20px;color: #666;">support@oasipay.com</span>
+            </td>
+            <td  style="width: 50%;text-align: end;">
+                <p style="color: #666;">Date:</p>
+                <span>
+                    16-11-2024 20:30:21
+                </span>
+            </td>
+        </tr>
+    </table>
+    <table width="100%" cellpadding="0" cellspacing="0" border="0" align="center" style=" margin: 50px 0px; ">
+        <tr>
+            <td colspan="2" style="padding: 20px;text-align: left;font-size: 16px;font-weight: 400;border: 1px solid #282626;border-left: 0;border-right: 0;">
+               <span style="color: #666;">Subject:</span> <span style="font-size: 14px;">Your seller code </span>
+           </td>
+       </tr>
+    </table>
+    <table  width="100%" cellpadding="0" cellspacing="0" border="0" align="center">
+        <tr>
+            <td style="padding: 20px;font-size: 16px;display: flex;flex-direction: column;">
+                <span>
+                    Hello Abuba, <br>
+                </span>
+                <span style="margin-top: 10px;">
+                    Here are the details of your code.If you click on the "Transaction code" you will be automatically redirected on monitoring page!
+                </span>
+            </td>
+        </tr>
+    </table>
+    <table  width="100%" cellpadding="0" cellspacing="0" border="0" align="center"  style="padding-bottom: 60px;">
+        <tr>
+            <td style=" padding: 10px;    width: 50%;">
+                <p style="line-height: 1.7;">
+                    <span style="font-weight: bold;">Source Code</span>
+                    <span style="color: #37a9da;">{{ $code }}</span><br>
+                    <span style="font-weight: bold;">Name</span>
+                    <span style="color: #666;">Abuha</span><br>
+                    <span style="font-weight: bold;">Email</span>
+                    <span style="color: #666;">потах 72789@nikale.com </span><br>
+                    <span style="font-weight: bold;">Item for the transaction is made</span>
+                    <span style="color: #666;">Nutella</span><br>
+                    <span style="font-weight: bold;">Item description </span>
+                    <span style="color: #666;">barattolo 750g</span><br>
+                    <span style="font-weight: bold;">method payment</span>
+                    <span style="color: #666;">PayPal</span><br>
+
+                </p>
+            </td>
+            <td style=" padding: 10px;">
+                <img src="{{ asset('assets/mail_images/seller_code_email.jpg') }}" alt="OasiPay" style="width: 100%;height: auto;">
+            </td>
+        </tr>
+
+        <tr>
+            <td colspan="2" style="padding: 20px;">
+                <span style="font-weight: bold;">link to share with buyers </span>
+                <span style="color: #37a9da;">
+                    https//www.canva.com/design/DAGWVZUGQWM/HHdSWNHZ/BTC2gE
+                </span><br>
+                <small style="color: #666">(The link can be shared directly in the ad on your favorite platform)</small>
+                 <br>
+                 <br>
+                 <br>
+                <span style="font-weight: bold; font-size: 24px;font-weight: 900;">Price of item </span>
+                <span style="color: #00bf63;font-size: 24px;font-weight: 900;margin-left: 100px;">6,00€ </span><br><br><br>
+                <span style=" font-size: 14px; color: #666;margin-top: 20px;">
+                    Regards, <br>
+                    OasiPay Team
+                </span>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="2" style="text-align: center; font-size: 14px; color: #666; padding: 20px;">
+                <a href="#" style="color: #37a9da; text-decoration: none;">Home</a> |
+                <a href="#" style="color: #37a9da; text-decoration: none;">FAQ</a> |
+                <a href="#" style="color: #37a9da; text-decoration: none;">Contact Us</a>
+                <br><br>
+                This email is automatically generated by our platform, the link leads back to the OasiPay site. If you are not the one operating on the OasiPay platform, do not take this email into account and do not open the link. OasiPay does not ask for personal data via email.
+            </td>
+        </tr>
+    </table>
 </body>
 </html>

@@ -4,7 +4,6 @@ use App\Http\Controllers\ContactUsController;
 use App\Http\Controllers\EmailVerificationController;
 use App\Http\Controllers\FaqController;
 use App\Http\Controllers\FeeController;
-use App\Http\Controllers\FullPageTranslationController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\MakePaymentController;
 use App\Http\Controllers\MonitoringTransactionController;
@@ -61,5 +60,4 @@ Route::get('faq',[FaqController::class,'index'])->name('faq');
 Route::get('contact-us',[ContactUsController::class, 'index'])->name('contact-us');
 Route::get('open-positions',[OpenPositionController::class, 'index'])->name('jobs');
 
-// translation url
-Route::post('/translate-page', [FullPageTranslationController::class, 'translate']);
+
