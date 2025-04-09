@@ -1,75 +1,77 @@
 <!DOCTYPE html>
 <html>
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Email Verification</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #f4f4f4;
-            margin: 0;
-            padding: 0;
-        }
-
-        .container {
-            width: 100%;
-            max-width: 600px;
-            margin: 30px auto;
-            background: #ffffff;
-            padding: 20px;
-            border-radius: 8px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-            text-align: center;
-        }
-
-        .header {
-            font-size: 24px;
-            color: #333;
-            font-weight: bold;
-        }
-
-        .button {
-            font-size: 18px;
-            font-weight: bold;
-            color: #ffffff;
-            background: #007bff;
-            display: inline-block;
-            padding: 12px 25px;
-            border-radius: 5px;
-            text-decoration: none;
-            margin: 20px 0;
-        }
-
-        .footer {
-            font-size: 14px;
-            color: #777;
-            margin-top: 20px;
-        }
-    </style>
+    <title>Confirm Email</title>
 </head>
+<body style="font-family: Arial, sans-serif; background-color: #f4f4f4;background-color: #ffffff; max-width: 900px; margin: 20px auto; border: 1px solid #ddd;padding: 0px 50px;">
+    <table width="100%" cellpadding="0" cellspacing="0" border="0" align="center" style="padding-top: 60px;">
+        <tr>
+            <td colspan="2" style="padding: 20px; text-align: center; font-size: 24px; font-weight: bold;">
+                Confirm Email
+            </td>
+        </tr>
+        <tr>
+            <td style="width: 50%;display: flex;align-items: start;">
 
-<body>
-    <div class="container">
-        <div class="header">Email Verification</div>
-        <p>Click the button below to verify your email address:</p>
-        @if ($source == 'other')
-            <a href="{{ route('verify.code', ['email' => $email, 'code' => $code]) }}" class="button"
-                style="color: white !important;">Verify Email</a>
-        @elseif ($source == 'receive_payment')
-            <a href="{{ url('email/verify/receivepayment', ['email' => $email, 'code' => $code, 'name' => $name]) }}"
-                class="button" style="color: white !important;">Verify Email</a>
-        @elseif ($source == 'make_payment')
-            <a href="{{ url('email/verify/makepayment', ['email' => $email, 'code' => $code, 'name' => $name]) }}"
-                class="button" style="color: white !important;">Verify Email</a>
-        @else
-            <a href="{{ route('verify.code.seller', ['email' => $email, 'code' => $code, 'name' => $name]) }}"
-                class="button" style="color: white !important;">Verify Email</a>
-        @endif
-        <p>If you didn't request this, you can ignore this email.</p>
-        <div class="footer">&copy; 2025 oasipay. All rights reserved.</div>
-    </div>
+                <img src="{{ asset('assets/mail_images/email_logo.jpg') }}" alt="Logo" style="border-radius: 50%; width: 50px; height: 50px;">
+                <span style="margin: 0; font-size: 14px; margin-left: 20px;color: #666;">support@oasipay.com</span>
+            </td>
+            <td  style="width: 50%;text-align: end;">
+                <p style="color: #666;">Date:</p>
+                <span>
+                    {{ Carbon\Carbon::now() }}
+                </span>
+            </td>
+        </tr>
+    </table>
+    <table width="100%" cellpadding="0" cellspacing="0" border="0" align="center" style=" margin: 50px 0px; ">
+        <tr>
+            <td colspan="2" style="padding: 20px;text-align: left;font-size: 16px;font-weight: 400;border: 1px solid #282626;border-left: 0;border-right: 0;">
+               <span style="color: #666;">Subject:</span> <span style="font-size: 14px;">Confirm Your Email</span>
+           </td>
+       </tr>
+    </table>
+    <table  width="100%" cellpadding="0" cellspacing="0" border="0" align="center"  style="padding-bottom: 60px;">
+        <tr>
+            <td style="padding: 20px;font-size: 16px;display: flex;flex-direction: column;">
+                <span>
+                    Hello {{ $name }}, welcome to OasiPay!<br>
+                </span>
+                <span style="margin-top: 10px;">
+                    Please click the link below to confirm your email.
+                </span>
+                <br>
+                @if ($source == 'other')
+                <a href="{{ route('verify.code', ['email' => $email, 'code' => $code]) }}" style="padding: 15px 35px;background-color: transparent;color: #235a86;text-decoration: none;font-weight: bold;border: 3px solid #235a86;border-radius: 50px;width: fit-content;margin-top: 60px;">CONFIRM EMAIL</a>
+                @elseif ($source == 'receive_payment')
+                <a href="{{ url('email/verify/receivepayment', ['email' => $email, 'code' => $code, 'name' => $name]) }}" style="padding: 15px 35px;background-color: transparent;color: #235a86;text-decoration: none;font-weight: bold;border: 3px solid #235a86;border-radius: 50px;width: fit-content;margin-top: 60px;">CONFIRM EMAIL</a>
+                @elseif ($source == 'make_payment')
+                <a href="{{ url('email/verify/makepayment', ['email' => $email, 'code' => $code, 'name' => $name]) }}" style="padding: 15px 35px;background-color: transparent;color: #235a86;text-decoration: none;font-weight: bold;border: 3px solid #235a86;border-radius: 50px;width: fit-content;margin-top: 60px;">CONFIRM EMAIL</a>
+                @else
+                <a href="{{ route('verify.code.seller', ['email' => $email, 'code' => $code, 'name' => $name]) }}" style="padding: 15px 35px;background-color: transparent;color: #235a86;text-decoration: none;font-weight: bold;border: 3px solid #235a86;border-radius: 50px;width: fit-content;margin-top: 60px;">CONFIRM EMAIL</a>
+                @endif
+            </td>
+            <td style=" padding: 10px;    width: 50%;">
+                <img src="{{ asset('assets/mail_images/Confirm_email.jpg') }}" alt="OasiPay" style="max-width: 100%; width: 100%; height: auto;">
+            </td>
+        </tr>
+        <tr>
+            <td style="padding: 20px; font-size: 14px; color: #666;">
+                Regards, <br>
+                OasiPay Team
+            </td>
+        </tr>
+        <tr>
+            <td colspan="2" style="text-align: center; font-size: 14px; color: #666; padding: 20px;">
+                <a href="{{ url('/') }}" style="color: #37a9da; text-decoration: none;">Home</a> |
+                <a href="{{ url('faq') }}" style="color: #37a9da; text-decoration: none;">FAQ</a> |
+                <a href="{{ url('contact-us') }}" style="color: #37a9da; text-decoration: none;">Contact Us</a>
+                <br><br>
+                This email is automatically generated by our platform, the link leads back to the OasiPay site. If you are not the one operating on the OasiPay platform, do not take this email into account and do not open the link. OasiPay does not ask for personal data via email.
+            </td>
+        </tr>
+    </table>
 </body>
-
 </html>
