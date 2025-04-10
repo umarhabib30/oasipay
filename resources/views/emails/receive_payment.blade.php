@@ -560,7 +560,7 @@
 
                               <div style="font-size: 14px; line-height: 140%; text-align: left; word-wrap: break-word;display:flex;">
                                 <p style="line-height: 140%; margin: 0px;width:51%;    font-weight: 600;">Item for the transaction is made</p>
-                                <p style="line-height: 140%; margin: 0px; width: 49%;text-align: center;color: #bdbdbd;">{{ {{ $data['title'] }} }} </p>
+                                <p style="line-height: 140%; margin: 0px; width: 49%;text-align: center;color: #bdbdbd;">{{ $data['title'] }} </p>
                               </div>
 
                             </td>
