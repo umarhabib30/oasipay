@@ -575,7 +575,7 @@
 
                               <div style="font-size: 14px; line-height: 140%; text-align: left; word-wrap: break-word;display:flex;">
                                 <p style="line-height: 140%; margin: 0px;width:51%;    font-weight: 600;">Item Description</p>
-                                <p style="line-height: 140%; margin: 0px; width: 49%;text-align: center;color: #bdbdbd;">{{ {{ $data['title'] }} }}</p>
+                                <p style="line-height: 140%; margin: 0px; width: 49%;text-align: center;color: #bdbdbd;">{{ $data['words'] }} </p>
                               </div>
 
                             </td>
@@ -583,9 +583,7 @@
                         </tbody>
                       </table>
 
-                      @if ()
-
-                      @endif
+                    
 
                       <table style="font-family:'Cabin',sans-serif;" role="presentation" cellpadding="0" cellspacing="0" width="100%" border="0">
                         <tbody>
