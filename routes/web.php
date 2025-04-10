@@ -57,7 +57,8 @@ Route::post('get/transaction/make',[MakePaymentController::class, 'getTransactio
 
 Route::get('fee',[FeeController::class, 'index'])->name('fee.index');
 Route::get('faq',[FaqController::class,'index'])->name('faq');
-Route::get('contact-us',[ContactUsController::class, 'index'])->name('contact-us');
 Route::get('open-positions',[OpenPositionController::class, 'index'])->name('jobs');
 
+Route::get('contact-us',[ContactUsController::class, 'index'])->name('contact-us');
+Route::post('contact-us/store',[ContactUsController::class, 'store'])->name('contact-us.store');
 
