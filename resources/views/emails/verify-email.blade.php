@@ -697,13 +697,15 @@
                                                   <tr>
                                                     <td align="center" style="padding: 10px; font-family: 'Cabin', sans-serif;">
 
-                                                      <div style="display: inline-block; text-align: center;">
+                                                      <div style="display: inline-block; text-align: center; color: rgb(55, 169, 218); text-decoration: none; line-height: inherit;">
+                                                        &nbsp;|&nbsp;
                                                         <a href="{{ url('/') }}" style="color: rgb(55, 169, 218); text-decoration: none; line-height: inherit;">Home</a>
                                                         &nbsp;|&nbsp;
                                                         <a href="{{ url('faq') }}" style="color: rgb(55, 169, 218); text-decoration: none; line-height: inherit;">FAQ</a>
                                                         &nbsp;|&nbsp;
                                                         <a href="{{ url('contact-us') }}" style="color: rgb(55, 169, 218); text-decoration: none; line-height: inherit;">Contact Us</a>
-                                                      </div>
+                                                        &nbsp;|&nbsp;
+                                                    </div>
 
                                                     </td>
                                                   </tr>
