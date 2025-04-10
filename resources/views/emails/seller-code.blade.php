@@ -445,7 +445,7 @@
                             <td style="overflow-wrap:break-word;word-break:break-word;padding:50px 10px 10px;font-family:'Cabin',sans-serif;" align="left">
 
                               <div style="font-size: 14px; line-height: 140%; text-align: left; word-wrap: break-word;">
-                                <p style="line-height: 140%; margin: 0px;"><span style="color: #000000; white-space: normal; background-color: #ffffff; line-height: 19.6px;">Hello Abuba,</span></p>
+                                <p style="line-height: 140%; margin: 0px;"><span style="color: #000000; white-space: normal; background-color: #ffffff; line-height: 19.6px;">Hello {{ $data['seller_name'] }},</span></p>
                               </div>
 
                             </td>
