@@ -20,6 +20,10 @@
     <title></title>
 
     <style type="text/css">
+        body {
+            background-color: white;
+        }
+
         @media only screen and (min-width: 620px) {
             .u-row {
                 width: 600px !important;
@@ -136,16 +140,16 @@
 </head>
 
 <body class="clean-body u_body"
-    style="margin: 0;padding: 0;-webkit-text-size-adjust: 100%;background-color: #f9f9f9;color: #000000">
+    style="margin: 0;padding: 0;-webkit-text-size-adjust: 100%;background-color: #ffffff;color: #000000">
     <!--[if IE]><div class="ie-container"><![endif]-->
     <!--[if mso]><div class="mso-container"><![endif]-->
     <table role="presentation" id="u_body"
-        style="border-collapse: collapse;table-layout: fixed;border-spacing: 0;mso-table-lspace: 0pt;mso-table-rspace: 0pt;vertical-align: top;min-width: 320px;Margin: 0 auto;background-color: #f9f9f9;width:100%"
+        style="border-collapse: collapse;table-layout: fixed;border-spacing: 0;mso-table-lspace: 0pt;mso-table-rspace: 0pt;vertical-align: top;min-width: 320px;Margin: 0 auto;background-color: #ffffff;width:100%"
         cellpadding="0" cellspacing="0">
         <tbody>
             <tr style="vertical-align: top">
                 <td style="word-break: break-word;border-collapse: collapse !important;vertical-align: top">
-                    <!--[if (mso)|(IE)]><table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0"><tr><td align="center" style="background-color: #f9f9f9;"><![endif]-->
+                    <!--[if (mso)|(IE)]><table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0"><tr><td align="center" style="background-color: #ffffff;"><![endif]-->
 
 
 
@@ -219,7 +223,7 @@
                                                             <div
                                                                 style="font-family: arial,helvetica,sans-serif; font-size: 14px; font-weight: 700; color: #b6afaf; line-height: 150%; text-align: left; word-wrap: break-word;">
                                                                 <p style="line-height: 150%; margin: 0px;"><span
-                                                                        style="color: #666666; white-space: normal; background-color: #ffffff; float: none; display: inline; line-height: 21px;">support@oasipay.com</span>
+                                                                        style="color: #666666 !important; white-space: normal; background-color: #ffffff; float: none; display: inline; line-height: 21px;">support@oasipay.com</span>
                                                                 </p>
                                                             </div>
 
@@ -270,7 +274,8 @@
 
                                                             <div
                                                                 style="font-size: 14px; line-height: 140%; text-align: right; word-wrap: break-word;">
-                                                                <p style="line-height: 140%; margin: 0px;"> {{ Carbon\Carbon::now() }}</p>
+                                                                <p style="line-height: 140%; margin: 0px;">
+                                                                    {{ Carbon\Carbon::now() }}</p>
                                                             </div>
 
                                                         </td>
@@ -484,7 +489,8 @@
                                                                 style="font-size: 14px; line-height: 140%; text-align: left; word-wrap: break-word;">
                                                                 <p style="line-height: 140%; margin: 0px;"><span
                                                                         style="color: #000000; white-space: normal; background-color: #ffffff; line-height: 19.6px;">Hello
-                                                                        {{ $name }} , welcome to OasiPay!<br></span><span
+                                                                        {{ $name }}, welcome to
+                                                                        OasiPay!<br></span><span
                                                                         style="color: #000000; white-space: normal; background-color: #ffffff; margin-top: 10px; line-height: 19.6px;">Please
                                                                         click the link below to confirm your
                                                                         email.</span></p>
@@ -506,79 +512,33 @@
                                                             <!--[if mso]><style>.v-button {background: transparent !important;}</style><![endif]-->
                                                             <div align="left">
                                                                 <!--[if mso]><v:roundrect xmlns:v="urn:schemas-microsoft-com:vml" xmlns:w="urn:schemas-microsoft-com:office:word" href="" style="height:37px; v-text-anchor:middle; width:148px;" arcsize="135%"  strokecolor="#36ade5" strokeweight="3px" fillcolor="#ffffff"><w:anchorlock/><center style="color:#0b0b0b;font-family: arial black,AvenirNext-Heavy,avant garde,arial; "><![endif]-->
-                                                                    @if ($source == 'other')
-                                                                    <a href="{{ route('verify.code', ['email' => $email, 'code' => $code]) }}" target="_blank" class="v-button"
-                                                                        style="box-sizing: border-box; display: inline-block; text-decoration: none; text-size-adjust: none; text-align: center; color: rgb(11, 11, 11); background: rgb(255, 255, 255); border-radius: 50px; width: auto; max-width: 100%; word-break: break-word; overflow-wrap: break-word; border-width: 3px; border-style: solid; border-color: rgb(54, 173, 229); font-family: 'arial black', AvenirNext-Heavy, 'avant garde', arial; font-size: 14px; font-weight: 700; line-height: inherit;">
-                                                                        <span style="padding:5px 20px;line-height:120%;display: flex;align-items: center;">
-                                                                            <span style="line-height: 16.8px;">Confirm Email</span>
-                                                                            <span style="margin-left: 22px;">
-                                                                                <svg fill="#36ADE5" width="20px" version="1.1" xmlns="http://www.w3.org/2000/svg"
-                                                                                    xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 330 330" xml:space="preserve"
-                                                                                    stroke="#36ADE5">
-                                                                                    <path
-                                                                                        d="M165,0C74.019,0,0,74.019,0,165s74.019,165,165,165s165-74.019,165-165S255.981,0,165,0z M225.606,175.605
-                                                                                        l-80,80.002C142.678,258.535,138.839,260,135,260s-7.678-1.464-10.606-4.394c-5.858-5.857-5.858-15.355,0-21.213
-                                                                                        l69.393-69.396l-69.393-69.392c-5.858-5.857-5.858-15.355,0-21.213c5.857-5.858,15.355-5.858,21.213,0
-                                                                                        l80,79.998c2.814,2.813,4.394,6.628,4.394,10.606C230,168.976,228.42,172.792,225.606,175.605z" />
-                                                                                </svg>
-                                                                            </span>
+                                                                    @php
+                                                                    switch ($source) {
+                                                                        case 'other':
+                                                                            $url = route('verify.code', ['email' => $email, 'code' => $code]);
+                                                                            break;
+                                                                        case 'receive_payment':
+                                                                            $url = url('email/verify/receivepayment', ['email' => $email, 'code' => $code, 'name' => $name]);
+                                                                            break;
+                                                                        case 'make_payment':
+                                                                            $url = url('email/verify/makepayment', ['email' => $email, 'code' => $code, 'name' => $name]);
+                                                                            break;
+                                                                        default:
+                                                                            $url = route('verify.code.seller', ['email' => $email, 'code' => $code, 'name' => $name]);
+                                                                            break;
+                                                                    }
+                                                                @endphp
+
+                                                                <a href="{{ $url }}" target="_blank" class="v-button"
+                                                                   style="box-sizing: border-box; display: inline-block; text-decoration: none; text-size-adjust: none; text-align: center; color: rgb(11, 11, 11); background: rgb(255, 255, 255); border-radius: 50px; width: auto; max-width: 100%; word-break: break-word; overflow-wrap: break-word; border-width: 3px; border-style: solid; border-color: rgb(54, 173, 229); font-family: &quot;arial black&quot;, AvenirNext-Heavy, &quot;avant garde&quot;, arial; font-size: 14px; font-weight: 700; line-height: inherit;">
+                                                                    <span style="padding:5px 5px;line-height:120%;display: flex;align-items: center;">
+                                                                        <span style="line-height: 16.8px; margin-left: 15px;">
+                                                                            Confirm Email
                                                                         </span>
-                                                                    </a>
-                                                                @elseif ($source == 'receive_payment')
-                                                                    <a href="{{ url('email/verify/receivepayment', ['email' => $email, 'code' => $code, 'name' => $name]) }}" target="_blank" class="v-button"
-                                                                        style="box-sizing: border-box; display: inline-block; text-decoration: none; text-size-adjust: none; text-align: center; color: rgb(11, 11, 11); background: rgb(255, 255, 255); border-radius: 50px; width: auto; max-width: 100%; word-break: break-word; overflow-wrap: break-word; border-width: 3px; border-style: solid; border-color: rgb(54, 173, 229); font-family: 'arial black', AvenirNext-Heavy, 'avant garde', arial; font-size: 14px; font-weight: 700; line-height: inherit;">
-                                                                        <span style="padding:5px 20px;line-height:120%;display: flex;align-items: center;">
-                                                                            <span style="line-height: 16.8px;">Confirm Email</span>
-                                                                            <span style="margin-left: 22px;">
-                                                                                <svg fill="#36ADE5" width="20px" version="1.1" xmlns="http://www.w3.org/2000/svg"
-                                                                                    xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 330 330" xml:space="preserve"
-                                                                                    stroke="#36ADE5">
-                                                                                    <path
-                                                                                        d="M165,0C74.019,0,0,74.019,0,165s74.019,165,165,165s165-74.019,165-165S255.981,0,165,0z M225.606,175.605
-                                                                                        l-80,80.002C142.678,258.535,138.839,260,135,260s-7.678-1.464-10.606-4.394c-5.858-5.857-5.858-15.355,0-21.213
-                                                                                        l69.393-69.396l-69.393-69.392c-5.858-5.857-5.858-15.355,0-21.213c5.857-5.858,15.355-5.858,21.213,0
-                                                                                        l80,79.998c2.814,2.813,4.394,6.628,4.394,10.606C230,168.976,228.42,172.792,225.606,175.605z" />
-                                                                                </svg>
-                                                                            </span>
-                                                                        </span>
-                                                                    </a>
-                                                                @elseif ($source == 'make_payment')
-                                                                    <a href="{{ url('email/verify/makepayment', ['email' => $email, 'code' => $code, 'name' => $name]) }}" target="_blank" class="v-button"
-                                                                        style="box-sizing: border-box; display: inline-block; text-decoration: none; text-size-adjust: none; text-align: center; color: rgb(11, 11, 11); background: rgb(255, 255, 255); border-radius: 50px; width: auto; max-width: 100%; word-break: break-word; overflow-wrap: break-word; border-width: 3px; border-style: solid; border-color: rgb(54, 173, 229); font-family: 'arial black', AvenirNext-Heavy, 'avant garde', arial; font-size: 14px; font-weight: 700; line-height: inherit;">
-                                                                        <span style="padding:5px 20px;line-height:120%;display: flex;align-items: center;">
-                                                                            <span style="line-height: 16.8px;">Confirm Email</span>
-                                                                            <span style="margin-left: 22px;">
-                                                                                <svg fill="#36ADE5" width="20px" version="1.1" xmlns="http://www.w3.org/2000/svg"
-                                                                                    xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 330 330" xml:space="preserve"
-                                                                                    stroke="#36ADE5">
-                                                                                    <path
-                                                                                        d="M165,0C74.019,0,0,74.019,0,165s74.019,165,165,165s165-74.019,165-165S255.981,0,165,0z M225.606,175.605
-                                                                                        l-80,80.002C142.678,258.535,138.839,260,135,260s-7.678-1.464-10.606-4.394c-5.858-5.857-5.858-15.355,0-21.213
-                                                                                        l69.393-69.396l-69.393-69.392c-5.858-5.857-5.858-15.355,0-21.213c5.857-5.858,15.355-5.858,21.213,0
-                                                                                        l80,79.998c2.814,2.813,4.394,6.628,4.394,10.606C230,168.976,228.42,172.792,225.606,175.605z" />
-                                                                                </svg>
-                                                                            </span>
-                                                                        </span>
-                                                                    </a>
-                                                                @else
-                                                                    <a href="{{ route('verify.code.seller', ['email' => $email, 'code' => $code, 'name' => $name]) }}" target="_blank" class="v-button"
-                                                                        style="box-sizing: border-box; display: inline-block; text-decoration: none; text-size-adjust: none; text-align: center; color: rgb(11, 11, 11); background: rgb(255, 255, 255); border-radius: 50px; width: auto; max-width: 100%; word-break: break-word; overflow-wrap: break-word; border-width: 3px; border-style: solid; border-color: rgb(54, 173, 229); font-family: 'arial black', AvenirNext-Heavy, 'avant garde', arial; font-size: 14px; font-weight: 700; line-height: inherit;">
-                                                                        <span style="padding:5px 20px;line-height:120%;display: flex;align-items: center;">
-                                                                            <span style="line-height: 16.8px;">Confirm Email</span>
-                                                                            <span style="margin-left: 22px;">
-                                                                                <svg fill="#36ADE5" width="20px" version="1.1" xmlns="http://www.w3.org/2000/svg"
-                                                                                    xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 330 330" xml:space="preserve"
-                                                                                    stroke="#36ADE5">
-                                                                                    <path
-                                                                                        d="M165,0C74.019,0,0,74.019,0,165s74.019,165,165,165s165-74.019,165-165S255.981,0,165,0z M225.606,175.605
-                                                                                        l-80,80.002C142.678,258.535,138.839,260,135,260s-7.678-1.464-10.606-4.394c-5.858-5.857-5.858-15.355,0-21.213
-                                                                                        l69.393-69.396l-69.393-69.392c-5.858-5.857-5.858-15.355,0-21.213c5.857-5.858,15.355-5.858,21.213,0
-                                                                                        l80,79.998c2.814,2.813,4.394,6.628,4.394,10.606C230,168.976,228.42,172.792,225.606,175.605z" />
-                                                                                </svg>
-                                                                            </span>
-                                                                        </span>
-                                                                    </a>
-                                                                @endif
+                                                                        <img src="{{ asset('assets/mail_images/right-arrow.png') }}" alt=""
+                                                                             style="height: 20px; margin-left: 22px;">
+                                                                    </span>
+                                                                </a>
 
                                                                 <!--[if mso]></center></v:roundrect><![endif]-->
                                                             </div>
@@ -798,8 +758,6 @@
 </body>
 
 </html>
-
-
 
 
 
