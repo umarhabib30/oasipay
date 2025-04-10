@@ -73,6 +73,10 @@ class PaymentReceiveController extends Controller
         $paymentDetails = [
             'seller_name' => $transaction->seller_name,
             'seller_email' => $transaction->seller_email,
+            'seller_code' => $request->seller_code,
+            'words' => $transaction->words,
+            'title' => $transaction->title,
+            'price' => $transaction->price,
         ];
 
         if ($request->receive_payment == 'paypal') {
