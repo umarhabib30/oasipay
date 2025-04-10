@@ -692,27 +692,24 @@
                                             style="box-sizing: border-box; height: 100%; padding: 0px;border-top: 0px solid transparent;border-left: 0px solid transparent;border-right: 0px solid transparent;border-bottom: 0px solid transparent;border-radius: 0px;-webkit-border-radius: 0px; -moz-border-radius: 0px;">
                                             <!--<![endif]-->
 
-                                            <table style="font-family:'Cabin',sans-serif;" role="presentation"
-                                                cellpadding="0" cellspacing="0" width="100%" border="0">
+                                            <table style="font-family:'Cabin',sans-serif;" role="presentation" cellpadding="0" cellspacing="0" width="100%" border="0">
                                                 <tbody>
-                                                    <tr>
-                                                        <td
-                                                            style="overflow-wrap:break-word;word-break:break-word;padding:10px;font-family:'Cabin',sans-serif;display: flex;justify-content: center;    margin-top: 35px;">
+                                                  <tr>
+                                                    <td align="center" style="padding: 10px; font-family: 'Cabin', sans-serif;">
 
-                                                            <div style="width: fit-content;">
-                                                                <a href="{{ url('/') }}"
-                                                                    style="color: rgb(55, 169, 218); text-decoration: none; line-height: inherit;">Home</a>
-                                                                | <a href="{{ url('faq') }}"
-                                                                    style="color: rgb(55, 169, 218); text-decoration: none; line-height: inherit;">FAQ</a>
-                                                                | <a href="{{ url('contact-us') }}"
-                                                                    style="color: rgb(55, 169, 218); text-decoration: none; line-height: inherit;">Contact
-                                                                    Us</a>
-                                                            </div>
+                                                      <div style="display: inline-block; text-align: center;">
+                                                        <a href="{{ url('/') }}" style="color: rgb(55, 169, 218); text-decoration: none; line-height: inherit;">Home</a>
+                                                        &nbsp;|&nbsp;
+                                                        <a href="{{ url('faq') }}" style="color: rgb(55, 169, 218); text-decoration: none; line-height: inherit;">FAQ</a>
+                                                        &nbsp;|&nbsp;
+                                                        <a href="{{ url('contact-us') }}" style="color: rgb(55, 169, 218); text-decoration: none; line-height: inherit;">Contact Us</a>
+                                                      </div>
 
-                                                        </td>
-                                                    </tr>
+                                                    </td>
+                                                  </tr>
                                                 </tbody>
-                                            </table>
+                                              </table>
+
 
                                             <table style="font-family:'Cabin',sans-serif;" role="presentation"
                                                 cellpadding="0" cellspacing="0" width="100%" border="0">
