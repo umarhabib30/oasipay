@@ -223,7 +223,7 @@
                                                             <div style="font-family: arial,helvetica,sans-serif; font-size: 14px; font-weight: 700; color: #b6afaf; line-height: 150%; text-align: left; word-wrap: break-word;">
                                                                 <p style="line-height: 150%; margin: 0px;">
                                                                   <span style="color: #666666; white-space: normal; background-color: #ffffff; float: none; display: inline; line-height: 21px;">
-                                                                    support<span style="display:none;">[at]</span>@oasipay.com
+                                                                    support<span style="display:none;">[at]</span>@<span style="display:none;">[at]</span>oasipay.com
                                                                   </span>
                                                                 </p>
                                                               </div>
