@@ -184,7 +184,7 @@
                                                                         align="center">
 
                                                                         <img align="center" border="0"
-                                                                            src="https://assets.unlayer.com/projects/271871/1744223340674-666774.jpg"
+                                                                            src="{{ asset('assets/mail_images/email_logo.jpg') }}"
                                                                             alt="" title=""
                                                                             style="outline: none;text-decoration: none;-ms-interpolation-mode: bicubic;clear: both;display: inline-block !important;border: none;height: auto;float: none;width: 100%;max-width: 77.02px;"
                                                                             width="77.02" />
@@ -614,7 +614,7 @@
                                                                         align="center">
 
                                                                         <img align="center" border="0"
-                                                                            src="https://assets.unlayer.com/projects/271871/1744221897340-Confirm_email.jpg?w=360px"
+                                                                            src="{{ asset('assets/mail_images/Confirm_email.jpg') }}"
                                                                             alt="" title=""
                                                                             style="outline: none;text-decoration: none;-ms-interpolation-mode: bicubic;clear: both;display: inline-block !important;border: none;height: auto;float: none;width: 100%;max-width: 180px;"
                                                                             width="180" />
