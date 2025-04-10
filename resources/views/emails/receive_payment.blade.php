@@ -583,7 +583,7 @@
                         </tbody>
                       </table>
 
-                    
+
 
                       <table style="font-family:'Cabin',sans-serif;" role="presentation" cellpadding="0" cellspacing="0" width="100%" border="0">
                         <tbody>
@@ -595,8 +595,9 @@
 
                                 @if ($data['bank_type'] == 'Paypal')
                                 <p style="line-height: 140%; margin: 0px; width: 49%;text-align: center;color: #bdbdbd;">Paypal </p>
-                                @endif
+                                @else
                                 <p style="line-height: 140%; margin: 0px; width: 49%;text-align: center;color: #bdbdbd;">Bank Transfer </p>
+                                @endif
                               </div>
 
                             </td>
