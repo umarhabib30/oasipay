@@ -13,13 +13,13 @@ class SellerCodeMail extends Mailable
 {
     use Queueable, SerializesModels;
 
-    public $code;
+    public $data=[];
     /**
      * Create a new message instance.
      */
-    public function __construct($code)
+    public function __construct($data)
     {
-        $this->code = $code;
+        $this->data = $data;
     }
 
     /**
@@ -38,7 +38,7 @@ class SellerCodeMail extends Mailable
     public function content(): Content
     {
         return new Content(
-            view: 'emails.seller-code',with:['code' => $this->code]
+            view: 'emails.seller-code',with:['data' => $this->data]
         );
     }
 

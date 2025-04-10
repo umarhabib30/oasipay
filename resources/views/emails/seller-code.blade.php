@@ -521,7 +521,7 @@
                               <div style="font-size: 14px; line-height: 140%; text-align: left; word-wrap: break-word;display: flex;">
                                 <p style="line-height: 140%; margin: 0px; width: 51%;    font-weight: 600;">Seller Code</p>
                                 <div style="line-height: 140%; margin: 0px; width: 49%;text-align: center;">
-                                    <a style="text-decoration: none;color: #37a9da;" href="#">{{ $code }}</a>
+                                    <a style="text-decoration: none;color: #37a9da;" href="#">{{ $data['seller_code'] }}</a>
                                 </div>
                               </div>
 
@@ -537,7 +537,7 @@
 
                               <div style="font-size: 14px;display:flex; line-height: 140%; text-align: left; word-wrap: break-word;">
                                 <p style="line-height: 140%; margin: 0px;width:51%;    font-weight: 600;">Name</p>
-                                <p style="line-height: 140%; margin: 0px; width: 49%;text-align: center;color: #bdbdbd;">Abuha</p>
+                                <p style="line-height: 140%; margin: 0px; width: 49%;text-align: center;color: #bdbdbd;">{{ $data['seller_name'] }}</p>
                               </div>
 
                             </td>
@@ -552,7 +552,7 @@
 
                               <div style="font-size: 14px; line-height: 140%; text-align: left; word-wrap: break-word;display:flex;">
                                 <p style="line-height: 140%; margin: 0px;width:51%;    font-weight: 600;">Email</p>
-                                <p style="line-height: 140%; margin: 0px; width: 49%;text-align: center;color: #bdbdbd;">потах 72789@nikale.com </p>
+                                <p style="line-height: 140%; margin: 0px; width: 49%;text-align: center;color: #bdbdbd;">{{ $data['seller_email'] }} </p>
                               </div>
 
                             </td>
@@ -567,7 +567,7 @@
 
                               <div style="font-size: 14px; line-height: 140%; text-align: left; word-wrap: break-word;display:flex;">
                                 <p style="line-height: 140%; margin: 0px;width:51%;    font-weight: 600;">Item for the transaction is made</p>
-                                <p style="line-height: 140%; margin: 0px; width: 49%;text-align: center;color: #bdbdbd;">Nutella </p>
+                                <p style="line-height: 140%; margin: 0px; width: 49%;text-align: center;color: #bdbdbd;">{{ $data['title'] }} </p>
                               </div>
 
                             </td>
@@ -582,7 +582,7 @@
 
                               <div style="font-size: 14px; line-height: 140%; text-align: left; word-wrap: break-word;display:flex;">
                                 <p style="line-height: 140%; margin: 0px;width:51%;    font-weight: 600;">Item Description</p>
-                                <p style="line-height: 140%; margin: 0px; width: 49%;text-align: center;color: #bdbdbd;">barattolo 750g </p>
+                                <p style="line-height: 140%; margin: 0px; width: 49%;text-align: center;color: #bdbdbd;">{{ $data['words'] }} </p>
                               </div>
 
                             </td>
