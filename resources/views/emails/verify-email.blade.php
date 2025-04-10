@@ -186,7 +186,7 @@
                                                                         <img align="center" border="0"
                                                                             src="{{ asset('assets/mail_images/email_logo.jpg') }}"
                                                                             alt="" title=""
-                                                                            style="outline: none;text-decoration: none;-ms-interpolation-mode: bicubic;clear: both;display: inline-block !important;border: none;height: auto;float: none;width: 100%;max-width: 77.02px;"
+                                                                            style="outline: none;text-decoration: none;-ms-interpolation-mode: bicubic;clear: both;display: inline-block !important;border: none;height: auto;float: none;width: 100%;max-width: 77.02px !important;"
                                                                             width="77.02" />
 
                                                                     </td>
