@@ -7,26 +7,25 @@
                 @csrf
                 <input type="hidden" name="verification_code" id="verification_code"
                     @if (isset($code)) value="{{ $code }}" @endif>
-                    <input type="hidden" name="from_recieve_payment_for" value="no" id="">
+                <input type="hidden" name="from_recieve_payment_for" value="yes" id="">
                 <div class="receive-payment-column">
                     <div class="receive-payment-form-main">
                         <div class="receive-payment-form-left">
                             <div class="form-group">
                                 <label for="name-input">Name</label>
-                                <input type="text" id="name-input" name="name" required
-                                    @if (isset($name)) value="{{ $name }}" @endif />
+                                <input type="text" id="name-input" name="name" required readonly
+                                    value="{{ $transaction->seller_name }}" />
                             </div>
 
                             <div class="form-group">
                                 <label for="email-input">Email</label>
-                                <input type="email" id="email-input" class="form-control" name="email" required
-                                    @if (isset($email)) value="{{ $email }}" @endif />
+                                <input type="email" id="email-input" class="form-control" name="email" required readonly
+                                value="{{ $transaction->seller_email }}" />
                             </div>
 
                             <div class="form-group">
                                 <label for="Insert-buyer-code">Insert buyer code</label>
-                                <input type="text" id="Insert-buyer-cod" class="form-control" name="seller_code"
-                                    required />
+                                <input type="text" id="Insert-buyer-cod" class="form-control" name="seller_code" value="{{ $transaction->seller_code }}" readonly required />
                             </div>
                         </div>
                         <div class="receive-payment-form-right">
@@ -47,7 +46,7 @@
                     {{-- <p class="make-a-payment-seller-price">Buyer pay</p>
                     <p class="receive-payment-price" id="buyer_pay_data">0€</p> --}}
                     <p class="make-a-payment-seller-price">You receive</p>
-                    <p class="receive-payment-price" id="receive_pay_data">0€</p>
+                    <p class="receive-payment-price" id="receive_pay_data">{{ $transaction->price }}€</p>
 
                     <p class="receive-payment-text">
                         If the price is not consistent with the item offered for sale, do
@@ -57,20 +56,19 @@
                     {{-- <p class="make-a-payment-seller-price">You receive</p>
                     <p class="receive-payment-price" id="receive_pay_data">0€</p> --}}
                     <p class="make-a-payment-seller-price">Buyer pay</p>
-                    <p class="receive-payment-price" id="buyer_pay_data">0€</p>
+                    <p class="receive-payment-price" id="buyer_pay_data">{{ $transaction->price + $transaction->fee_price }}€</p>
 
                 </div>
 
                 <div class="receive-payment-column">
                     <div class="form-group">
                         <label for="The-payment-is-for">You receive a payement for...</label>
-                        <input type="text" id="The-payment-is-for" class="form-control" name="The-payment-is-for"
-                            required placeholder="Item for which you pay" readonly />
+                        <input type="text" id="The-payment-is-for" class="form-control" name="The-payment-is-for" value="{{ $transaction->title }}" required placeholder="Item for which you pay" readonly />
                     </div>
                     <div class="form-group">
                         <label for="In-two-words">In two words</label>
                         <textarea type="text" id="In-two-words" class="form-control" name="In-two-words" required readonly
-                            placeholder="small descripption of item"></textarea>
+                            placeholder="small descripption of item">{{ $transaction->words }}</textarea>
                     </div>
 
                     <p class="receive-payment-fee-text">
@@ -134,11 +132,13 @@
 
             $('body').on('click', '#confirm-code-first', function(e) {
                 e.preventDefault();
-                toastr.error('Please verify your email first');
+                toastr.error('Already confirmed');
             });
 
             // ------------ email verification ------------
             $('body').on('click', '#send-code', function(e) {
+                toastr.error('Already confirmed');
+                return;
                 e.preventDefault();
                 let email = $('#email-input').val();
                 let name = $('#name-input').val();
@@ -238,26 +238,7 @@
                 let paypal_radio = $('#paypalRadio').val();
                 let paypal_link = $('#Insert-buyer-code').val();
 
-                if (!email) {
-                    toastr.error('Please insert your email');
-                    return;
-                }
-                if (!verification_code) {
-                    toastr.error('Please verify your email first');
-                    return;
-                }
-                if (!name) {
-                    toastr.error('Please insert your name');
-                    return;
-                }
-                if (!buyer_code) {
-                    toastr.error('Please insert buyer code first');
-                    return;
-                }
-                if (!title) {
-                    toastr.error('Please hit the confirm code button');
-                    return;
-                }
+
 
                 if (!$('#swift').is(':checked') && !$('#paypalRadio').is(':checked')) {
                     toastr.error('Please select a payment method');

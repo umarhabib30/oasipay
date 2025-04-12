@@ -40,6 +40,7 @@ Route::post('sellercode/save',[SellerCodeController::class, 'submitCode'])->name
 Route::get('receive-payment',[PaymentReceiveController::class, 'index'])->name('receive-payment');
 Route::post('receive/payment/store',[PaymentReceiveController::class, 'store'])->name('receivepayment.store');
 Route::post('get/transaction',[PaymentReceiveController::class, 'getTransaction'])->name('get.transaction');
+Route::get('receive-payment-for/{code}',[PaymentReceiveController::class, 'receivePaymentFor'])->name('receive-payment-for');
 
 Route::get('monitoring-transactions/{id}',[MonitoringTransactionController::class, 'index'])->name('monitoring.transactions');
 Route::get('cancel-transaction/{seller_code}',[MonitoringTransactionController::class, 'cancel'])->name('transaction.cancel');

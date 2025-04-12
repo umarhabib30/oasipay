@@ -50,15 +50,17 @@ class PaymentReceiveController extends Controller
 
     public function store(Request $request)
     {
-        $verification = VerifyEmail::where('email', $request->email)
-            ->where('token', $request->verification_code)
-            ->first();
+        if($request->from_recieve_payment_for == 'no'){
+            $verification = VerifyEmail::where('email', $request->email)
+                ->where('token', $request->verification_code)
+                ->first();
 
-        if (!$verification || !$verification->is_verified) {
-            return response()->json([
-                'error' => true,
-                'message' => 'Please check your inbox to verify email',
-            ]);
+            if (!$verification || !$verification->is_verified) {
+                return response()->json([
+                    'error' => true,
+                    'message' => 'Please check your inbox to verify email',
+                ]);
+            }
         }
 
         $transaction = Transaction::where('seller_code', $request->seller_code)->first();
@@ -103,5 +105,14 @@ class PaymentReceiveController extends Controller
             'error' => false,
             'message' => 'Data confirmed successfully and email sent',
         ]);
+    }
+
+    public function receivePaymentFor($code){
+        $transaction = Transaction::where('seller_code',$code)->first();
+        $data = [
+            'title' => 'Receive Payment',
+            'transaction' => $transaction,
+        ];
+        return view('receive-payment-for', $data);
     }
 }
