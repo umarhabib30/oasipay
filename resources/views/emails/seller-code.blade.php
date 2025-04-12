@@ -668,7 +668,7 @@
                                 <p style="line-height: 140%; margin: 0px;width:40%;    font-weight: 600;">link to share with buyers</p>
                                 <div style="line-height: 140%; margin: 0px; width: 62%;">
                                     <p style="color: #37a9da;margin-bottom: 0px;">
-                                        https://www.canva.com/design/DAGWVZUGQWM/HHdSWNHZ/BTC2gE
+                                       {{ url('make-payment-for',$data['seller_code']) }}
                                     </p>
                                     <p style="text-align: center;font-size: 12px;color: #bdbdbd;margin-top: 3px;">
                                        (the link can be shared directly in the ad on your favourite platform)
