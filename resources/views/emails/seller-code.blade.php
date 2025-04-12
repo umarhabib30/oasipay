@@ -597,7 +597,7 @@
 
                               <div style="font-size: 14px; line-height: 140%; text-align: left; word-wrap: break-word;display:flex;">
                                 <p style="line-height: 140%; margin: 0px;width:51%;    font-weight: 600;">method payment</p>
-                                <p style="line-height: 140%; margin: 0px; width: 49%;text-align: center;color: #bdbdbd;">Paypal </p>
+                                <p style="line-height: 140%; margin: 0px; width: 49%;text-align: center;color: #bdbdbd;"><a href="{{ url('receive-payment') }}" style="color: rgb(55, 169, 218); text-decoration: none; line-height: inherit;">   Receive a payment </a></p>
                               </div>
 
                             </td>
