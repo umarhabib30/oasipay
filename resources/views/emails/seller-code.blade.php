@@ -521,7 +521,7 @@
                               <div style="font-size: 14px; line-height: 140%; text-align: left; word-wrap: break-word;display: flex;">
                                 <p style="line-height: 140%; margin: 0px; width: 51%;    font-weight: 600;">Seller Code</p>
                                 <div style="line-height: 140%; margin: 0px; width: 49%;text-align: center;">
-                                    <a style="text-decoration: none;color: #37a9da;" href="#">{{ $data['seller_code'] }}</a>
+                                    <a style="text-decoration: none;color: #37a9da;" target="__blank" href="{{ url('monitoring-transactions', $data['seller_code']) }}">{{ $data['seller_code'] }}</a>
                                 </div>
                               </div>
 
@@ -690,7 +690,7 @@
 
                               <div style="font-size: 14px; line-height: 140%;display:flex; text-align: left; word-wrap: break-word;">
                                 <p style="line-height: 140%; margin: 0px;width:51%;    font-weight: 700;font-size: 23px;text-align: center;">Price of item </p>
-                                <p style="line-height: 140%; margin: 0px; width: 49%;text-align: center;font-size: 35px;color: #00bf63;font-weight: 700;">6,00€ </p>
+                                <p style="line-height: 140%; margin: 0px; width: 49%;text-align: center;font-size: 35px;color: #00bf63;font-weight: 700;">{{ $data['price'] }}€ </p>
                               </div>
                             </td>
                           </tr>

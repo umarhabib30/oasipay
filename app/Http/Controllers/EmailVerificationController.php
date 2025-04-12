@@ -12,6 +12,7 @@ class EmailVerificationController extends Controller
 {
     public function SendVerifyMail(Request $request)
     {
+      
         try {
             $code = rand(100000, 999999);
             VerifyEmail::create([
