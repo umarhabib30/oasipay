@@ -18,13 +18,13 @@
                             <div class="form-group">
                                 <label for="name-input">Name</label>
                                 <input type="text" id="name-input" name="name"
-                                    @if (isset($name)) value="{{ $name }}" @endif required />
+                                    @if (isset($name)) value="{{ $name }}" readonly @endif required />
                             </div>
 
                             <div class="form-group">
                                 <label for="email-input">Email</label>
                                 <input type="email" id="email-input" class="form-control" name="email"
-                                    @if (isset($email)) value="{{ $email }}" @endif required />
+                                    @if (isset($email)) value="{{ $email }}" readonly @endif required />
                             </div>
 
                             <div class="form-group">
