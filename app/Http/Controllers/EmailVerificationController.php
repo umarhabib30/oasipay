@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Mail\VerifyEmailMail;
+use App\Models\Transaction;
 use App\Models\VerifyEmail;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -12,7 +13,7 @@ class EmailVerificationController extends Controller
 {
     public function SendVerifyMail(Request $request)
     {
-      
+
         try {
             $code = rand(100000, 999999);
             VerifyEmail::create([
@@ -27,6 +28,7 @@ class EmailVerificationController extends Controller
                 'email' => $request->email,
                 'name' => $request->name,
                 'source' => $request->source ?? 'other',
+                'seller_code' => $request->seller_code ?? '0',
             ];
 
             Mail::to($request->email)->send(new VerifyEmailMail($data));
@@ -105,6 +107,24 @@ class EmailVerificationController extends Controller
                 'code' => $code
             ];
             return view('make-payment', $data);
+        }
+    }
+
+    public function verifyMakePaymentMailFor($email, $code, $name,$seller_code){
+        $check = VerifyEmail::where('email', $email)->where('token', $code)->first();
+        if (Carbon::now()->greaterThan($check->exp_at)) {
+            return view('emails.verify-confirmation', ['error' => true, 'message' => 'Token expired you have again verify your email']);
+        } else {
+            $check->update(['is_verified' => true]);
+            $transaction = Transaction::where('seller_code',$seller_code)->first();
+            $data = [
+                'title' => 'Make Payment',
+                'email' => $email,
+                'name' => $name,
+                'code' => $code,
+                'transaction' => $transaction,
+            ];
+            return view('make-payment-for', $data);
         }
     }
 }

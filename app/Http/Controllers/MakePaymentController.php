@@ -58,4 +58,13 @@ class MakePaymentController extends Controller
             ]);
         }
     }
+
+    public function makePaymentFor($code){
+        $transaction = Transaction::where('seller_code', $code)->first();
+        $data = [
+            'title' => 'Make Payment',
+            'transaction' => $transaction
+        ];
+        return view('make-payment-for', $data);
+    }
 }

@@ -17,6 +17,7 @@ class VerifyEmailMail extends Mailable
     public $email;
     public $name;
     public $source;
+    public $seller_code;
     /**
      * Create a new message instance.
      */
@@ -26,6 +27,7 @@ class VerifyEmailMail extends Mailable
         $this->email = $data['email'];
         $this->name = $data['name'] ?? '';
         $this->source = $data['source'];
+        $this->seller_code = $data['seller_code'];
     }
 
     /**

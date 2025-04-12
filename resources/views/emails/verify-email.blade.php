@@ -525,6 +525,9 @@
                                                                         case 'make_payment':
                                                                             $url = url('email/verify/makepayment', ['email' => $email, 'code' => $code, 'name' => $name]);
                                                                             break;
+                                                                        case 'make_payment_for':
+                                                                            $url = url('email/verify/makepaymentfor', ['email' => $email, 'code' => $code, 'name' => $name,'seller_code' =>$seller_code]);
+                                                                            break;
                                                                         default:
                                                                             $url = route('verify.code.seller', ['email' => $email, 'code' => $code, 'name' => $name]);
                                                                             break;

@@ -32,6 +32,7 @@ Route::get('email/verify/{email}/{code}',[EmailVerificationController::class, 'v
 Route::get('email/verify/{email}/{code}/{name}',[EmailVerificationController::class, 'verifySellerMail'])->name('verify.code.seller');
 Route::get('email/verify/receivepayment/{email}/{code}/{name}',[EmailVerificationController::class, 'verifyPaymentReceive'])->name('verify.code.receivepayment');
 Route::get('email/verify/makepayment/{email}/{code}/{name}',[EmailVerificationController::class, 'verifyMakePaymentMail'])->name('verify.code.makepayment');
+Route::get('email/verify/makepaymentfor/{email}/{code}/{name}/{seller_code}',[EmailVerificationController::class, 'verifyMakePaymentMailFor'])->name('verify.code.makepayment.for');
 
 Route::get('seller-code',[SellerCodeController::class, 'index'])->name('seller.code');
 Route::post('sellercode/save',[SellerCodeController::class, 'submitCode'])->name('save.sellercode');
@@ -54,6 +55,7 @@ Route::post('tell-us/store',[TellUsController::class, 'store'])->name('tell-us.s
 Route::get('make-payment',[MakePaymentController::class, 'index'])->name('make.payment');
 Route::post('pay-without-code',[MakePaymentController::class, 'paywithoutcode'])->name('make.payment.withoutcode');
 Route::post('get/transaction/make',[MakePaymentController::class, 'getTransaction'])->name('get.transaction.make');
+Route::get('make-payment-for/{code}',[MakePaymentController::class, 'makePaymentFor'])->name('make-payment-for');
 
 
 Route::get('fee',[FeeController::class, 'index'])->name('fee.index');
