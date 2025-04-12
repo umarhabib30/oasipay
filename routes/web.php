@@ -56,6 +56,7 @@ Route::get('make-payment',[MakePaymentController::class, 'index'])->name('make.p
 Route::post('pay-without-code',[MakePaymentController::class, 'paywithoutcode'])->name('make.payment.withoutcode');
 Route::post('get/transaction/make',[MakePaymentController::class, 'getTransaction'])->name('get.transaction.make');
 Route::get('make-payment-for/{code}',[MakePaymentController::class, 'makePaymentFor'])->name('make-payment-for');
+Route::post('make-payment-through-api',[MakePaymentController::class, 'pay'])->name('pay.through.api');
 
 
 Route::get('fee',[FeeController::class, 'index'])->name('fee.index');

@@ -10,6 +10,15 @@
                 <input type="hidden" name="name" id=""  @if (isset($name)) value="{{ $name }}" @endif>
                 <input type="hidden" name="email" id=""  @if (isset($email)) value="{{ $email }}" @endif>
             </form>
+
+            {{-- make payment through api --}}
+            <form action="{{ route('pay.through.api') }}" method="POST" id="make_payment_through_api">
+                @csrf
+                <input type="hidden" name="seller_code" id=""  value="{{ $transaction->seller_code }}">
+                <input type="hidden" name="name" id=""  @if (isset($name)) value="{{ $name }}" @endif>
+                <input type="hidden" name="email" id=""  @if (isset($email)) value="{{ $email }}" @endif>
+            </form>
+
             <form class="make-a-payment-form" action="">
                 <input type="hidden" name="verification_code" id="verification_code" @if (isset($code)) value="{{ $code }}" @endif>
                 <div class="make-a-payment-column">
@@ -223,6 +232,30 @@
                     });
                 }
             });
+
+            // --- proceed to payment ---
+            $('body').on('click','.buy-follow-receive__btn',function(e){
+                e.preventDefault();
+                let seller_code = $('#seller-code-input').val();
+                let email = $('#email-input').val();
+                let name = $('#name-input').val();
+                let verification_code = $('#verification_code').val();
+                if (!name) {
+                    toastr.error('Please enter name');
+                    return;
+                }
+                if (!email) {
+                    toastr.error('Please enter email');
+                    return;
+                }
+                if (!verification_code) {
+                    toastr.error('Please verify email');
+                    return;
+                }
+
+                $('#make_payment_through_api').submit();
+
+            })
         });
     </script>
 @endsection
