@@ -2,8 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Mail\VerifyEmailMail;
 use App\Models\Transaction;
+use App\Models\VerifyEmail;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Mail;
 
 class MonitoringTransactionController extends Controller
 {
@@ -92,6 +96,47 @@ class MonitoringTransactionController extends Controller
             return response()->json([
                 'error' => true,
                 'message' => 'You must enter seller email to insert the shipping code',
+            ]);
+        }
+    }
+
+    public function sendVerificationMail(Request $request){
+        try {
+            $transaction = Transaction::where('seller_code', $request->seller_code)->first();
+            if (($transaction->receiver_email != $request->email) || ($transaction->receiver_name != $request->name)) {
+                return response()->json([
+                    'error' => true,
+                    'message' => 'Buyer name or email does not match',
+                ]);
+            }
+
+
+            $code = rand(100000, 999999);
+            VerifyEmail::create([
+                'email' => $request->email,
+                'token' => $code,
+                'is_verified' => false,
+                'exp_at' =>  Carbon::now()->addMinutes(15),
+            ]);
+
+            $data = [
+                'code' => $code,
+                'email' => $request->email,
+                'name' => $request->name,
+                'source' => $request->source ?? 'other',
+                'seller_code' => $request->seller_code ?? '0',
+            ];
+
+            Mail::to($request->email)->send(new VerifyEmailMail($data));
+            return response()->json([
+                'error' => false,
+                'message' => 'Please check your email for verification',
+                'code' => $code,
+            ]);
+        } catch (\Exception $e) {
+            return response()->json([
+                'error' => true,
+                'message' => $e->getMessage(),
             ]);
         }
     }

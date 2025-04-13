@@ -33,6 +33,7 @@ Route::get('email/verify/{email}/{code}/{name}',[EmailVerificationController::cl
 Route::get('email/verify/receivepayment/{email}/{code}/{name}',[EmailVerificationController::class, 'verifyPaymentReceive'])->name('verify.code.receivepayment');
 Route::get('email/verify/makepayment/{email}/{code}/{name}',[EmailVerificationController::class, 'verifyMakePaymentMail'])->name('verify.code.makepayment');
 Route::get('email/verify/makepaymentfor/{email}/{code}/{name}/{seller_code}',[EmailVerificationController::class, 'verifyMakePaymentMailFor'])->name('verify.code.makepayment.for');
+Route::get('email/verify/monitoring-transaction/{email}/{code}/{name}/{seller_code}',[EmailVerificationController::class, 'verifyItemReceiveMail'])->name('verify.item-recieve');
 
 Route::get('seller-code',[SellerCodeController::class, 'index'])->name('seller.code');
 Route::post('sellercode/save',[SellerCodeController::class, 'submitCode'])->name('save.sellercode');
@@ -48,6 +49,8 @@ Route::get('cancel-transaction/{seller_code}',[MonitoringTransactionController::
 Route::post('cancel-transaction/store',[MonitoringTransactionController::class, 'cancelStore'])->name('transaction.cancel.store');
 Route::post('transaction/confirm-code',[MonitoringTransactionController::class,'confirmCode'])->name('transaction.confirm.code');
 Route::post('transaction/shipping-code/store',[MonitoringTransactionController::class, 'shippingCode'])->name('transaction.shipping.store');
+Route::post('send-item-receive-verification-mail',[MonitoringTransactionController::class,'sendVerificationMail'])->name('verification.mail.send');
+
 
 Route::get('tell-us/{seller_code}',[TellUsController::class,'index'])->name('tellus');
 Route::post('tell-us/store',[TellUsController::class, 'store'])->name('tell-us.store');

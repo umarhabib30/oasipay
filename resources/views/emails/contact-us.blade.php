@@ -473,7 +473,7 @@
                             <td style="overflow-wrap:break-word;word-break:break-word;padding:70px 10px;font-family:'Cabin',sans-serif;" align="left">
 
                               <div style="font-size: 14px; line-height: 140%; text-align: left; word-wrap: break-word;">
-                                <p style="line-height: 140%; margin: 0px;"><span style="color: #000000; white-space: normal; background-color: #ffffff; margin-top: 40px; line-height: 19.6px;">We will contact you as soon as possible, we remind you that you can always consult our FAQ where you will find the main questions relating to your problems.</span></p>
+                                <p style="line-height: 140%; margin: 0px;"><span style="color: #000000; white-space: normal; background-color: #ffffff; margin-top: 40px; line-height: 19.6px;">We will contact you as soon as possible, we remind you that you can always consult our <a href="{{ url('contact-us') }}" style="color: rgb(55, 169, 218); text-decoration: none; line-height: inherit;">FAQ</a>  where you will find the main questions relating to your problems.</span></p>
                               </div>
 
                             </td>

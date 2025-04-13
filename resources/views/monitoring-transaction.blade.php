@@ -205,7 +205,11 @@
 
                     <div class="monitoring-transaction-row">
                         <div class="monitoring-transaction-btn-box">
-                            <a href="#" class="btn">I RECEIVE ITEM</a>
+                            @if (isset($code))
+                            <a href="#" class="btn" id="code_verified">I RECEIVE ITEM</a>
+                            @else
+                            <a  class="btn" id="send_verification_code">I RECEIVE ITEM</a>
+                            @endif
                             <a href="{{route('tellus', $transaction->seller_code)}}" class="btn">WHAT’S WRONG</a>
 
                         </div>
@@ -214,7 +218,7 @@
             </form>
         </section>
 
-        <!-- The Modal -->
+        <!-- The Modal for shipping code -->
         <div id="myModal" class="modal">
             <!-- Modal content -->
             <div class="modal-content" >
@@ -232,7 +236,25 @@
                     </div>
                 </div>
             </div>
+        </div>
 
+        {{-- model for receive item --}}
+        <div id="item_received_model" class="modal">
+            <!-- Modal content -->
+            <div class="modal-content" >
+                <div class="modal-header">
+                    <span class="close close_item">&times;</span>
+                  </div>
+                <div class="modal-body">
+                    <label for="The-payment-is-for">Receiver Name</label>
+                    <input type="email" style="height: 40px; margin-top: 15px;" id="item_reciever_name" class="form-control" name="name"   placeholder="Please provide receiver name" />
+                    <label for="The-payment-is-for">Receiver Email</label>
+                    <input type="email" style="height: 40px; margin-top: 15px;" id="item_reciever_email" class="form-control" name="email"   placeholder="Please provide receiver email" />
+                    <div class="buy-follow-receive__buttons">
+                        <a class="btn" id="send_verification_mail">Verify Email</a>
+                    </div>
+                </div>
+            </div>
         </div>
 
     </main>
@@ -241,6 +263,13 @@
 @section('script')
     <script>
         $(document).ready(function() {
+            // --------- open model for verification of receive item -----------
+            $('body').on('click','#send_verification_code',function(e){
+                e.preventDefault();
+                var modal = document.getElementById("item_received_model");
+                modal.style.display = "block";
+            });
+
             // ------- cancel shipping code error ----------
             $('body').on('click', '.has_shipping_code', function(e) {
                 e.preventDefault();
@@ -257,6 +286,41 @@
                     var modal = document.getElementById("myModal");
                     modal.style.display = "block";
                 }
+            });
+
+
+            // --- send item recieve verification mail ---
+            $('body').on('click','#send_verification_mail',function(e){
+                e.preventDefault();
+                let name = $('#item_reciever_name').val();
+                let email = $('#item_reciever_email').val();
+                let seller_code = $('#seller_code').val();
+                let source = 'item_received';
+                let data = {
+                    name : name,
+                    email : email,
+                    seller_code : seller_code,
+                    source : source,
+                    _token: $('meta[name="csrf-token"]').attr('content')
+                };
+                $.ajax({
+                    url: "{{ route('verification.mail.send') }}",
+                    type: "POST",
+                    data: data,
+                    success: function(response) {
+                        if (response.error) {
+                            toastr.error(response.message);
+                        } else {
+                            var modal = document.getElementById("item_received_model");
+                            modal.style.display = "none";
+                            toastr.success(response.message);
+                        }
+                    },
+                    error: function(error) {
+                        console.log( error);
+                    }
+                });
+
             });
 
             // ----- contact oasipay to update the code ----------
@@ -311,5 +375,16 @@
         span.onclick = function() {
             modal.style.display = "none";
         }
+
+
+        // When the user clicks on <span> (x), close the modal
+        var modal = document.getElementById("item_received_model");
+        var span = document.getElementsByClassName("close_item")[0];
+        span.onclick = function() {
+            modal.style.display = "none";
+        }
+
+
+
     </script>
 @endsection
