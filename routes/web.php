@@ -50,6 +50,7 @@ Route::post('cancel-transaction/store',[MonitoringTransactionController::class, 
 Route::post('transaction/confirm-code',[MonitoringTransactionController::class,'confirmCode'])->name('transaction.confirm.code');
 Route::post('transaction/shipping-code/store',[MonitoringTransactionController::class, 'shippingCode'])->name('transaction.shipping.store');
 Route::post('send-item-receive-verification-mail',[MonitoringTransactionController::class,'sendVerificationMail'])->name('verification.mail.send');
+Route::post('send/item-receive/email',[MonitoringTransactionController::class, 'itemReceiveMail'])->name('item-receive.mail.send');
 
 
 Route::get('tell-us/{seller_code}',[TellUsController::class,'index'])->name('tellus');

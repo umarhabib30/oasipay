@@ -29,5 +29,6 @@ class Transaction extends Model
         'is_cancelled',
         'cancel_by_email',
         'cancel_by_name',
+        'item_recieved'
     ];
 }

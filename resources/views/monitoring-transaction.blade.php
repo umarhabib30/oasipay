@@ -87,6 +87,8 @@
 @endsection
 @section('content')
     <main>
+        <form action="{{ url('') }}"></form>
+
         <section class="monitoring-transaction-container">
             <h1>Monitoring Transaction</h1>
             <form class="monitoring-transaction-form" action="#">
@@ -322,6 +324,9 @@
                 });
 
             });
+
+            // ---- send item recieved mail --------
+            $('body').on('click',)
 
             // ----- contact oasipay to update the code ----------
             $('body').on('click','#contact_oasipay_alert',function(e){

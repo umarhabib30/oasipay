@@ -529,7 +529,7 @@
                                                                             $url = url('email/verify/makepaymentfor', ['email' => $email, 'code' => $code, 'name' => $name,'seller_code' =>$seller_code]);
                                                                             break;
                                                                         case 'item_received':
-                                                                            $url = url('email/verify/makepaymentfor', ['email' => $email, 'code' => $code, 'name' => $name,'seller_code' =>$seller_code]);
+                                                                            $url = url('email/verify/monitoring-transaction', ['email' => $email, 'code' => $code, 'name' => $name,'seller_code' =>$seller_code]);
                                                                             break;
                                                                         default:
                                                                             $url = route('verify.code.seller', ['email' => $email, 'code' => $code, 'name' => $name]);

@@ -33,6 +33,7 @@ return new class extends Migration
             $table->boolean('is_cancelled')->default(false);
             $table->string('cancel_by_name')->nullable();
             $table->string('cancel_by_email')->nullable();
+            $table->boolean('item_recieved')->default(false);
             $table->timestamps();
         });
     }
