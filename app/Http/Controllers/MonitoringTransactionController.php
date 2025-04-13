@@ -154,6 +154,8 @@ class MonitoringTransactionController extends Controller
         ];
 
         Mail::to($transaction->receiver_email)->send(new ItemReceiveMail($data));
-        return redirect('monitoring-transactions',$transaction->seller_code)->with('success','Item received successfully');
+        return redirect()->route('monitoring-transactions', ['id' => $transaction->seller_code])
+                 ->with('success', 'Item received successfully');
+
     }
 }
