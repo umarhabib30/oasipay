@@ -87,7 +87,10 @@
 @endsection
 @section('content')
     <main>
-        <form action="{{ url('') }}"></form>
+        <form action="{{ url('send/item-receive/email') }}" method="POST" id="receive_item_form">
+            @csrf
+            <input type="hidden" name="seller_code" id="" value="{{ $transaction->seller_code }}">
+        </form>
 
         <section class="monitoring-transaction-container">
             <h1>Monitoring Transaction</h1>
@@ -326,7 +329,9 @@
             });
 
             // ---- send item recieved mail --------
-            $('body').on('click',)
+            $('body').on('click','#code_verified',function(e){
+                $('#receive_item_form').submit();
+            });
 
             // ----- contact oasipay to update the code ----------
             $('body').on('click','#contact_oasipay_alert',function(e){
