@@ -619,7 +619,7 @@
                                 <td style="overflow-wrap:break-word;word-break:break-word;padding:10px;font-family:'Cabin',sans-serif;" align="left">
 
                                 <div style="font-size: 14px; line-height: 140%; text-align: left; word-wrap: break-word;display:flex;">
-                                    <p style="line-height: 140%; margin: 0px;width:51%;    font-weight: 600;text-align: center;">link PayPal</p>
+                                    <p style="line-height: 140%; margin: 0px;width:51%;    font-weight: 600;">link PayPal</p>
                                     <p style="line-height: 140%; margin: 0px; width: 49%;text-align: center;color: #bdbdbd;">
                                         {{ $data['paypal_link'] }}
                                     </p>
@@ -636,7 +636,7 @@
                             <td style="overflow-wrap:break-word;word-break:break-word;padding:10px;font-family:'Cabin',sans-serif;" align="left">
 
                               <div style="font-size: 14px; line-height: 140%; text-align: left; word-wrap: break-word;display:flex;">
-                                <p style="line-height: 140%; margin: 0px;width:51%;    font-weight: 600;text-align: center;">IBAN</p>
+                                <p style="line-height: 140%; margin: 0px;width:51%;    font-weight: 600;">IBAN</p>
                                 <p style="line-height: 140%; margin: 0px; width: 49%;text-align: center;color: #bdbdbd;">
                                     {{ $data['iban'] }}
                                 </p>
@@ -655,7 +655,7 @@
                             <td style="overflow-wrap:break-word;word-break:break-word;padding:10px;font-family:'Cabin',sans-serif;" align="left">
 
                               <div style="font-size: 14px; line-height: 140%; text-align: left; word-wrap: break-word;display:flex;">
-                                <p style="line-height: 140%; margin: 0px;width:51%;    font-weight: 600;text-align: center;">BIC/SWIFT</p>
+                                <p style="line-height: 140%; margin: 0px;width:51%;    font-weight: 600;">BIC/SWIFT</p>
                                 <p style="line-height: 140%; margin: 0px; width: 49%;text-align: center;color: #bdbdbd;">
                                     {{ $data['bic_swift'] }}
                                 </p>
