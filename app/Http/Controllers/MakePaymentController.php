@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Mail\PayWithoutCodeMail;
 use App\Mail\TransactionConfirmMail;
 use App\Models\Transaction;
 use Illuminate\Http\Request;
@@ -99,6 +100,40 @@ class MakePaymentController extends Controller
     }
 
     public function paywithoutcodeSubmit(Request $request){
-        dd($request);
+        $fee_price = 0;
+        if ($request->price <= 10) {
+            $fee_price = 0.5;
+        } else if ($request->price > 10 || $request->price <= 1500) {
+            $fee_price = $request->price * 0.05;
+        } else {
+            $fee_price = 100;
+        }
+
+        $code = rand(100000, 999999);
+        Transaction::create([
+            'receiver_name' => $request->receiver_name,
+            'receiver_email' => $request->receiver_email,
+            'seller_code' => $code,
+            'price' => $request->price,
+            'fee_price' => $fee_price,
+            'currency' => $request->currency,
+            'currency_symbol' => $request->currency_symbol,
+            'words' => $request->words,
+            'title' => $request->title,
+        ]);
+
+        $data=[
+            'receiver_name' => $request->receiver_name,
+            'receiver_email' => $request->receiver_email,
+            'seller_code' => $code,
+            'price' => $request->price,
+            'fee_price' => $fee_price,
+            'currency' => $request->currency,
+            'currency_symbol' => $request->currency_symbol,
+            'words' => $request->words,
+            'title' => $request->title,
+        ];
+
+        Mail::to($request->email)->send(new PayWithoutCodeMail($data));
     }
 }
