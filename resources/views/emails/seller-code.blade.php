@@ -520,8 +520,13 @@
 
                               <div style="font-size: 14px; line-height: 140%; text-align: left; word-wrap: break-word;display: flex;">
                                 <p style="line-height: 140%; margin: 0px; width: 51%;    font-weight: 600;">Seller Code</p>
-                                <div style="line-height: 140%; margin: 0px; width: 49%;text-align: center;">
-                                    <a style="text-decoration: none;color: #37a9da;" target="__blank" href="{{ url('monitoring-transactions', $data['seller_code']) }}">{{ $data['seller_code'] }}</a>
+                                <div style="line-height: 140%; margin: 0px; width: 49%; text-align: center;">
+                                    <span style="display: inline-flex; align-items: center; gap: 4px;">
+                                        <a style="text-decoration: none; color: #37a9da;" href="{{ url('monitoring-transactions', $data['seller_code']) }}">
+                                            {{ $data['seller_code'] }}
+                                        </a>
+                                        <img src="{{ asset('assets/mail_images/click-icon.png') }}" alt="" style="width: 30px; margin-bottom: -14px; margin-left: -4px;">
+                                    </span>
                                 </div>
                               </div>
 

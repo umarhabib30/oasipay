@@ -97,4 +97,8 @@ class MakePaymentController extends Controller
             return redirect()->back()->with('error',$e->getMessage());
         }
     }
+
+    public function paywithoutcodeSubmit(Request $request){
+        dd($request);
+    }
 }

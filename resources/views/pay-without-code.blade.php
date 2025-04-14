@@ -11,7 +11,17 @@
 @section('content')
     <main>
         <section class="pay-without-code-container">
-            
+            <form action="{{ route('pay.withoutcode.submit') }}" method="POST" id="submit-withoutcode-form">
+                @csrf
+                <input type="hidden" name="receiver_name" id="receiver_name" value="{{ $name }}">
+                <input type="hidden" name="receiver_email" id="receiver_email" value="{{ $email }}">
+                <input type="hidden" name="price" id="price">
+                <input type="hidden" name="currency" id="currency">
+                <input type="hidden" name="currency_symbol" id="currency_symbol">
+                <input type="hidden" name="words" id="words">
+                <input type="hidden" name="title" id="title">
+            </form>
+
             <h1>I want to pay without code</h1>
             <form class="pay-without-code-form" action="">
                 <div class="pay-without-code-column">
@@ -30,7 +40,7 @@
                     </div>
                     <div class="form-group form-group-seller-code-input">
                         <label for="seller-code-input">The payment is for...</label>
-                        <input type="text" id="seller-code-input" class="form-control" name="seller_code"
+                        <input type="text" id="title-input" class="form-control" name="seller_code"
                             placeholder="item for which you pay " required />
                     </div>
                     <div class="form-group form-group-In-two-words">
@@ -95,7 +105,7 @@
                         <div class="btn-box1">
                             <button class="buy-follow-receive__btn">
                                 <p>PROCEED TO PAY</p>
-                                <img src="./assets/images/fav.png" alt="" />
+                                <img src="{{ asset('assets/images/fav.png') }}" alt="" />
                             </button>
                         </div>
                     </div>
@@ -130,6 +140,24 @@
 
             document.getElementById("the_fee_amount").innerText = formatCurrency(fee_price);
             document.getElementById("you_will_pay").innerText = formatCurrency(total);
+        });
+
+        $(document).ready(function(){
+            $('body').on('click','.buy-follow-receive__btn',function(e){
+                let title = $('#title-input').val();
+                let words = $('#In-two-words').val();
+                let price = $('#price_input').val();
+                let currency = $('#currency_input').val();
+                let currencySymbol = $('#currency_input option:selected').text();
+
+                $('#title').val(title);
+                $('#words').val(words);
+                $('#price').val(price);
+                $('#currency').val(currency);
+                $('#currency_symbol').val(currency);
+
+                $('#submit-withoutcode-form').submit();
+            });
         });
     </script>
 @endsection
