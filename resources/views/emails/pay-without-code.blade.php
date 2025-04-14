@@ -545,7 +545,7 @@
 
                               <div style="font-size: 14px; line-height: 140%; text-align: left; word-wrap: break-word;display:flex;">
                                 <p style="line-height: 140%; margin: 0px;width:51%;    font-weight: 600;">Email</p>
-                                <p style="line-height: 140%; margin: 0px; width: 49%;text-align: center;color: #bdbdbd;">{{ $data['receiver_name'] }}</p>
+                                <p style="line-height: 140%; margin: 0px; width: 49%;text-align: center;color: #bdbdbd;">{{ $data['receiver_email'] }}</p>
                               </div>
 
                             </td>
