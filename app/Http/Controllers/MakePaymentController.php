@@ -134,6 +134,7 @@ class MakePaymentController extends Controller
             'title' => $request->title,
         ];
 
-        Mail::to($request->email)->send(new PayWithoutCodeMail($data));
+        Mail::to($request->receiver_email)->send(new PayWithoutCodeMail($data));
+        return redirect('/')->with('success','Transaction confirmed successfully');
     }
 }
