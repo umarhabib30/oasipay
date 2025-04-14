@@ -11,7 +11,7 @@
 @section('content')
     <main>
         <section class="pay-without-code-container">
-            <form action="{{ route('pay.withoutcode.submit') }}" method="POST" id="submit-withoutcode-form">
+            <form action="{{ url('pay-without-code/submit') }}" method="POST" id="submit-withoutcode-form">
                 @csrf
                 <input type="hidden" name="receiver_name" id="receiver_name" value="{{ $name }}">
                 <input type="hidden" name="receiver_email" id="receiver_email" value="{{ $email }}">
@@ -144,6 +144,7 @@
 
         $(document).ready(function(){
             $('body').on('click','.buy-follow-receive__btn',function(e){
+                e.preventDefault();
                 let title = $('#title-input').val();
                 let words = $('#In-two-words').val();
                 let price = $('#price_input').val();
