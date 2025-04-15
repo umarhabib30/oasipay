@@ -122,9 +122,9 @@
                 var numericValue = currentValue.replace(/[^0-9.]/g, '');
 
                 // Ensure that only one decimal point is allowed
-                if (numericValue.split('.').length > 2) {
-                    numericValue = numericValue.replace(/\.+$/, '');
-                }
+                // if (numericValue.split('.').length > 2) {
+                //     numericValue = numericValue.replace(/\.+$/, '');
+                // }
 
                 // Set the cleaned value back to the input field
                 $(this).val(numericValue);
