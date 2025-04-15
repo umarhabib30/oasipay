@@ -58,6 +58,48 @@
             }
         }
 
+        @media only screen and (max-width: 1900px) {
+            .modal-content {
+                width: 35% !important;
+            }
+        }
+
+        @media only screen and (max-width: 1825px) {
+            .modal-content {
+                width: 40% !important;
+            }
+        }
+
+        @media only screen and (max-width: 1590px) {
+            .modal-content {
+                width: 50% !important;
+            }
+        }
+
+        @media only screen and (max-width: 1375px) {
+            .modal-content {
+                width: 65% !important;
+            }
+        }
+
+
+        @media only screen and (max-width: 1200px) {
+            .modal-content {
+                width: 90% !important;
+            }
+        }
+
+        @media only screen and (max-width: 730px) {
+            .buy-follow-receive__btn {
+                width: 45% !important;
+            }
+        }
+        @media only screen and (max-width: 520px) {
+            .buy-follow-receive__btn {
+                width: 90% !important;
+            }
+        }
+
         /* The Close Button */
         .close {
             color: rgb(35, 90, 134);
@@ -235,7 +277,8 @@
                     <input type="email" style="height: 40px; margin-top: 15px;" id="seller_email_input"
                         class="form-control" name="The-payment-is-for"
                         placeholder="Please provide seller email to insert shipping code" />
-                    <div class="buy-follow-receive__buttons" style="justify-content: center !important; flex-direction: row;">
+                    <div class="buy-follow-receive__buttons"
+                        style="justify-content: center !important; flex-direction: row;">
                         <button class="buy-follow-receive__btn" id="store_shipping_code" style="width: 30%;">
                             <p>INSERT CODE</p>
                             <img src="{{ asset('assets/images/truck.png') }}" alt="" />
@@ -259,7 +302,8 @@
                     <label for="The-payment-is-for">Buyer Email</label>
                     <input type="email" style="height: 40px; margin-top: 15px;" id="item_reciever_email"
                         class="form-control" name="email" placeholder="Please provide bu email" />
-                    <div class="buy-follow-receive__buttons justify-content-center" style="justify-content: center !important;  flex-direction: row;">
+                    <div class="buy-follow-receive__buttons justify-content-center"
+                        style="justify-content: center !important;  flex-direction: row;">
                         <a class="btn" id="send_verification_mail">Verify Email</a>
                     </div>
                 </div>
