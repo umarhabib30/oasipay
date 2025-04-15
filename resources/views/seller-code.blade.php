@@ -114,29 +114,13 @@
     <script>
         $(document).ready(function() {
 
-            // Function to ensure only numeric input
             $('#price_input').on('input', function() {
+                // Replace any non-numeric characters except for the decimal point
                 var currentValue = $(this).val();
-
-                // Remove any non-numeric characters except for the decimal point
                 var numericValue = currentValue.replace(/[^0-9.]/g, '');
-
-                // Ensure that only one decimal point is allowed
-                // if (numericValue.split('.').length > 2) {
-                //     numericValue = numericValue.replace(/\.+$/, '');
-                // }
 
                 // Set the cleaned value back to the input field
                 $(this).val(numericValue);
-            });
-
-            // Ensure that a number like .34 is not allowed as the first character
-            $('#price_input').on('focusout', function() {
-                var currentValue = $(this).val();
-                // If the value starts with a decimal point, add a leading zero
-                if (currentValue.startsWith('.')) {
-                    $(this).val('0' + currentValue);
-                }
             });
             // -------- send verification code to email ---------
             $('body').on('click', '#send-code', function(e) {
