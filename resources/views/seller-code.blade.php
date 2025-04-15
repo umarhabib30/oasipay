@@ -74,7 +74,7 @@ input[type=number] {
                             Indicate the price of the item
                         </p>
                         <div style="display: flex; align-items: center; ">
-                            <input type="number" class="generate-seller-code-price make-a-payment-price01" value="0" pattern="[0-9]*" onchange="allowOnlyNumbers()"
+                            <input type="number" class="generate-seller-code-price make-a-payment-price01" value="0" pattern="[0-9]*" oninput="validateNumber(this)"
                                 name="price" id="price_input" style="height: 71px !important">
                             <select class="generate-seller-code-price make-a-payment-price01"
                                 style="width: 21%;height: 51px;font-size: 36px;" id="currency_input">
@@ -113,15 +113,12 @@ input[type=number] {
 @endsection
 @section('script')
     <script>
-            function allowOnlyNumbers(e){
-        // check input using regex
-        var regex = RegExp(/[0-9]+/g);
-        const test_result = regex.test(e.target.value);
-
-        if(test_result){
-        e.target.defaultValue = e.target.value;
-        }else{
-        e.target.value = e.target.defaultValue;
+     function validateNumber(input) {
+        const value = input.value;
+        if (isNaN(value)) {
+            input.setCustomValidity('Please enter a valid number');
+        } else {
+            input.setCustomValidity('');
         }
     }
 
