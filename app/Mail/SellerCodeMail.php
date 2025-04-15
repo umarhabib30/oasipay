@@ -28,7 +28,7 @@ class SellerCodeMail extends Mailable
     public function envelope(): Envelope
     {
         return new Envelope(
-            subject: 'Seller Code Mail',
+            subject: 'Your Seller Code',
         );
     }
 

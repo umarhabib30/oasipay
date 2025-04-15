@@ -27,7 +27,7 @@ class ReceivePaymentMail extends Mailable
     public function envelope(): Envelope
     {
         return new Envelope(
-            subject: 'Receive Payment Mail',
+            subject: 'Your payment details has been received',
         );
     }
 

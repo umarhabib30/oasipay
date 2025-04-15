@@ -28,7 +28,7 @@ class TransactionConfirmMail extends Mailable
     public function envelope(): Envelope
     {
         return new Envelope(
-            subject: 'Transaction Confirm',
+            subject: 'Transaction Code',
         );
     }
 
