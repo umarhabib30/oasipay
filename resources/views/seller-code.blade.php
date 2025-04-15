@@ -1,17 +1,24 @@
 @extends('layouts.app')
 @section('style')
     <style>
-        input[type=number] {
-        -webkit-appearance: none;
-        -moz-appearance: textfield;
-        appearance: textfield;
-    }
+    /* Remove spinner for WebKit browsers (Chrome, Safari) */
+input[type=number]::-webkit-outer-spin-button,
+input[type=number]::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
 
-    input[type=number]::-webkit-inner-spin-button,
-    input[type=number]::-webkit-outer-spin-button {
-        -webkit-appearance: none;
-        margin: 0;
-    }
+/* Remove spinner for Firefox */
+input[type=number] {
+    -moz-appearance: textfield;
+}
+
+/* Safari-specific fix */
+input[type=number] {
+    appearance: none;
+    -webkit-appearance: none;
+}
+
 
     </style>
 @endsection
