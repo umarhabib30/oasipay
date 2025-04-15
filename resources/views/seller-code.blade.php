@@ -114,14 +114,19 @@
     <script>
         $(document).ready(function() {
 
-            $('#price_input').on('input', function() {
-                // Replace any non-numeric characters except for the decimal point
-                var currentValue = $(this).val();
-                var numericValue = currentValue.replace(/[^0-9.]/g, '');
+            $('#price_input').on('input', function(e) {
+            var currentValue = $(this).val();
+            var cursorPosition = this.selectionStart;  // Get the cursor position
 
-                // Set the cleaned value back to the input field
-                $(this).val(numericValue);
-            });
+            // Replace any non-numeric characters except for the decimal point
+            var numericValue = currentValue.replace(/[^0-9.]/g, '');
+
+            // Set the cleaned value back to the input field
+            $(this).val(numericValue);
+
+            // Restore the cursor position after the input is modified
+            this.setSelectionRange(cursorPosition, cursorPosition);
+        });
             // -------- send verification code to email ---------
             $('body').on('click', '#send-code', function(e) {
                 e.preventDefault();
