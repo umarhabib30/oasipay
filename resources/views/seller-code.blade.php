@@ -2,22 +2,22 @@
 @section('style')
     <style>
     /* Remove spinner for WebKit browsers (Chrome, Safari) */
-input[type=number]::-webkit-outer-spin-button,
-input[type=number]::-webkit-inner-spin-button {
-    -webkit-appearance: none;
-    margin: 0;
-}
+        input[type=number]::-webkit-outer-spin-button,
+        input[type=number]::-webkit-inner-spin-button {
+            -webkit-appearance: none;
+            margin: 0;
+        }
 
-/* Remove spinner for Firefox */
-input[type=number] {
-    -moz-appearance: textfield;
-}
+        /* Remove spinner for Firefox */
+        input[type=number] {
+            -moz-appearance: textfield;
+        }
 
-/* Safari-specific fix */
-input[type=number] {
-    appearance: none;
-    -webkit-appearance: none;
-}
+        /* Safari-specific fix */
+        input[type=number] {
+            appearance: none;
+            -webkit-appearance: none;
+        }
 
 
     </style>
@@ -118,16 +118,19 @@ input[type=number] {
 
         $(document).ready(function() {
 
-            $('#myNumericField').on('input', function() {
-            // Remove any non-numeric characters except for the decimal point
-            var currentValue = $(this).val();
-            var numericValue = currentValue.replace(/[^0-9.]/g, '');
+            $('#price_input').on('input', function() {
+                // Remove any non-numeric characters except for the decimal point
+                var currentValue = $(this).val();
+                var numericValue = currentValue.replace(/[^0-9.]/g, '');
 
-            // Allow only one decimal point
-            if (numericValue.split('.').length > 2) {
-                numericValue = numericValue.replace(/\.+$/, '');
+                // Allow only one decimal point
+                if (numericValue.split('.').length > 2) {
+                    numericValue = numericValue.replace(/\.+$/, '');
+                }
+
+                // Set the cleaned value back to the input field
+                $(this).val(numericValue);
             });
-
             // -------- send verification code to email ---------
             $('body').on('click', '#send-code', function(e) {
                 e.preventDefault();
