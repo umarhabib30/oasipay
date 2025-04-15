@@ -1,7 +1,7 @@
 @extends('layouts.app')
 @section('style')
     <style>
-    /* Remove spinner for WebKit browsers (Chrome, Safari) */
+        /* Remove spinner for WebKit browsers (Chrome, Safari) */
         input[type=number]::-webkit-outer-spin-button,
         input[type=number]::-webkit-inner-spin-button {
             -webkit-appearance: none;
@@ -18,8 +18,6 @@
             appearance: none;
             -webkit-appearance: none;
         }
-
-
     </style>
 @endsection
 @section('content')
@@ -74,7 +72,8 @@
                             Indicate the price of the item
                         </p>
                         <div style="display: flex; align-items: center; ">
-                            <input type="number" class="generate-seller-code-price make-a-payment-price01" value="0" pattern="[0-9]*" oninput="validateNumber(this)"  inputmode="numeric"  min="0"
+                            <input type="number" class="generate-seller-code-price make-a-payment-price01" value="0"
+                                pattern="[0-9]*" oninput="validateNumber(this)" inputmode="numeric" min="0"
                                 name="price" id="price_input" style="height: 71px !important">
                             <select class="generate-seller-code-price make-a-payment-price01"
                                 style="width: 21%;height: 51px;font-size: 36px;" id="currency_input">
@@ -113,23 +112,31 @@
 @endsection
 @section('script')
     <script>
-
-
-
         $(document).ready(function() {
 
+            // Function to ensure only numeric input
             $('#price_input').on('input', function() {
-                // Remove any non-numeric characters except for the decimal point
                 var currentValue = $(this).val();
+
+                // Remove any non-numeric characters except for the decimal point
                 var numericValue = currentValue.replace(/[^0-9.]/g, '');
 
-                // Allow only one decimal point
+                // Ensure that only one decimal point is allowed
                 if (numericValue.split('.').length > 2) {
                     numericValue = numericValue.replace(/\.+$/, '');
                 }
 
                 // Set the cleaned value back to the input field
                 $(this).val(numericValue);
+            });
+
+            // Ensure that a number like .34 is not allowed as the first character
+            $('#price_input').on('focusout', function() {
+                var currentValue = $(this).val();
+                // If the value starts with a decimal point, add a leading zero
+                if (currentValue.startsWith('.')) {
+                    $(this).val('0' + currentValue);
+                }
             });
             // -------- send verification code to email ---------
             $('body').on('click', '#send-code', function(e) {
