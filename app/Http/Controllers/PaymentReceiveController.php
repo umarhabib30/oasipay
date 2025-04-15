@@ -29,6 +29,12 @@ class PaymentReceiveController extends Controller
                 ]);
             }
             if ($transaction) {
+                if($transaction->is_cancelled){
+                    return response()->json([
+                        'error' => true,
+                        'message' => 'Transaction is cancelled',
+                    ]);
+                }
                 return response()->json([
                     'error' => false,
                     'message' => 'Transaction found successfully',

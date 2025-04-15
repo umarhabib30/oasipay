@@ -75,14 +75,13 @@
 
         .modal-header {
             padding: 2px 16px;
-           height: 35px;
+            height: 35px;
             color: rgb(35, 90, 134);
         }
 
         .modal-body {
             padding: 2px 16px;
         }
-
     </style>
 @endsection
 @section('content')
@@ -125,9 +124,9 @@
                         <div class="monitoring-transaction__column">
                             <div class="form-group">
                                 <label for="The-payment-is-for">Shipping code </label>
-                                <input type="text" id="shipping-code" class="form-control" name="shipping-code"  @if ($transaction->shipping_code)
-                                readonly value="{{ $transaction->shipping_code }}"
-                                @endif required />
+                                <input type="text" id="shipping-code" class="form-control" name="shipping-code"
+                                    @if ($transaction->shipping_code) readonly value="{{ $transaction->shipping_code }}" @endif
+                                    required />
                             </div>
 
                             <div class="confirm-box">
@@ -137,15 +136,15 @@
 
                                 <div class="buy-follow-receive__buttons">
                                     @if ($transaction->shipping_code)
-                                    <button class="buy-follow-receive__btn" id="contact_oasipay_alert">
-                                        <p>INSERT CODE</p>
-                                        <img src="{{ asset('assets/images/truck.png') }}" alt="" />
-                                    </button>
+                                        <button class="buy-follow-receive__btn" id="contact_oasipay_alert">
+                                            <p>INSERT CODE</p>
+                                            <img src="{{ asset('assets/images/truck.png') }}" alt="" />
+                                        </button>
                                     @else
-                                    <button class="buy-follow-receive__btn" id="buy-follow-receive__btn">
-                                        <p>INSERT CODE</p>
-                                        <img src="{{ asset('assets/images/truck.png') }}" alt="" />
-                                    </button>
+                                        <button class="buy-follow-receive__btn" id="buy-follow-receive__btn">
+                                            <p>INSERT CODE</p>
+                                            <img src="{{ asset('assets/images/truck.png') }}" alt="" />
+                                        </button>
                                     @endif
                                 </div>
 
@@ -155,9 +154,10 @@
                         <div class="monitoring-transaction__column">
                             <div class="receive-payment-btn-box">
                                 @if ($transaction->shipping_code)
-                                <a href="" class="btn has_shipping_code">CANCEL TRANSACTION</a>
+                                    <a href="" class="btn has_shipping_code">CANCEL TRANSACTION</a>
                                 @else
-                                <a href="{{ route('transaction.cancel',$transaction->seller_code) }}" class="btn">CANCEL TRANSACTION</a>
+                                    <a href="{{ route('transaction.cancel', $transaction->seller_code) }}"
+                                        class="btn">CANCEL TRANSACTION</a>
                                 @endif
                                 <a href="{{ route('contact-us') }}" class="btn">CONTACT US</a>
 
@@ -211,11 +211,11 @@
                     <div class="monitoring-transaction-row">
                         <div class="monitoring-transaction-btn-box">
                             @if (isset($code))
-                            <a href="#" class="btn" id="code_verified">I RECEIVE ITEM</a>
+                                <a href="#" class="btn" id="code_verified">I RECEIVE ITEM</a>
                             @else
-                            <a  class="btn" id="send_verification_code">I RECEIVE ITEM</a>
+                                <a class="btn" id="send_verification_code">I RECEIVE ITEM</a>
                             @endif
-                            <a href="{{route('tellus', $transaction->seller_code)}}" class="btn">WHAT’S WRONG</a>
+                            <a href="{{ route('tellus', $transaction->seller_code) }}" class="btn">WHAT’S WRONG</a>
 
                         </div>
                     </div>
@@ -226,14 +226,16 @@
         <!-- The Modal for shipping code -->
         <div id="myModal" class="modal">
             <!-- Modal content -->
-            <div class="modal-content" >
+            <div class="modal-content">
                 <div class="modal-header">
-                    <span class="close">&times;</span>
-                  </div>
+                    <span class="close" id="close_shipping_model">&times;</span>
+                </div>
                 <div class="modal-body">
                     <label for="The-payment-is-for">Seller Email</label>
-                    <input type="email" style="height: 40px; margin-top: 15px;" id="seller_email_input" class="form-control" name="The-payment-is-for"   placeholder="Please provide seller email to insert shipping code" />
-                    <div class="buy-follow-receive__buttons">
+                    <input type="email" style="height: 40px; margin-top: 15px;" id="seller_email_input"
+                        class="form-control" name="The-payment-is-for"
+                        placeholder="Please provide seller email to insert shipping code" />
+                    <div class="buy-follow-receive__buttons" style="justify-content: center !important; flex-direction: row;">
                         <button class="buy-follow-receive__btn" id="store_shipping_code" style="width: 30%;">
                             <p>INSERT CODE</p>
                             <img src="{{ asset('assets/images/truck.png') }}" alt="" />
@@ -246,16 +248,18 @@
         {{-- model for receive item --}}
         <div id="item_received_model" class="modal">
             <!-- Modal content -->
-            <div class="modal-content" >
+            <div class="modal-content">
                 <div class="modal-header">
                     <span class="close close_item">&times;</span>
-                  </div>
+                </div>
                 <div class="modal-body">
-                    <label for="The-payment-is-for">Receiver Name</label>
-                    <input type="email" style="height: 40px; margin-top: 15px;" id="item_reciever_name" class="form-control" name="name"   placeholder="Please provide receiver name" />
-                    <label for="The-payment-is-for">Receiver Email</label>
-                    <input type="email" style="height: 40px; margin-top: 15px;" id="item_reciever_email" class="form-control" name="email"   placeholder="Please provide receiver email" />
-                    <div class="buy-follow-receive__buttons">
+                    <label for="The-payment-is-for">Buyer Name</label>
+                    <input type="email" style="height: 40px; margin-top: 15px;" id="item_reciever_name"
+                        class="form-control" name="name" placeholder="Please provide buyer name" />
+                    <label for="The-payment-is-for">Buyer Email</label>
+                    <input type="email" style="height: 40px; margin-top: 15px;" id="item_reciever_email"
+                        class="form-control" name="email" placeholder="Please provide bu email" />
+                    <div class="buy-follow-receive__buttons justify-content-center" style="justify-content: center !important;  flex-direction: row;">
                         <a class="btn" id="send_verification_mail">Verify Email</a>
                     </div>
                 </div>
@@ -269,7 +273,7 @@
     <script>
         $(document).ready(function() {
             // --------- open model for verification of receive item -----------
-            $('body').on('click','#send_verification_code',function(e){
+            $('body').on('click', '#send_verification_code', function(e) {
                 e.preventDefault();
                 var modal = document.getElementById("item_received_model");
                 modal.style.display = "block";
@@ -295,17 +299,17 @@
 
 
             // --- send item recieve verification mail ---
-            $('body').on('click','#send_verification_mail',function(e){
+            $('body').on('click', '#send_verification_mail', function(e) {
                 e.preventDefault();
                 let name = $('#item_reciever_name').val();
                 let email = $('#item_reciever_email').val();
                 let seller_code = $('#seller_code').val();
                 let source = 'item_received';
                 let data = {
-                    name : name,
-                    email : email,
-                    seller_code : seller_code,
-                    source : source,
+                    name: name,
+                    email: email,
+                    seller_code: seller_code,
+                    source: source,
                     _token: $('meta[name="csrf-token"]').attr('content')
                 };
                 $.ajax({
@@ -322,38 +326,38 @@
                         }
                     },
                     error: function(error) {
-                        console.log( error);
+                        console.log(error);
                     }
                 });
 
             });
 
             // ---- send item recieved mail --------
-            $('body').on('click','#code_verified',function(e){
+            $('body').on('click', '#code_verified', function(e) {
                 $('#receive_item_form').submit();
             });
 
             // ----- contact oasipay to update the code ----------
-            $('body').on('click','#contact_oasipay_alert',function(e){
+            $('body').on('click', '#contact_oasipay_alert', function(e) {
                 e.preventDefault();
                 toastr.error('Contact Oasipay team to change it');
             });
 
             // --------- store the seller code -------------
-            $('body').on('click','#store_shipping_code',function(e){
+            $('body').on('click', '#store_shipping_code', function(e) {
                 e.preventDefault();
                 let shipping_code = $('#shipping-code').val();
                 let email = $('#seller_email_input').val();
                 let seller_code = $('#seller_code').val();
-                if(!email){
+                if (!email) {
                     toastr.error('Please insert seller email');
                     return;
                 }
 
                 let data = {
-                    shipping_code : shipping_code,
-                    email : email,
-                    seller_code : seller_code,
+                    shipping_code: shipping_code,
+                    email: email,
+                    seller_code: seller_code,
                     _token: $('meta[name="csrf-token"]').attr('content')
                 };
                 console.log(data);
@@ -367,24 +371,24 @@
                         } else {
                             var modal = document.getElementById("myModal");
                             modal.style.display = "none";
-                            $('#shipping-code').attr('readonly',true);
+                            $('#shipping-code').attr('readonly', true);
                             toastr.success(response.message);
                         }
                     },
                     error: function(error) {
-                        console.log( error);
+                        console.log(error);
                     }
                 });
 
             });
+
+            $('body').on('click', '#close_shipping_model', function() {
+                var modal = document.getElementById("myModal");
+                modal.style.display = "none";
+            });
+
         });
 
-        // When the user clicks on <span> (x), close the modal
-        var modal = document.getElementById("myModal");
-        var span = document.getElementsByClassName("close")[0];
-        span.onclick = function() {
-            modal.style.display = "none";
-        }
 
 
         // When the user clicks on <span> (x), close the modal
@@ -393,8 +397,5 @@
         span.onclick = function() {
             modal.style.display = "none";
         }
-
-
-
     </script>
 @endsection

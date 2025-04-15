@@ -357,7 +357,7 @@
                             <td style="overflow-wrap:break-word;word-break:break-word;padding:10px;font-family:'Cabin',sans-serif;" align="left">
 
                               <div style="font-family: arial,helvetica,sans-serif; font-size: 14px; color: #b3b3b3; line-height: 140%; text-align: left; word-wrap: break-word;">
-                                <p style="line-height: 140%; margin: 0px;">Subject <strong style=" color: black; margin-left: 25px;">Transaction confirm</strong></p>
+                                <p style="line-height: 140%; margin: 0px;">Subject <strong style=" color: black; margin-left: 25px;">Transaction Code</strong></p>
                               </div>
 
                             </td>
@@ -494,7 +494,7 @@
             </div>
           </div>
 
-<div class="u-row-container" style="padding: 0px;background-color: transparent">
+        <div class="u-row-container" style="padding: 0px;background-color: transparent">
             <div class="u-row" style="margin: 0 auto;min-width: 320px;max-width: 600px;overflow-wrap: break-word;word-wrap: break-word;word-break: break-word;background-color: transparent;">
               <div style="border-collapse: collapse;display: table;width: 100%;height: 100%;background-color: transparent;margin-top: 55px;">
                 <!--[if (mso)|(IE)]><table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0"><tr><td style="padding: 0px;background-color: transparent;" align="center"><table role="presentation" cellpadding="0" cellspacing="0" border="0" style="width:600px;"><tr style="background-color: transparent;"><![endif]-->
@@ -512,10 +512,14 @@
 
                               <div style="font-size: 14px; line-height: 140%; text-align: left; word-wrap: break-word;display: flex;">
                                 <p style="line-height: 140%; margin: 0px; width: 51%;    font-weight: 600;">Transaction Code</p>
-                                <div style="line-height: 140%; margin: 0px; width: 49%;text-align: center;">
-                                    <a style="text-decoration: none;color: #37a9da;" target="__blank" href="{{ url('monitoring-transactions', $data['seller_code']) }}">{{ $data['seller_code'] }}</a>
-                                    <p style="color: red;margin-top: 0px;">Share this code to the seller!</p>
-                                </div>
+                                <div style="line-height: 140%; margin: 0px; width: 49%; text-align: center;">
+                                  <span style="display: inline-flex; align-items: center; gap: 4px;">
+                                      <a style="text-decoration: none; color: #37a9da;" href="{{ url('monitoring-transactions', $data['seller_code']) }}">
+                                          {{ $data['seller_code'] }}
+                                      </a>
+                                      <img src="click-icon.png" alt="" style="width: 30px; margin-bottom: -14px; margin-left: -4px;">
+                                  </span>
+                              </div>
                               </div>
 
                             </td>
@@ -545,7 +549,7 @@
 
                               <div style="font-size: 14px; line-height: 140%; text-align: left; word-wrap: break-word;display:flex;">
                                 <p style="line-height: 140%; margin: 0px;width:51%;    font-weight: 600;">Email</p>
-                                <p style="line-height: 140%; margin: 0px; width: 49%;text-align: center;color: #bdbdbd;">{{ $data['receiver_email'] }}</p>
+                                <p style="line-height: 140%; margin: 0px; width: 49%;text-align: center;color: #bdbdbd;">{{ $data['receiver_email'] }} </p>
                               </div>
 
                             </td>
@@ -590,7 +594,7 @@
 
                               <div style="font-size: 14px; line-height: 140%; text-align: left; word-wrap: break-word;display:flex;">
                                 <p style="line-height: 140%; margin: 0px;width:51%;    font-weight: 600;">Price of the item</p>
-                                <p style="line-height: 140%; margin: 0px; width: 49%;text-align: center;color: #00bf63;">{{ $data['price'] }} </p>
+                                <p style="line-height: 140%; margin: 0px; width: 49%;text-align: center;color: #00bf63;">{{ $data['price'] }}€  </p>
                               </div>
 
                             </td>
@@ -620,7 +624,7 @@
 
                               <div style="font-size: 14px; line-height: 140%;display:flex; text-align: left; word-wrap: break-word;">
                                 <p style="line-height: 140%; margin: 0px;width:51%;    font-weight: 700;font-size: 23px;">Total price you pay </p>
-                                <p style="line-height: 140%; margin: 0px; width: 49%;text-align: center;font-size: 35px;color: #00bf63;font-weight: 700;">{{ $data['price'] + $data['fee_price'] }} € </p>
+                                <p style="line-height: 140%; margin: 0px; width: 49%;text-align: center;font-size: 35px;color: #00bf63;font-weight: 700;">{{ $data['price'] +$data['fee_price'] }}€ </p>
                               </div>
 
                             </td>
@@ -649,7 +653,6 @@
                                   <td style="padding-right: 0px;padding-left: 0px;" align="center">
 
                                     <img align="center" border="0" src="https://assets.unlayer.com/projects/271871/1744222110794-buyer_code_email.jpg?w=360px" alt="" title="" style="outline: none;text-decoration: none;-ms-interpolation-mode: bicubic;clear: both;display: inline-block !important;border: none;height: auto;float: none;width: 100%;max-width: 180px;" width="180">
-
                                   </td>
                                 </tr>
                               </tbody></table>
@@ -679,24 +682,19 @@
                   <div style="height: 100%;width: 100% !important;border-radius: 0px;-webkit-border-radius: 0px; -moz-border-radius: 0px;">
                     <!--[if (!mso)&(!IE)]><!-->
                     <div style="box-sizing: border-box; height: 100%; padding: 0px;border-top: 0px solid transparent;border-left: 0px solid transparent;border-right: 0px solid transparent;border-bottom: 0px solid transparent;border-radius: 0px;-webkit-border-radius: 0px; -moz-border-radius: 0px;"><!--<![endif]-->
-
                       <table style="font-family:'Cabin',sans-serif;" role="presentation" cellpadding="0" cellspacing="0" width="100%" border="0">
                         <tbody>
                           <tr>
                             <td style="overflow-wrap:break-word;word-break:break-word;padding:10px;font-family:'Cabin',sans-serif;" align="left">
-
                               <div style="font-size: 14px; line-height: 140%; text-align: left; word-wrap: break-word;">
                                 <p style="line-height: 140%; margin: 0px;">Regards,</p>
                                 <p style="line-height: 140%; margin: 0px;">OasiPay Team</p>
                               </div>
-
                             </td>
                           </tr>
                         </tbody>
                       </table>
-
-                      <!--[if (!mso)&(!IE)]><!-->
-                    </div><!--<![endif]-->
+                    </div>
                   </div>
                 </div>
                 <!--[if (mso)|(IE)]></td><![endif]-->

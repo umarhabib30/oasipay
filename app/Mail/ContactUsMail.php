@@ -27,7 +27,7 @@ class ContactUsMail extends Mailable
     public function envelope(): Envelope
     {
         return new Envelope(
-            subject: 'Contact Us Mail',
+            subject: 'OasiPay Support',
         );
     }
 

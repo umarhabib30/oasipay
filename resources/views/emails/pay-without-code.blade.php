@@ -508,13 +508,13 @@
                       <table style="font-family:'Cabin',sans-serif;" role="presentation" cellpadding="0" cellspacing="0" width="100%" border="0">
                         <tbody>
                           <tr>
-                            <td style="overflow-wrap:break-word;word-break:break-word;padding:10px;font-family:'Cabin',sans-serif;" align="left">
+                            <td style="overflow-wrap:break-word;word-break:break-word;padding:0px 10px;font-family:'Cabin',sans-serif;" align="left">
 
                               <div style="font-size: 14px; line-height: 140%; text-align: left; word-wrap: break-word;display: flex;">
                                 <p style="line-height: 140%; margin: 0px; width: 51%;    font-weight: 600;">Transaction Code</p>
                                 <div style="line-height: 140%; margin: 0px; width: 49%;text-align: center;">
                                     <a style="text-decoration: none;color: #37a9da;" href="{{ url('monitoring-transactions', $data['seller_code']) }}">{{ $data['seller_code'] }}</a>
-                                    <p style="color: red;margin-top: 0px;">Share this code to the seller!</p>
+                                    <p style="color: red;margin-top: 0px; font-size: 11px !important;">Share this code to the seller!</p>
                                 </div>
                               </div>
 
