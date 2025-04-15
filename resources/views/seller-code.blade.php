@@ -74,7 +74,7 @@ input[type=number] {
                             Indicate the price of the item
                         </p>
                         <div style="display: flex; align-items: center; ">
-                            <input type="number" class="generate-seller-code-price make-a-payment-price01" value="0" pattern="[0-9]*" oninput="validateNumber(this)"
+                            <input type="number" class="generate-seller-code-price make-a-payment-price01" value="0" pattern="[0-9]*" oninput="validateNumber(this)"  inputmode="numeric"  min="0"
                                 name="price" id="price_input" style="height: 71px !important">
                             <select class="generate-seller-code-price make-a-payment-price01"
                                 style="width: 21%;height: 51px;font-size: 36px;" id="currency_input">
