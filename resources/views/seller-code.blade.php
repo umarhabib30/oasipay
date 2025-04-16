@@ -114,22 +114,25 @@
 
             $('#price_input').on('input', function(e) {
                 var currentValue = $(this).val();
-                var cursorPosition = this.selectionStart;  // Get the cursor position
+                var cursorPosition = this.selectionStart;
 
-                // Replace any non-numeric characters except for the decimal point
-                var numericValue = currentValue.replace(/[^0-9.]/g, '');
+                // Allow digits, comma, and one decimal point
+                var numericValue = currentValue.replace(/[^0-9.,]/g, '');
 
-                // Allow only one decimal point
-                if (numericValue.indexOf('.') !== numericValue.lastIndexOf('.')) {
-                    numericValue = numericValue.slice(0, cursorPosition - 1) + numericValue.slice(cursorPosition);  // Remove the last inserted decimal point
+                // Ensure only one decimal point
+                var parts = numericValue.split('.');
+                if (parts.length > 2) {
+                    // Keep only the first decimal point
+                    numericValue = parts[0] + '.' + parts.slice(1).join('').replace(/\./g, '');
                 }
 
-                // Set the cleaned value back to the input field
+                // Set the cleaned value back
                 $(this).val(numericValue);
 
-                // Restore the cursor position after the input is modified
+                // Restore cursor position
                 this.setSelectionRange(cursorPosition, cursorPosition);
             });
+
             // -------- send verification code to email ---------
             $('body').on('click', '#send-code', function(e) {
                 e.preventDefault();

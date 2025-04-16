@@ -56,7 +56,7 @@
                         seller to make an agreement!
                     </p>
                     <div style="display: flex; align-items: center; ">
-                        <input type="number" class="pay-without-code-price make-a-payment-price01" name="price"
+                        <input type="text" class="pay-without-code-price make-a-payment-price01" name="price"
                             value="0" style="height: 45px; width: 67%" id="price_input">
                         <select class="generate-seller-code-price make-a-payment-price01"
                             style="width: 23%;height: 45px;font-size: 25px;" id="currency_input">
@@ -146,23 +146,25 @@
 
             $('#price_input').on('input', function(e) {
                 var currentValue = $(this).val();
-                var cursorPosition = this.selectionStart;  // Get the cursor position
+                var cursorPosition = this.selectionStart;
 
-                // Replace any non-numeric characters except for the decimal point
-                var numericValue = currentValue.replace(/[^0-9.]/g, '');
+                // Allow digits, comma, and one decimal point
+                var numericValue = currentValue.replace(/[^0-9.,]/g, '');
 
-                // Allow only one decimal point
-                if (numericValue.indexOf('.') !== numericValue.lastIndexOf('.')) {
-                    numericValue = numericValue.slice(0, cursorPosition - 1) + numericValue.slice(cursorPosition);  // Remove the last inserted decimal point
+                // Ensure only one decimal point
+                var parts = numericValue.split('.');
+                if (parts.length > 2) {
+                    // Keep only the first decimal point
+                    numericValue = parts[0] + '.' + parts.slice(1).join('').replace(/\./g, '');
                 }
 
-                // Set the cleaned value back to the input field
+                // Set the cleaned value back
                 $(this).val(numericValue);
 
-                // Restore the cursor position after the input is modified
+                // Restore cursor position
                 this.setSelectionRange(cursorPosition, cursorPosition);
             });
-            
+
 
             $('body').on('click','.buy-follow-receive__btn',function(e){
                 e.preventDefault();
