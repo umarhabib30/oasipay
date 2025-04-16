@@ -74,10 +74,10 @@
                     </p>
                     <div class="buy-follow-receive__payments">
                         <img src="{{ asset('assets/images/apple-pay.png') }}" alt="apple-pay" />
-                        <img src="./assets/images/ame.png" alt="apple-pay" />
-                        <img src="./assets/images/google-pay.png" alt="google-pay" />
-                        <img src="./assets/images/paypal.png" alt="paypal" />
-                        <img src="./assets/images/Master.png" />
+                        <img src="{{ asset('assets/images/ame.png') }}" alt="apple-pay" />
+                        <img src="{{ asset('assets/images/google-pay.png') }}" alt="google-pay" />
+                        <img src="{{ asset('assets/images/paypal.png') }}" alt="paypal" />
+                        <img src="{{ asset('assets/images/Master.png') }}" />
                     </div>
                 </div>
 
@@ -143,6 +143,27 @@
         });
 
         $(document).ready(function(){
+
+            $('#price_input').on('input', function(e) {
+                var currentValue = $(this).val();
+                var cursorPosition = this.selectionStart;  // Get the cursor position
+
+                // Replace any non-numeric characters except for the decimal point
+                var numericValue = currentValue.replace(/[^0-9.]/g, '');
+
+                // Allow only one decimal point
+                if (numericValue.indexOf('.') !== numericValue.lastIndexOf('.')) {
+                    numericValue = numericValue.slice(0, cursorPosition - 1) + numericValue.slice(cursorPosition);  // Remove the last inserted decimal point
+                }
+
+                // Set the cleaned value back to the input field
+                $(this).val(numericValue);
+
+                // Restore the cursor position after the input is modified
+                this.setSelectionRange(cursorPosition, cursorPosition);
+            });
+            
+
             $('body').on('click','.buy-follow-receive__btn',function(e){
                 e.preventDefault();
                 let title = $('#title-input').val();

@@ -98,15 +98,15 @@
                     </div>
 
                     <p class="make-a-payment-seller-price">Seller Price</p>
-                    <p class="make-a-payment-price" id="seller_price_field">{{ $transaction->price }} €</p>
+                    <p class="make-a-payment-price" id="seller_price_field">{{ number_format($transaction->price, 2) }}€</p>
                     <div class="make-a-payment-price-details">
                         <p class="make-a-payment-fee-details">
                             The fees amount
-                            <span class="make-a-payment-fee-details-span" id="fee_field">{{ $transaction->fee_price }} €</span>
+                            <span class="make-a-payment-fee-details-span" id="fee_field">{{ number_format($transaction->fee_price, 2) }}€</span>
                         </p>
                     </div>
                     <p class="make-a-payment-seller-price">You will pay</p>
-                    <p class="make-a-payment-price make-a-payment-price01" id="you_pay_field">{{ $transaction->price + $transaction->fee_price }} €</p>
+                    <p class="make-a-payment-price make-a-payment-price01" id="you_pay_field">{{ number_format($transaction->price + $transaction->fee_price, 2) }}€</p>
                     <div class="buy-follow-receive__buttons">
                         <div class="btn-box1">
                             <button class="buy-follow-receive__btn">
