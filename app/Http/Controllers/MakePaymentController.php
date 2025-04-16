@@ -77,6 +77,9 @@ class MakePaymentController extends Controller
 
     public function makePaymentFor($code){
         $transaction = Transaction::where('seller_code', $code)->first();
+        if ($transaction->is_cancelled) {
+            return redirect('/')->with('error', 'Transaction is cancelled');
+        }
         $data = [
             'title' => 'Make Payment',
             'transaction' => $transaction

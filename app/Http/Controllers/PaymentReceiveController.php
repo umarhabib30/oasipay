@@ -125,6 +125,9 @@ class PaymentReceiveController extends Controller
 
     public function receivePaymentFor($code){
         $transaction = Transaction::where('seller_code',$code)->first();
+        if ($transaction->is_cancelled) {
+            return redirect('/')->with('error', 'Transaction is cancelled');
+        }
         $data = [
             'title' => 'Receive Payment',
             'transaction' => $transaction,
