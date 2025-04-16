@@ -43,12 +43,19 @@ class MakePaymentController extends Controller
             //     ]);
             // }
             if ($transaction) {
-                if($transaction->is_cancelled){
-                    return response()->json([
-                        'error' => true,
-                        'message' => 'Transaction is cancelled',
-                    ]);
+                if ($transaction->is_cancelled) {
+                    $message = 'Transaction is cancelled';
+
+                    if ($request->ajax()) {
+                        return response()->json([
+                            'error' => true,
+                            'message' => $message,
+                        ]);
+                    }
+
+                    return redirect('/')->with('error', $message);
                 }
+
                 return response()->json([
                     'error' => false,
                     'message' => 'Transaction found successfully',
