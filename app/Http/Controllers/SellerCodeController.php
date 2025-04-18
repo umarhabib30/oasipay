@@ -27,10 +27,12 @@ class SellerCodeController extends Controller
         $verification = VerifyEmail::where('email', $request->email)->where('token', $request->code)->first();
         if ($verification->is_verified) {
             $fee_price = 0;
-            if ($request->price <= 10) {
+            $price = floatval(str_replace(',', '', $request->price)); // Remove commas and convert to float
+
+            if ($price <= 10) {
                 $fee_price = 0.5;
-            } else if ($request->price > 10 || $request->price <= 1500) {
-                $fee_price = $request->price * 0.05;
+            } else if ($price > 10 && $price <= 1500) {
+                $fee_price = $price * 0.05;
             } else {
                 $fee_price = 100;
             }
