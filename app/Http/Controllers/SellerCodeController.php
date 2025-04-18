@@ -25,10 +25,13 @@ class SellerCodeController extends Controller
     {
 
         $verification = VerifyEmail::where('email', $request->email)->where('token', $request->code)->first();
-        if ($verification->is_verified) {
-            $fee_price = 0;
-            $price = floatval(str_replace(',', '', $request->price)); // Remove commas and convert to float
 
+        if ($verification && $verification->is_verified) {
+            // Sanitize price input
+            $raw_price = str_replace(',', '', $request->price); // Remove commas
+            $price = is_numeric($raw_price) ? floatval($raw_price) : 0;
+
+            // Determine fee
             if ($price <= 10) {
                 $fee_price = 0.5;
             } else if ($price > 10 && $price <= 1500) {
@@ -38,11 +41,12 @@ class SellerCodeController extends Controller
             }
 
             $code = rand(100000, 999999);
+
             Transaction::create([
                 'seller_name' => $request->name,
                 'seller_email' => $request->email,
                 'seller_code' => $code,
-                'price' => $request->price,
+                'price' => $price,
                 'fee_price' => $fee_price,
                 'currency' => $request->currency,
                 'currency_symbol' => $request->currency_symbol,
@@ -50,11 +54,11 @@ class SellerCodeController extends Controller
                 'title' => $request->title,
             ]);
 
-            $data=[
+            $data = [
                 'seller_name' => $request->name,
                 'seller_email' => $request->email,
                 'seller_code' => $code,
-                'price' => $request->price,
+                'price' => $price,
                 'fee_price' => $fee_price,
                 'currency' => $request->currency,
                 'currency_symbol' => $request->currency_symbol,
@@ -63,15 +67,17 @@ class SellerCodeController extends Controller
             ];
 
             Mail::to($request->email)->send(new SellerCodeMail($data));
+
             return response()->json([
                 'error' => false,
-                'message' => 'Seller code is sent your email successfully',
+                'message' => 'Seller code is sent to your email successfully',
             ]);
         } else {
             return response()->json([
                 'error' => true,
-                'message' => 'Please check your inbox to verify email',
+                'message' => 'Please check your inbox to verify your email',
             ]);
         }
+
     }
 }
