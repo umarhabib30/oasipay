@@ -146,7 +146,7 @@ class MakePaymentController extends Controller
             'receiver_name' => $request->receiver_name,
             'receiver_email' => $request->receiver_email,
             'seller_code' => $code,
-            'price' => $request->price,
+            'price' => $price,
             'fee_price' => $fee_price,
             'currency' => $request->currency,
             'currency_symbol' => $request->currency_symbol,
