@@ -75,7 +75,8 @@ class MakePaymentController extends Controller
         }
     }
 
-    public function makePaymentFor($code){
+    public function makePaymentFor($code)
+    {
         $transaction = Transaction::where('seller_code', $code)->first();
         if ($transaction->is_cancelled) {
             return redirect('/')->with('error', 'Transaction is cancelled');
@@ -87,15 +88,16 @@ class MakePaymentController extends Controller
         return view('make-payment-for', $data);
     }
 
-    public function pay(Request $request){
-        try{
-            $transaction = Transaction::where('seller_code',$request->seller_code)->first();
+    public function pay(Request $request)
+    {
+        try {
+            $transaction = Transaction::where('seller_code', $request->seller_code)->first();
             $transaction->update([
                 'receiver_name' => $request->name,
                 'receiver_email' => $request->email,
             ]);
 
-            $data=[
+            $data = [
                 'receiver_name' => $transaction->receiver_name,
                 'receiver_email' => $transaction->receiver_email,
                 'seller_code' => $transaction->seller_code,
@@ -109,52 +111,35 @@ class MakePaymentController extends Controller
 
             Mail::to($transaction->receiver_email)->send(new TransactionConfirmMail($data));
 
-            return redirect('/')->with('success','Transaction made successfully');
-        }catch (\Exception $e) {
-            return redirect()->back()->with('error',$e->getMessage());
+            return redirect('/')->with('success', 'Transaction made successfully');
+        } catch (\Exception $e) {
+            return redirect()->back()->with('error', $e->getMessage());
         }
     }
 
-    public function paywithoutcodeSubmit(Request $request){
-       // Sanitize price input
-       $raw_price = str_replace(',', '', $request->price); // Remove commas
-       $price = is_numeric($raw_price) ? floatval($raw_price) : 0;
-
-       // Determine fee
-       if ($price <= 10) {
-           $fee_price = 0.5;
-       } else if ($price > 10 && $price <= 1500) {
-           $fee_price = $price * 0.05;
-       } else {
-           $fee_price = 100;
-       }
+    public function paywithoutcodeSubmit(Request $request)
+    {
 
         $code = rand(100000, 999999);
         Transaction::create([
             'receiver_name' => $request->receiver_name,
             'receiver_email' => $request->receiver_email,
             'seller_code' => $code,
-            'price' => $request->price,
-            'fee_price' => $fee_price,
+            'price' => round($request->price, 2),
+            'fee_price' => $request->fee_price,
             'currency' => $request->currency,
             'currency_symbol' => $request->currency_symbol,
             'words' => $request->words,
             'title' => $request->title,
         ]);
 
-
-
-        $price = $this->truncateToTwoDecimals($request->price);
-        $fee_price = $this->truncateToTwoDecimals($fee_price);
-        $total = $this->sumPrices($price, $fee_price);
-
         $data = [
             'receiver_name' => $request->receiver_name,
             'receiver_email' => $request->receiver_email,
             'seller_code' => $code,
-            'price' => $price,
-            'fee_price' => $fee_price,
-            'total' => $total,
+            'price' => round($request->price, 2),
+            'fee_price' => $request->fee_price,
+            'total' => $request->total_price,
             'currency' => $request->currency,
             'currency_symbol' => $request->currency_symbol,
             'words' => $request->words,
@@ -162,31 +147,6 @@ class MakePaymentController extends Controller
         ];
 
         Mail::to($request->receiver_email)->send(new PayWithoutCodeMail($data));
-        return redirect('/')->with('success','Transaction confirmed successfully');
-    }
-
-
-    function truncateToTwoDecimals($value) {
-        // Normalize comma to dot
-        $value = str_replace(',', '.', $value);
-
-        // Split and truncate
-        $parts = explode('.', $value);
-        if (count($parts) === 2) {
-            $parts[1] = substr($parts[1], 0, 2);
-        }
-
-        // Rebuild and return with comma
-        return str_replace('.', ',', $parts[0] . (isset($parts[1]) ? '.' . $parts[1] : ''));
-    }
-
-    function sumPrices($p1, $p2) {
-        // Convert commas to dots
-        $p1 = floatval(str_replace(',', '.', $p1));
-        $p2 = floatval(str_replace(',', '.', $p2));
-        $sum = $p1 + $p2;
-
-        // Truncate the result and return with comma
-        return $this->truncateToTwoDecimals(number_format($sum, 4, '.', ''));
+        return redirect('/')->with('success', 'Transaction confirmed successfully');
     }
 }

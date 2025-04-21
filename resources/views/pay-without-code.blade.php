@@ -16,6 +16,8 @@
                 <input type="hidden" name="receiver_name" id="receiver_name" value="{{ $name }}">
                 <input type="hidden" name="receiver_email" id="receiver_email" value="{{ $email }}">
                 <input type="hidden" name="price" id="price">
+                <input type="hidden" name="fee_price" id="fee_price">
+                <input type="hidden" name="total_price" id="total_price">
                 <input type="hidden" name="currency" id="currency">
                 <input type="hidden" name="currency_symbol" id="currency_symbol">
                 <input type="hidden" name="words" id="words">
@@ -117,7 +119,8 @@
 @section('script')
     <script>
         document.getElementById("price_input").addEventListener("input", function() {
-            let price = parseFloat(this.value) || 0;
+            let price = parseFloat(this.value.replace(/,/g, "")) || 0;
+
             let fee_price = 0;
 
             if (price <= 10) {
@@ -132,11 +135,12 @@
 
             // Format numbers with thousands separator and two decimal places
             function formatCurrency(value) {
-                return value.toLocaleString("de-DE", {
+                return value.toLocaleString("en-US", {
                     minimumFractionDigits: 2,
                     maximumFractionDigits: 2
                 }) + "€";
             }
+
 
             document.getElementById("the_fee_amount").innerText = formatCurrency(fee_price);
             document.getElementById("you_will_pay").innerText = formatCurrency(total);
@@ -144,26 +148,35 @@
 
         $(document).ready(function(){
 
-            $('#price_input').on('input', function(e) {
+            $('#price_input').on('input', function (e) {
                 var currentValue = $(this).val();
                 var cursorPosition = this.selectionStart;
 
-                // Allow digits, comma, and one decimal point
-                var numericValue = currentValue.replace(/[^0-9.,]/g, '');
+                // Allow digits, comma, and dot
+                var cleanedValue = currentValue.replace(/[^0-9.,]/g, '');
 
-                // Ensure only one decimal point
-                var parts = numericValue.split('.');
-                if (parts.length > 2) {
-                    // Keep only the first decimal point
-                    numericValue = parts[0] + '.' + parts.slice(1).join('').replace(/\./g, '');
+                // Prevent consecutive , and . (., or ,.)
+                cleanedValue = cleanedValue.replace(/([.,])([.,])/g, '$2');
+
+                // Ensure only one dot
+                let dotParts = cleanedValue.split('.');
+                if (dotParts.length > 2) {
+                    cleanedValue = dotParts[0] + '.' + dotParts.slice(1).join('').replace(/\./g, '');
+                }
+
+                // Ensure only one comma
+                let commaParts = cleanedValue.split(',');
+                if (commaParts.length > 2) {
+                    cleanedValue = commaParts[0] + ',' + commaParts.slice(1).join('').replace(/,/g, '');
                 }
 
                 // Set the cleaned value back
-                $(this).val(numericValue);
+                $(this).val(cleanedValue);
 
                 // Restore cursor position
                 this.setSelectionRange(cursorPosition, cursorPosition);
             });
+
 
 
             $('body').on('click','.buy-follow-receive__btn',function(e){
@@ -171,12 +184,16 @@
                 let title = $('#title-input').val();
                 let words = $('#In-two-words').val();
                 let price = $('#price_input').val();
+                let feeprice = $('#the_fee_amount').val();
+                let totalprice = $('#you_will_pay').val();
                 let currency = $('#currency_input').val();
                 let currencySymbol = $('#currency_input option:selected').text();
 
                 $('#title').val(title);
                 $('#words').val(words);
                 $('#price').val(price);
+                $('#fee_price').val(feeprice);
+                $('#total_price').val(totalprice);
                 $('#currency').val(currency);
                 $('#currency_symbol').val(currency);
 
