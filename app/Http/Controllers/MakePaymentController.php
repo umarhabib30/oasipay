@@ -142,12 +142,19 @@ class MakePaymentController extends Controller
             'title' => $request->title,
         ]);
 
-        $data=[
+
+
+        $price = $this->truncateToTwoDecimals($request->price);
+        $fee_price = $this->truncateToTwoDecimals($fee_price);
+        $total = $this->sumPrices($price, $fee_price);
+
+        $data = [
             'receiver_name' => $request->receiver_name,
             'receiver_email' => $request->receiver_email,
             'seller_code' => $code,
             'price' => $price,
             'fee_price' => $fee_price,
+            'total' => $total,
             'currency' => $request->currency,
             'currency_symbol' => $request->currency_symbol,
             'words' => $request->words,
@@ -156,5 +163,30 @@ class MakePaymentController extends Controller
 
         Mail::to($request->receiver_email)->send(new PayWithoutCodeMail($data));
         return redirect('/')->with('success','Transaction confirmed successfully');
+    }
+
+
+    function truncateToTwoDecimals($value) {
+        // Normalize comma to dot
+        $value = str_replace(',', '.', $value);
+
+        // Split and truncate
+        $parts = explode('.', $value);
+        if (count($parts) === 2) {
+            $parts[1] = substr($parts[1], 0, 2);
+        }
+
+        // Rebuild and return with comma
+        return str_replace('.', ',', $parts[0] . (isset($parts[1]) ? '.' . $parts[1] : ''));
+    }
+
+    function sumPrices($p1, $p2) {
+        // Convert commas to dots
+        $p1 = floatval(str_replace(',', '.', $p1));
+        $p2 = floatval(str_replace(',', '.', $p2));
+        $sum = $p1 + $p2;
+
+        // Truncate the result and return with comma
+        return $this->truncateToTwoDecimals(number_format($sum, 4, '.', ''));
     }
 }
