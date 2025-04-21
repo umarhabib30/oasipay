@@ -188,14 +188,15 @@
                 let totalprice = $('#you_will_pay').html();
                 let currency = $('#currency_input').val();
                 let currencySymbol = $('#currency_input option:selected').text();
-                alert(feeprice);
-                return;
+
+                let fee_price = strreplace(feeprice, '€', '');
+                let total_price = strreplace(totalprice, '€', '');
 
                 $('#title').val(title);
                 $('#words').val(words);
                 $('#price').val(price);
-                $('#fee_price').val(feeprice);
-                $('#total_price').val(totalprice);
+                $('#fee_price').val(fee_price);
+                $('#total_price').val(total_price);
                 $('#currency').val(currency);
                 $('#currency_symbol').val(currency);
 
