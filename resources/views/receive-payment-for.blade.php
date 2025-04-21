@@ -46,7 +46,7 @@
                     {{-- <p class="make-a-payment-seller-price">Buyer pay</p>
                     <p class="receive-payment-price" id="buyer_pay_data">0€</p> --}}
                     <p class="make-a-payment-seller-price">You receive</p>
-                    <p class="receive-payment-price" id="receive_pay_data">{{ number_format($transaction->price, 2) }}€</p>
+                    <p class="receive-payment-price" id="receive_pay_data">{{ $transaction->price }}€</p>
 
                     <p class="receive-payment-text">
                         If the price is not consistent with the item offered for sale, do
@@ -56,7 +56,7 @@
                     {{-- <p class="make-a-payment-seller-price">You receive</p>
                     <p class="receive-payment-price" id="receive_pay_data">0€</p> --}}
                     <p class="make-a-payment-seller-price">Buyer pay</p>
-                    <p class="receive-payment-price" id="buyer_pay_data">{{ number_format($transaction->price + $transaction->fee_price, 2) }}€</p>
+                    <p class="receive-payment-price" id="buyer_pay_data">{{ $transaction->total }}€</p>
 
                 </div>
 
