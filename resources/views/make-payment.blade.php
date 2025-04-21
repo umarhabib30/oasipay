@@ -10,7 +10,8 @@
                 <input type="hidden" name="name" id=""  @if (isset($name)) value="{{ $name }}" @endif>
                 <input type="hidden" name="email" id=""  @if (isset($email)) value="{{ $email }}" @endif>
             </form>
-            <form class="make-a-payment-form" action="">
+            <form class="make-a-payment-form" action="{{ route('pay.through.api') }}" method="POST" >
+                @csrf
                 <input type="hidden" name="verification_code" id="verification_code"
                     @if (isset($code)) value="{{ $code }}" @endif>
                 <div class="make-a-payment-column">
