@@ -250,11 +250,13 @@
                                                                 style="font-size: 14px; line-height: 140%; text-align: left; word-wrap: break-word;">
                                                                 <p style="line-height: 140%; margin: 0px;"><span
                                                                         style="color: #000000; white-space: normal; background-color: #ffffff; line-height: 19.6px;">Transaction
-                                                                        Code</span><span
-                                                                        style="color: #000000; white-space: normal; background-color: #ffffff; float: none; display: inline; line-height: 19.6px;">
-                                                                        &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
-                                                                        &nbsp;<span
-                                                                            style="color: #37a9da; white-space: normal; background-color: #ffffff; float: none; display: inline; line-height: 19.6px;">{{ $data['seller_code'] }}</span>&nbsp;</span>
+                                                                        Code</span>
+                                                                        <span style="display: inline-flex; align-items: center; gap: 4px;">
+                                                                            <a style="text-decoration: none; color: #37a9da;" href="{{ url('monitoring-transactions', $data['seller_code']) }}">
+                                                                                {{ $data['seller_code'] }}
+                                                                            </a>
+                                                                            <img src="{{ asset('assets/mail_images/click-icon.png') }}" alt="" style="width: 30px; margin-bottom: -14px; margin-left: -4px;">
+                                                                        </span>
                                                                 </p>
                                                             </div>
 
