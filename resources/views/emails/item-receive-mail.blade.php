@@ -251,7 +251,7 @@
                                                                 <p style="line-height: 140%; margin: 0px;"><span
                                                                         style="color: #000000; white-space: normal; background-color: #ffffff; line-height: 19.6px;">Transaction
                                                                         Code</span>
-                                                                        <span style="display: inline-flex; align-items: center; gap: 4px;">
+                                                                        <span style="display: inline-flex; align-items: center; gap: 4px; margin-left: 70px;">
                                                                             <a style="text-decoration: none; color: #37a9da;" href="{{ url('monitoring-transactions', $data['seller_code']) }}">
                                                                                 {{ $data['seller_code'] }}
                                                                             </a>
