@@ -189,8 +189,9 @@
                 let currency = $('#currency_input').val();
                 let currencySymbol = $('#currency_input option:selected').text();
 
-                let fee_price = strreplace(feeprice, '€', '');
-                let total_price = strreplace(totalprice, '€', '');
+                let fee_price = feeprice.replace(/€/g, '').trim();
+                let total_price = totalprice.replace(/€/g, '').trim();
+
 
                 $('#title').val(title);
                 $('#words').val(words);
