@@ -184,8 +184,8 @@
                 let title = $('#title-input').val();
                 let words = $('#In-two-words').val();
                 let price = $('#price_input').val();
-                let feeprice = $('#the_fee_amount').val();
-                let totalprice = $('#you_will_pay').val();
+                let feeprice = $('#the_fee_amount').html();
+                let totalprice = $('#you_will_pay').html();
                 let currency = $('#currency_input').val();
                 let currencySymbol = $('#currency_input option:selected').text();
                 alert(feeprice);
