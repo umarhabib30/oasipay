@@ -29,9 +29,6 @@ class PaymentReceiveController extends Controller
                 ]);
             }
             if ($transaction) {
-
-
-
                 if ($transaction->is_cancelled) {
                     $message = 'Transaction is cancelled';
 
