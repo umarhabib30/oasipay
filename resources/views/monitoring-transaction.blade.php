@@ -151,7 +151,7 @@
 
                     <p class="monitoring-transaction-title">Transaction amount</p>
                     <p class="monitoring-transaction-amount">
-                        {{ number_format($transaction->price, 2) }} {{ $transaction->currency_symbol }}
+                        {{ $transaction->price}} {{ $transaction->currency_symbol }}
                     </p>
 
                     </p>
