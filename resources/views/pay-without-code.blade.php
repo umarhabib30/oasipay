@@ -188,6 +188,8 @@
                 let totalprice = $('#you_will_pay').val();
                 let currency = $('#currency_input').val();
                 let currencySymbol = $('#currency_input option:selected').text();
+                alert(feeprice);
+                return;
 
                 $('#title').val(title);
                 $('#words').val(words);
