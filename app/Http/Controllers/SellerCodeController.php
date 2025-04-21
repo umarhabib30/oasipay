@@ -43,7 +43,7 @@ class SellerCodeController extends Controller
             $total = $price + $fee_price;
             $total = number_format($total, 2, '.', '');
             $fee_price = number_format($fee_price, 2, '.', '');
-            $price = number_format($price, 2, '.', '');
+            $price = number_format($price, 2, '.', ',');
             $code = rand(100000, 999999);
 
             Transaction::create([
