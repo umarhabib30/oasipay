@@ -116,14 +116,18 @@ class MakePaymentController extends Controller
     }
 
     public function paywithoutcodeSubmit(Request $request){
-        $fee_price = 0;
-        if ($request->price <= 10) {
-            $fee_price = 0.5;
-        } else if ($request->price > 10 || $request->price <= 1500) {
-            $fee_price = $request->price * 0.05;
-        } else {
-            $fee_price = 100;
-        }
+       // Sanitize price input
+       $raw_price = str_replace(',', '', $request->price); // Remove commas
+       $price = is_numeric($raw_price) ? floatval($raw_price) : 0;
+
+       // Determine fee
+       if ($price <= 10) {
+           $fee_price = 0.5;
+       } else if ($price > 10 && $price <= 1500) {
+           $fee_price = $price * 0.05;
+       } else {
+           $fee_price = 100;
+       }
 
         $code = rand(100000, 999999);
         Transaction::create([
