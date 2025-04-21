@@ -46,12 +46,12 @@
                             <a href="#" id="send-code"><img src="{{ asset('assets/images/confirm.png') }}" /></a>
                         </div>
                     </div>
-                    {{-- <a href="#" style="margin-top: 10px" class="btn" id="confirm-code">CONFIRM CODE</a> --}}
-                    @if (isset($code))
+                    <a href="#" style="margin-top: 10px" class="btn" id="confirm-code-done" disabled>CONFIRM CODE</a>
+                    {{-- @if (isset($code))
                         <a href="#" style="margin-top: 10px" class="btn" id="confirm-code">CONFIRM CODE</a>
                     @else
                         <a href="#" style="margin-top: 10px" class="btn" id="confirm-code-first">CONFIRM CODE</a>
-                    @endif
+                    @endif --}}
 
                     <p class="make-a-payment-text">
                         Remember to check the form and verify that the item you are paying
