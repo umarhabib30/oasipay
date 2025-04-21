@@ -121,11 +121,13 @@ class MakePaymentController extends Controller
     {
 
         $code = rand(100000, 999999);
+        $price =  number_format((float) str_replace(',', '', $request->price), 2, '.', ',');
+
         Transaction::create([
             'receiver_name' => $request->receiver_name,
             'receiver_email' => $request->receiver_email,
             'seller_code' => $code,
-            'price' => round($request->price, 2),
+           'price' =>$price,
             'fee_price' => $request->fee_price,
             'currency' => $request->currency,
             'currency_symbol' => $request->currency_symbol,
@@ -137,7 +139,7 @@ class MakePaymentController extends Controller
             'receiver_name' => $request->receiver_name,
             'receiver_email' => $request->receiver_email,
             'seller_code' => $code,
-            'price' => round($request->price, 2),
+            'price' => $price,
             'fee_price' => $request->fee_price,
             'total' => $request->total_price,
             'currency' => $request->currency,
