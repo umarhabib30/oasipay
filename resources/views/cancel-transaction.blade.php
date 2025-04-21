@@ -31,7 +31,7 @@
                     <div class="cancel-transaction-column">
                         <p class="confirm-transaction-seller-price">Cost of item</p>
                         <p class="confirm-transaction-price">
-                            {{ number_format($transaction->price, 2) }} {{ $transaction->currency_symbol }}
+                            {{ $transaction->price}} {{ $transaction->currency_symbol }}
                         </p>
 
                         <p class="confirm-transaction-fee-text">
