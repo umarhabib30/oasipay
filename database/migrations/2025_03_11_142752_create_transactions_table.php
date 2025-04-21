@@ -20,6 +20,7 @@ return new class extends Migration
             $table->string('title')->nullable();
             $table->string('price')->nullable();
             $table->string('fee_price')->nullable();
+            $table->string('total')->nullable();
             $table->string('currency')->nullable();
             $table->string('currency_symbol')->nullable();
             $table->string('words')->nullable();

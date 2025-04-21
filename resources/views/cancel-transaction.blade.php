@@ -40,21 +40,21 @@
                         <p class="confirm-transaction-fee-details">
                             Cost of item
                             <span
-                                class="confirm-transaction-fee-details-span confirm-transaction-fee-details-span02"> {{ number_format($transaction->price, 2) }}
+                                class="confirm-transaction-fee-details-span confirm-transaction-fee-details-span02"> {{$transaction->price}}
                                 {{ $transaction->currency_symbol }}</span>
                         </p>
 
                         <p class="confirm-transaction-fee-details">
                             The fees amount
                             <span
-                                class="confirm-transaction-fee-details-span confirm-transaction-fee-details-span02"> {{ number_format($transaction->fee_price, 2) }}
+                                class="confirm-transaction-fee-details-span confirm-transaction-fee-details-span02"> {{ $transaction->fee_price }}
                                 {{ $transaction->currency_symbol }}</span>
                         </p>
                     </div>
                     <div class="cancel-transaction-column">
                         <p class="confirm-transaction-seller-price">Transaction amount</p>
                         <p class="confirm-transaction-price">
-                            {{ number_format($transaction->price + $transaction->fee_price, 2) }} {{ $transaction->currency_symbol }}
+                            {{ $transaction->total }} {{ $transaction->currency_symbol }}
                         </p>
 
                         <p class="confirm-transaction-fee-text">

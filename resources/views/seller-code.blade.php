@@ -112,22 +112,30 @@
     <script>
         $(document).ready(function() {
 
-            $('#price_input').on('input', function(e) {
+            $('#price_input').on('input', function (e) {
                 var currentValue = $(this).val();
                 var cursorPosition = this.selectionStart;
 
-                // Allow digits, comma, and one decimal point
-                var numericValue = currentValue.replace(/[^0-9.,]/g, '');
+                // Allow digits, comma, and dot
+                var cleanedValue = currentValue.replace(/[^0-9.,]/g, '');
 
-                // Ensure only one decimal point
-                var parts = numericValue.split('.');
-                if (parts.length > 2) {
-                    // Keep only the first decimal point
-                    numericValue = parts[0] + '.' + parts.slice(1).join('').replace(/\./g, '');
+                // Prevent consecutive , and . (., or ,.)
+                cleanedValue = cleanedValue.replace(/([.,])([.,])/g, '$2');
+
+                // Ensure only one dot
+                let dotParts = cleanedValue.split('.');
+                if (dotParts.length > 2) {
+                    cleanedValue = dotParts[0] + '.' + dotParts.slice(1).join('').replace(/\./g, '');
+                }
+
+                // Ensure only one comma
+                let commaParts = cleanedValue.split(',');
+                if (commaParts.length > 2) {
+                    cleanedValue = commaParts[0] + ',' + commaParts.slice(1).join('').replace(/,/g, '');
                 }
 
                 // Set the cleaned value back
-                $(this).val(numericValue);
+                $(this).val(cleanedValue);
 
                 // Restore cursor position
                 this.setSelectionRange(cursorPosition, cursorPosition);

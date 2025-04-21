@@ -16,6 +16,7 @@ class Transaction extends Model
         'title',
         'price',
         'fee_price',
+        'total',
         'currency',
         'currency_symbol',
         'words',

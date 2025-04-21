@@ -449,7 +449,7 @@
                                                                     Total price you pay </p>
                                                                 <p
                                                                     style="line-height: 140%; margin: 0px; width: 49%;text-align: center;font-size: 35px;color: #00bf63;font-weight: 700;">
-                                                                    {{ $data['price'] + $data['fee_price'] }}€ </p>
+                                                                    {{ $data['total'] }}€ </p>
                                                             </div>
 
                                                         </td>
