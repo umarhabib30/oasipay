@@ -292,8 +292,8 @@
                                                                             href="{{ url('monitoring-transactions', $data['seller_code']) }}">
                                                                             {{ $data['seller_code'] }}
                                                                         </a>
-                                                                        <img src="click-icon.png" alt=""
-                                                                            style="width: 30px; margin-bottom: -14px; margin-left: -4px;">
+                                                                        <img src="{{ asset('assets/mail_images/click-icon.png') }}"  alt=""
+                                                                        style="width: 30px; margin-bottom: -14px; margin-left: -4px;">
                                                                     </span>
                                                                 </div>
                                                             </div>

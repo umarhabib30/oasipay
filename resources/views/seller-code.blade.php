@@ -45,7 +45,7 @@
                                 @if (isset($email)) value="{{ $email }}" @endif required />
                         </div>
                         <div class="generate-seller-code-form-right">
-                            <a id="send-code"><img src="{{ asset('assets/images/confirm.png') }}" /></a>
+                            <a id="send-code" style="cursor: pointer;" ><img src="{{ asset('assets/images/confirm.png') }}" /></a>
                         </div>
                     </div>
 
