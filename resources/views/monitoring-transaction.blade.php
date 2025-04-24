@@ -203,12 +203,12 @@
                         <div class="monitoring-transaction__column">
                             <div class="receive-payment-btn-box">
                                 @if ($transaction->shipping_code)
-                                    <a href="" class="btn has_shipping_code"  @if ($transaction->item_recieved) disabled @endif>CANCEL TRANSACTION</a>
+                                    <a href="" class="btn has_shipping_code {{ $transaction->item_recieved ? 'disabled-link' : '' }}"  >CANCEL TRANSACTION</a>
                                 @else
                                     <a href="{{ route('transaction.cancel', $transaction->seller_code) }}"
-                                        class="btn"  @if ($transaction->item_recieved) disabled @endif>CANCEL TRANSACTION</a>
+                                        class="btn {{ $transaction->item_recieved ? 'disabled-link' : '' }}"  >CANCEL TRANSACTION</a>
                                 @endif
-                                <a href="{{ route('contact-us') }}" class="btn"  @if ($transaction->item_recieved) disabled @endif>CONTACT US</a>
+                                <a href="{{ route('contact-us') }}" class="btn {{ $transaction->item_recieved ? 'disabled-link' : '' }}"  >CONTACT US</a>
 
                             </div>
                         </div>
