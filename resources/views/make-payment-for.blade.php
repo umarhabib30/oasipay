@@ -59,11 +59,11 @@
                     </p>
                     <div class="make-a-payment-btn-box">
                         @if (isset($code))
-                            <a href="#" class="btn submit_without_code">I PAY WITHOUT CODE</a>
+                            <a href="#" class="btn submit_without_code" disabled>I PAY WITHOUT CODE</a>
                         @else
-                            <a href="#" class="btn pay_without_code">I PAY WITHOUT CODE</a>
+                            <a href="#" class="btn pay_without_code" disabled>I PAY WITHOUT CODE</a>
                         @endif
-                        <a href="{{ route('seller.code') }}" class="btn">I WANT SELLER CODE</a>
+                        <a href="{{ route('seller.code') }}" class="btn" disabled>I WANT SELLER CODE</a>
                     </div>
                     <p class="make-a-payment-text">
                         What you are paying includes our taxes (5%) and shipping costs if

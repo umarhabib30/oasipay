@@ -199,7 +199,7 @@
                 $('#fee_price').val(fee_price);
                 $('#total_price').val(total_price);
                 $('#currency').val(currency);
-                $('#currency_symbol').val(currency);
+                $('#currency_symbol').val(currencySymbol);
 
                 $('#submit-withoutcode-form').submit();
             });

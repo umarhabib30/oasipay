@@ -178,12 +178,12 @@
 
                                 <div class="buy-follow-receive__buttons">
                                     @if ($transaction->shipping_code)
-                                        <button class="buy-follow-receive__btn" id="contact_oasipay_alert">
+                                        <button class="buy-follow-receive__btn" id="contact_oasipay_alert"  @if ($transaction->item_recieved) disabled @endif>
                                             <p>INSERT CODE</p>
                                             <img src="{{ asset('assets/images/truck.png') }}" alt="" />
                                         </button>
                                     @else
-                                        <button class="buy-follow-receive__btn" id="buy-follow-receive__btn">
+                                        <button class="buy-follow-receive__btn" id="buy-follow-receive__btn"  @if ($transaction->item_recieved) disabled @endif>
                                             <p>INSERT CODE</p>
                                             <img src="{{ asset('assets/images/truck.png') }}" alt="" />
                                         </button>
@@ -196,12 +196,12 @@
                         <div class="monitoring-transaction__column">
                             <div class="receive-payment-btn-box">
                                 @if ($transaction->shipping_code)
-                                    <a href="" class="btn has_shipping_code">CANCEL TRANSACTION</a>
+                                    <a href="" class="btn has_shipping_code"  @if ($transaction->item_recieved) disabled @endif>CANCEL TRANSACTION</a>
                                 @else
                                     <a href="{{ route('transaction.cancel', $transaction->seller_code) }}"
-                                        class="btn">CANCEL TRANSACTION</a>
+                                        class="btn"  @if ($transaction->item_recieved) disabled @endif>CANCEL TRANSACTION</a>
                                 @endif
-                                <a href="{{ route('contact-us') }}" class="btn">CONTACT US</a>
+                                <a href="{{ route('contact-us') }}" class="btn"  @if ($transaction->item_recieved) disabled @endif>CONTACT US</a>
 
                             </div>
                         </div>
@@ -253,9 +253,9 @@
                     <div class="monitoring-transaction-row">
                         <div class="monitoring-transaction-btn-box">
                             @if (isset($code))
-                                <a href="#" class="btn" id="code_verified">I RECEIVE ITEM</a>
+                                <a href="#" class="btn" id="code_verified"  @if ($transaction->item_recieved) disabled @endif>I RECEIVE ITEM</a>
                             @else
-                                <a class="btn" id="send_verification_code">I RECEIVE ITEM</a>
+                                <a class="btn" id="send_verification_code"  @if ($transaction->item_recieved) disabled @endif>I RECEIVE ITEM</a>
                             @endif
                             <a href="{{ route('tellus', $transaction->seller_code) }}" class="btn">WHAT’S WRONG</a>
 

@@ -135,6 +135,7 @@ class MakePaymentController extends Controller
             'currency_symbol' => $request->currency_symbol,
             'words' => $request->words,
             'title' => $request->title,
+            'without_code' => true,
         ]);
 
         $data = [
@@ -150,7 +151,7 @@ class MakePaymentController extends Controller
             'title' => $request->title,
         ];
 
-        Mail::to($request->receiver_email)->send(new PayWithoutCodeMail($data));
+        // Mail::to($request->receiver_email)->send(new PayWithoutCodeMail($data));
         return redirect('/')->with('success', 'Transaction confirmed successfully');
     }
 }

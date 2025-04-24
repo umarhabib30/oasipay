@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Mail\ItemReceiveMail;
 use App\Mail\VerifyEmailMail;
 use App\Models\Transaction;
 use App\Models\VerifyEmail;
@@ -135,14 +136,18 @@ class EmailVerificationController extends Controller
         } else {
             $check->update(['is_verified' => true]);
             $transaction = Transaction::where('seller_code',$seller_code)->first();
-            $data = [
-                'title' => 'Monitoring Transaction',
-                'email' => $email,
-                'name' => $name,
-                'code' => $code,
-                'transaction' => $transaction,
+            $transaction->update([
+                'item_recieved' => true,
+            ]);
+
+            $data =[
+                'name' => $transaction->receiver_name,
+                'seller_code' => $transaction->seller_code,
             ];
-            return view('monitoring-transaction', $data);
+
+            Mail::to($transaction->receiver_email)->send(new ItemReceiveMail($data));
+            return redirect()->route('monitoring.transactions', ['id' => $transaction->seller_code])
+                     ->with('success', 'Item received successfully');
         }
     }
 }

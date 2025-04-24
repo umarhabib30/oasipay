@@ -9,6 +9,7 @@ use App\Models\VerifyEmail;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Session;
 
 class MonitoringTransactionController extends Controller
 {
@@ -43,6 +44,23 @@ class MonitoringTransactionController extends Controller
     {
         try {
             $transaction = Transaction::where('seller_code', $request->seller_code)->first();
+
+            if($transaction->without_code){
+                if($transaction->receiver_email != $request->email || $transaction->receiver_name != $request->name){
+                    return response()->json([
+                        'error' => true,
+                        'message' => 'Buyer name or email does not match',
+                    ]);
+                }
+            }else{
+                if($transaction->seller_email != $request->email || $transaction->seller_name != $request->name){
+                    return response()->json([
+                        'error' => true,
+                        'message' => 'Seller name or email does not match',
+                    ]);
+                }
+            }
+
             if($transaction->shipping_code){
                 return response()->json([
                     'error' => true,
@@ -54,6 +72,8 @@ class MonitoringTransactionController extends Controller
                 'cancel_by_email' => $request->email,
                 'is_cancelled' => true
             ]);
+
+            Session::flash('success', 'Transaction cancelled successfully');
             return response()->json([
                 'error' => false,
                 'message' => 'Transaction cancelled successfully'

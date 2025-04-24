@@ -85,7 +85,7 @@
                 let seller_code = $('#insert-transaction-code').val();
                 let email = $('#enter-email-input').val();
                 if (!seller_code) {
-                    toastr.error('Please Transaction code');
+                    toastr.error('Please insert Transaction code');
                     return;
                 }
                 let data = {
@@ -114,13 +114,17 @@
             $('body').on('click','#cancel-transaction',function(e){
                 e.preventDefault();
                 let is_confirmed = $('#is_confirmed').val();
-                if(is_confirmed == 0){
-                    toastr.error('Please confirm transaction code');
-                    return;
-                }
+                // if(is_confirmed == 0){
+                //     toastr.error('Please confirm transaction code');
+                //     return;
+                // }
                 let seller_code = $('#insert-transaction-code').val();
+                let email = $('#enter-email-input').val();
+                let name = $('#name-input').val();
                 let data = {
                     seller_code: seller_code,
+                    email : email,
+                    name : name,
                     _token: $('meta[name="csrf-token"]').attr('content')
                 };
                 $.ajax({
@@ -131,7 +135,6 @@
                         if (response.error) {
                             toastr.error(response.message);
                         } else {
-                            toastr.success(response.message);
                             window.location.href= "{{ route('home') }}";
                         }
                     },

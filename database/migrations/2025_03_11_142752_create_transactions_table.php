@@ -31,10 +31,13 @@ return new class extends Migration
             $table->string('bic_swift')->nullable();
             $table->string('paypal_link')->nullable();
             $table->string('shipping_code')->nullable();
+            $table->boolean('item_recieved')->default(false);
+            $table->enum('tracking_status', ['Item not yet shipped', 'Item Shipped', 'Item Delivered '])->default('Item not yet shipped');
+            $table->enum('transaction_status', ['Payment to do', 'Payment in charge of Oasipay', 'Payment sent to seller'])->default('Payment to do');
+            $table->boolean('without_code')->default(false);
             $table->boolean('is_cancelled')->default(false);
             $table->string('cancel_by_name')->nullable();
             $table->string('cancel_by_email')->nullable();
-            $table->boolean('item_recieved')->default(false);
             $table->timestamps();
         });
     }

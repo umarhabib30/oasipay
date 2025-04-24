@@ -30,6 +30,9 @@ class Transaction extends Model
         'is_cancelled',
         'cancel_by_email',
         'cancel_by_name',
-        'item_recieved'
+        'item_recieved',
+        'tracking_status',
+        'transaction_status',
+        'without_code',
     ];
 }
