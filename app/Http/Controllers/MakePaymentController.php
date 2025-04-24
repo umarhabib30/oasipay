@@ -95,6 +95,7 @@ class MakePaymentController extends Controller
             $transaction->update([
                 'receiver_name' => $request->name,
                 'receiver_email' => $request->email,
+                'transaction_status' => 'Payment in charge of Oasipay',
             ]);
 
             $data = [
@@ -136,6 +137,7 @@ class MakePaymentController extends Controller
             'words' => $request->words,
             'title' => $request->title,
             'without_code' => true,
+            'transaction_status' => 'Payment in charge of Oasipay',
         ]);
 
         $data = [
@@ -151,7 +153,7 @@ class MakePaymentController extends Controller
             'title' => $request->title,
         ];
 
-        // Mail::to($request->receiver_email)->send(new PayWithoutCodeMail($data));
+        Mail::to($request->receiver_email)->send(new PayWithoutCodeMail($data));
         return redirect('/')->with('success', 'Transaction confirmed successfully');
     }
 }

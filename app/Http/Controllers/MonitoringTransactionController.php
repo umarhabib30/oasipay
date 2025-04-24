@@ -107,7 +107,9 @@ class MonitoringTransactionController extends Controller
         $transaction = Transaction::where('seller_code', $request->seller_code)->first();
         if ($transaction->seller_email == $request->email) {
             $transaction->update([
-                'shipping_code' => $request->shipping_code
+                'shipping_code' => $request->shipping_code,
+                'tracking_status' => 'Item Shipped',
+
             ]);
             return response()->json([
                 'error' => false,

@@ -138,6 +138,7 @@ class EmailVerificationController extends Controller
             $transaction = Transaction::where('seller_code',$seller_code)->first();
             $transaction->update([
                 'item_recieved' => true,
+                'tracking_status' => 'Item Delivered',
             ]);
 
             $data =[
