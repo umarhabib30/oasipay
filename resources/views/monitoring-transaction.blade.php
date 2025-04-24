@@ -2,11 +2,7 @@
 @section('style')
     <style>
 
-        .disabled-link {
-            pointer-events: none;  /* disables clicks */
-            opacity: 0.5;          /* makes it look disabled */
-            cursor: not-allowed;   /* changes cursor */
-        }
+       
 
         /* The Modal (background) */
         .modal {

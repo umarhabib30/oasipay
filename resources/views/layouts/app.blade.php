@@ -18,6 +18,15 @@
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.1.4/toastr.css" />
     <title>{{ $title }}</title>
 
+    <style>
+        /* disable the button on receive item */
+         .disabled-link {
+            pointer-events: none;  /* disables clicks */
+            opacity: 0.5;          /* makes it look disabled */
+            cursor: not-allowed;   /* changes cursor */
+        }
+    </style>
+
     @yield('style')
 
 </head>
@@ -109,7 +118,7 @@
 
     <script src="{{ asset('assets/JS/main.js') }}"></script>
     @yield('script')
-   
+
 
 
 </body>
