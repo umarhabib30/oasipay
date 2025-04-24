@@ -254,6 +254,7 @@
                             $('#name-input').val('');
                             $('#email-input').val('');
                             toastr.success(response.message);
+                            window.location.href = response.redirect_url;
                         }
                     },
                     error: function(error) {

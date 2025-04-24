@@ -72,11 +72,12 @@ class SellerCodeController extends Controller
                 'title' => $request->title,
             ];
 
-            Mail::to($request->email)->send(new SellerCodeMail($data));
+            // Mail::to($request->email)->send(new SellerCodeMail($data));
 
             return response()->json([
                 'error' => false,
-                'message' => 'Seller code is sent to your email successfully',
+                'message' => 'Seller code generated successfully',
+                'redirect_url' => route('receive-payment-for', ['code' => $code]),
             ]);
         } else {
             return response()->json([
