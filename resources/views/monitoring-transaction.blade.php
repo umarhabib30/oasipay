@@ -1,6 +1,13 @@
 @extends('layouts.app')
 @section('style')
     <style>
+
+        .disabled-link {
+            pointer-events: none;  /* disables clicks */
+            opacity: 0.5;          /* makes it look disabled */
+            cursor: not-allowed;   /* changes cursor */
+        }
+
         /* The Modal (background) */
         .modal {
             display: none;
@@ -253,9 +260,9 @@
                     <div class="monitoring-transaction-row">
                         <div class="monitoring-transaction-btn-box">
                             @if (isset($code))
-                                <a href="#" class="btn" id="code_verified"  @if ($transaction->item_recieved) disabled @endif>I RECEIVE ITEM</a>
+                                <a href="#" class="btn {{ $transaction->item_recieved ? 'disabled-link' : '' }}" id="code_verified"  >I RECEIVE ITEM</a>
                             @else
-                                <a class="btn" id="send_verification_code"  @if ($transaction->item_recieved) disabled @endif>I RECEIVE ITEM</a>
+                                <a class="btn {{ $transaction->item_recieved ? 'disabled-link' : '' }}" id="send_verification_code"  >I RECEIVE ITEM</a>
                             @endif
                             <a href="{{ route('tellus', $transaction->seller_code) }}" class="btn">WHAT’S WRONG</a>
 
