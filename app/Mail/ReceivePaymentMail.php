@@ -37,7 +37,7 @@ class ReceivePaymentMail extends Mailable
     public function content(): Content
     {
         return new Content(
-            view: 'emails.receive_payment',
+            view: 'emails.receive-payment-new',
             with: ['data' => $this->data]
         );
     }
