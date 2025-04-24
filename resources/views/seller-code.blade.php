@@ -253,7 +253,7 @@
                             $('#seller_code_form')[0].reset();
                             $('#name-input').val('');
                             $('#email-input').val('');
-                            toastr.success(response.message);
+                    
                             window.location.href = response.redirect_url;
                         }
                     },

@@ -10,6 +10,7 @@ use App\Models\VerifyEmail;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Session;
 
 class SellerCodeController extends Controller
 {
@@ -73,6 +74,7 @@ class SellerCodeController extends Controller
             ];
 
             // Mail::to($request->email)->send(new SellerCodeMail($data));
+            Session::flash('success', 'Seller code generated successfully.');
 
             return response()->json([
                 'error' => false,
