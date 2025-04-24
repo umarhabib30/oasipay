@@ -46,7 +46,7 @@
                             <a href="#" id="send-code"><img src="{{ asset('assets/images/confirm.png') }}" /></a>
                         </div>
                     </div>
-                    <a href="#" style="margin-top: 10px" class="btn" id="confirm-code-done" disabled>CONFIRM CODE</a>
+                    <a href="#" style="margin-top: 10px" class="btn {{ $transaction->item_recieved ? 'disabled-link' : '' }}" id="confirm-code-done" disabled>CONFIRM CODE</a>
                     {{-- @if (isset($code))
                         <a href="#" style="margin-top: 10px" class="btn" id="confirm-code">CONFIRM CODE</a>
                     @else
@@ -59,9 +59,9 @@
                     </p>
                     <div class="make-a-payment-btn-box">
                         @if (isset($code))
-                            <a href="#" class="btn submit_without_code" disabled>I PAY WITHOUT CODE</a>
+                            <a href="#" class="btn submit_without_code {{ $transaction->item_recieved ? 'disabled-link' : '' }}" disabled>I PAY WITHOUT CODE</a>
                         @else
-                            <a href="#" class="btn pay_without_code" disabled>I PAY WITHOUT CODE</a>
+                            <a href="#" class="btn pay_without_code {{ $transaction->item_recieved ? 'disabled-link' : '' }}" disabled>I PAY WITHOUT CODE</a>
                         @endif
                         <a href="{{ route('seller.code') }}" class="btn" disabled>I WANT SELLER CODE</a>
                     </div>
@@ -109,7 +109,7 @@
                     <p class="make-a-payment-price make-a-payment-price01" id="you_pay_field">{{ $transaction->total }}€</p>
                     <div class="buy-follow-receive__buttons">
                         <div class="btn-box1">
-                            <button class="buy-follow-receive__btn">
+                            <button class="buy-follow-receive__btn {{ $transaction->item_recieved ? 'disabled-link' : '' }}">
                                 <p>PROCEED TO PAY</p>
                                 <img src="{{ asset('assets/images/fav.png') }}" alt="" />
                             </button>
