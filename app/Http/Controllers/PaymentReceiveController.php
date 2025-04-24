@@ -42,6 +42,13 @@ class PaymentReceiveController extends Controller
                     return redirect('/')->with('error', $message);
                 }
 
+                if($transaction->item_received == 1){
+                    return response()->json([
+                        'error' => true,
+                        'message' => 'Item already received',
+                    ]);
+                }
+
                 return response()->json([
                     'error' => false,
                     'message' => 'Transaction found successfully',
