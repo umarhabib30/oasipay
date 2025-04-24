@@ -42,7 +42,7 @@ class PaymentReceiveController extends Controller
                     return redirect('/')->with('error', $message);
                 }
 
-                if($transaction->item_received){
+                if($transaction->item_recieved){
                     return response()->json([
                         'error' => true,
                         'message' => 'Item already received',
