@@ -43,7 +43,7 @@
                             </div>
                         </div>
                         <div class="make-a-payment-form-right">
-                            <a href="#" id="send-code"><img src="{{ asset('assets/images/confirm.png') }}" /></a>
+                            <a href="#" id="send-code" class="{{ $transaction->item_recieved ? 'disabled-link' : '' }}"><img src="{{ asset('assets/images/confirm.png') }}" /></a>
                         </div>
                     </div>
                     <a href="#" style="margin-top: 10px" class="btn {{ $transaction->item_recieved ? 'disabled-link' : '' }}" id="confirm-code-done" disabled>CONFIRM CODE</a>
