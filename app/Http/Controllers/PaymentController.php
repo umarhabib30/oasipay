@@ -34,8 +34,9 @@ class PaymentController extends Controller
             $data = $response->json();
             return redirect()->route('payment.form', ['secureToken' => $data['secureToken']]);
         } else {
-            return redirect()->back()->with('error', 'Transaction initialization failed.');
+            return redirect()->route('payment.failed')->with('error', 'Transaction initialization failed.');
         }
+
     }
 
     // Step 2: Load the SecureFields form
@@ -51,20 +52,9 @@ class PaymentController extends Controller
     // Step 3: Process the payment after form submission
     public function processPayment(Request $request)
     {
-        // Validate required inputs
-        $request->validate([
-            'secureToken' => 'required',
-            'transactionId' => 'required',
-        ]);
-
+        // Get the form data (you might have form data returned from the callback)
         $secureToken = $request->input('secureToken');
-        $transactionId = $request->input('transactionId');
-
-        // Store transaction status in session to prevent redirect loops
-        if ($request->session()->has('payment_processed_' . $transactionId)) {
-            return redirect()->route('payment.failed')
-                ->with('error', 'Payment already processed');
-        }
+        $transactionId = $request->input('transactionId'); // Get the transaction ID from the form
 
         // Call the authorize API
         $authorizeUrl = env('DATATRANS_API_URL') . '/authorize';
@@ -74,18 +64,12 @@ class PaymentController extends Controller
                 'transactionId' => $transactionId
             ]);
 
-        // Mark transaction as processed
-        $request->session()->put('payment_processed_' . $transactionId, true);
-
         // Check for successful authorization
         if ($apiResponse->successful()) {
-            return redirect()->route('payment.success')
-                ->with('transaction_id', $transactionId);
+            return redirect()->route('payment.success');
+        } else {
+            return redirect()->route('payment.failed');
         }
-
-        return redirect()->route('payment.failed')
-            ->with('error', 'Payment authorization failed')
-            ->with('transaction_id', $transactionId);
     }
 
     // Step 4: Show Success page
