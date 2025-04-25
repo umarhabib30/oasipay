@@ -38,9 +38,10 @@ class PaymentController extends Controller
                     "logoBorderColor" => "#A1A1A1",
                     "brandButton" => "#A1A1A1",
                     "payButtonTextColor" => "#FFFFFF",
-                    "logoSrc" => "{svg}",
+                    "logoSrc" => "https://oasipay.equestrianrc.com/assets/images/Logo.png",
                     "logoType" => "circle",
-                    "initialView" => "list"
+                    "initialView" => "list",
+                     "bodyBackgroundColor" => "#FFFFFF",
                 ]
             ]
         ];
@@ -84,7 +85,7 @@ class PaymentController extends Controller
             'url' => $url
         ];
 
-        return view('payment.form',$data);
+        return  redirect($url);
 
     }
 
