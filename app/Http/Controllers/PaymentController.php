@@ -20,9 +20,8 @@ class PaymentController extends Controller
 
         $amount = (int) ($request->input('amount') * 100); // CHF to minor units
 
-        $auth = base64_encode(
-            config('services.datatrans.merchant_id') . ':' . config('services.datatrans.password')
-        );
+        $auth = base64_encode('1110019573:Umar@77553366');
+
 
         $response = Http::withHeaders([
             'Authorization' => 'Basic ' . $auth,
