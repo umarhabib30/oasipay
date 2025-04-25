@@ -73,6 +73,7 @@ Route::get('contact-us',[ContactUsController::class, 'index'])->name('contact-us
 Route::post('contact-us/store',[ContactUsController::class, 'store'])->name('contact-us.store');
 
 //------ transaction routes ---------
+Route::post('/payment', [PaymentController::class, 'showPaymentForm'])->name('payment.form');
 Route::post('/payment/initiate', [PaymentController::class, 'initiatePayment'])->name('payment.initiate');
 Route::get('/payment/success', [PaymentController::class, 'handleSuccess'])->name('payment.success');
 Route::get('/payment/cancel', [PaymentController::class, 'handleCancel'])->name('payment.cancel');
