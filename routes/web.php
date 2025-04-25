@@ -73,8 +73,8 @@ Route::get('contact-us',[ContactUsController::class, 'index'])->name('contact-us
 Route::post('contact-us/store',[ContactUsController::class, 'store'])->name('contact-us.store');
 
 //------ transaction routes ---------
-Route::get('/payment', [PaymentController::class, 'showPaymentForm'])->name('payment.form');
-Route::post('/payment/initiate', [PaymentController::class, 'initiatePayment'])->name('payment.initiate');
-Route::get('/payment/success', [PaymentController::class, 'handleSuccess'])->name('payment.success');
-Route::get('/payment/cancel', [PaymentController::class, 'handleCancel'])->name('payment.cancel');
-Route::get('/payment/error', [PaymentController::class, 'handleError'])->name('payment.error');
+Route::get('/payment/initialize', [PaymentController::class, 'initializeTransaction'])->name('payment.initialize');
+Route::get('/payment/form/{secureToken}', [PaymentController::class, 'loadSecureFieldsForm'])->name('payment.form');
+Route::post('/payment/process', [PaymentController::class, 'processPayment'])->name('payment.process');
+Route::get('/payment/success', [PaymentController::class, 'paymentSuccess'])->name('payment.success');
+Route::get('/payment/failed', [PaymentController::class, 'paymentFailed'])->name('payment.failed');

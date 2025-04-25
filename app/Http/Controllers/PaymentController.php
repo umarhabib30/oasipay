@@ -4,92 +4,82 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
-use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Str;
 
 class PaymentController extends Controller
 {
-    public function showPaymentForm()
+    // Step 1: Initialize the transaction
+    public function initializeTransaction(Request $request)
     {
-        return view('payment.start');
-    }
+        // Prepare the API endpoint and credentials
+        $apiUrl = env('DATATRANS_API_URL');
+        $merchantId = env('DATATRANS_MERCHANT_ID');
+        $username = env('DATATRANS_USERNAME');
+        $password = env('DATATRANS_PASSWORD');
 
-    public function initiatePayment(Request $request)
-    {
-        // Validate the amount being paid
-        $request->validate([
-            'amount' => 'required|numeric|min:0.01',
-        ]);
-
-        $amount = (int) ($request->input('amount') * 100); // Convert to minor units (e.g., cents)
-
-        // Prepare the URL and Merchant ID for DataTrans API
-        $auth = base64_encode('1110019573:boFPeNtfMfZfMn4X');  // Merchant authentication credentials
-
-        // Prepare data for the request in x-www-form-urlencoded format
+        // Prepare the payload for the API call
         $payload = [
-            'currency' => 'EUR', // Specify the currency
-            'amount' => $amount,
-            'refno' => 'Order-' . uniqid(),  // Unique reference for the transaction
-            'paymentMethods' => 'VIS,ECA,PAP,TWI', // List of accepted payment methods
-            'autoSettle' => 'true',  // Enable automatic settlement
-            'option' => [
-                'createAlias' => 'true',
-            ],
-            'redirect' => [
-                'successUrl' => 'https://oasipay.equestrianrc.com/payment/success',
-                'cancelUrl' => 'https://oasipay.equestrianrc.com/payment/cancel',
-                'errorUrl' => 'https://oasipay.equestrianrc.com/payment/error',
-            ],
+            'merchantId' => $merchantId,
+            'amount' => 1000, // Amount in cents (1000 = 10.00 USD)
+            'currency' => 'USD',
+            'captureMode' => 'AUTOMATIC'
         ];
 
-        // Convert data to URL encoded form
-        $form_data = http_build_query($payload);
+        // Call the API using Guzzle HTTP client
+        $response = Http::withBasicAuth($username, $password)
+            ->post($apiUrl, $payload);
 
-        try {
-            // Send request to DataTrans API endpoint (UPP) for payment initiation
-            $response = Http::withHeaders([
-                'Authorization' => 'Basic ' . $auth,
-                'Content-Type' => 'application/x-www-form-urlencoded',
-            ])->post('https://pay.sandbox.datatrans.com/upp/jsp/upStart.jsp', $form_data);
-
-            // Check if the response is successful
-            if ($response->successful()) {
-                $data = $response->json();
-                Log::info('Payment initiation success response:', $data);
-
-                // Assuming response contains a redirect URL (this depends on the response format)
-                if (!empty($data['redirectUrl'])) {
-                    return redirect()->away($data['redirectUrl']);
-                } else {
-                    Log::warning('Missing redirect URL in Datatrans response:', $data);
-                    return redirect()->route('payment.start')->with('error', 'No redirect URL in response.');
-                }
-            } else {
-                Log::error('Datatrans error response: ' . $response->body());
-                return redirect()->route('payment.start')->with('error', 'Payment initiation failed.');
-            }
-
-        } catch (\Exception $e) {
-            Log::error('Datatrans exception: ' . $e->getMessage());
-            return redirect()->route('payment.start')->with('error', 'An error occurred while initiating payment.');
+        // Check if the API call was successful
+        if ($response->successful()) {
+            $data = $response->json();
+            return redirect()->route('payment.form', ['secureToken' => $data['secureToken']]);
+        } else {
+            return redirect()->back()->with('error', 'Transaction initialization failed.');
         }
     }
 
-    public function handleSuccess(Request $request)
+    // Step 2: Load the SecureFields form
+    public function loadSecureFieldsForm($secureToken)
     {
-        // Handle success after a successful payment
-        return view('payment.status', ['message' => '✅ Payment successful!', 'status' => 'success']);
+        // Use the secureToken to generate the URL
+        $secureFieldsUrl = env('DATATRANS_SECUREFIELDS_URL') . $secureToken;
+
+        // Return a view with the form embedded (you can embed in an iframe)
+        return view('payment.form', ['secureFieldsUrl' => $secureFieldsUrl]);
     }
 
-    public function handleCancel()
+    // Step 3: Process the payment after form submission
+    public function processPayment(Request $request)
     {
-        // Handle cancel after user cancels the payment
-        return view('payment.status', ['message' => '❌ Payment was cancelled.', 'status' => 'cancel']);
+        // Get the form data (you might have form data returned from the callback)
+        $secureToken = $request->input('secureToken');
+        $transactionId = $request->input('transactionId'); // Get the transaction ID from the form
+
+        // Call the authorize API
+        $authorizeUrl = env('DATATRANS_API_URL') . '/authorize';
+        $apiResponse = Http::withBasicAuth(env('DATATRANS_USERNAME'), env('DATATRANS_PASSWORD'))
+            ->post($authorizeUrl, [
+                'merchantId' => env('DATATRANS_MERCHANT_ID'),
+                'transactionId' => $transactionId
+            ]);
+
+        // Check for successful authorization
+        if ($apiResponse->successful()) {
+            return redirect()->route('payment.success');
+        } else {
+            return redirect()->route('payment.failed');
+        }
     }
 
-    public function handleError()
+    // Step 4: Show Success page
+    public function paymentSuccess()
     {
-        // Handle error if something goes wrong during payment
-        return view('payment.status', ['message' => '⚠️ An error occurred during payment.', 'status' => 'error']);
+        return view('payment.success');
+    }
+
+    // Step 5: Show Failed page
+    public function paymentFailed()
+    {
+        return view('payment.failed');
     }
 }
