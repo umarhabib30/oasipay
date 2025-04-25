@@ -77,7 +77,10 @@ class PaymentController extends Controller
         }
 
 
-       return url('https://pay.sandbox.datatrans.com/v1/start/' . $data['transactionId']);
+        $url = 'https://pay.sandbox.datatrans.com/v1/start/' . $data['transactionId'];
+
+        // Send GET request
+         Http::get($url);
 
     }
 
