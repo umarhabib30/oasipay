@@ -85,7 +85,7 @@ class PaymentController extends Controller
             'url' => $url
         ];
 
-        return  redirect($url);
+        return  view('payment.form',$data);
 
     }
 
