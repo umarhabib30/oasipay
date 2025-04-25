@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\Log;
 
 class PaymentController extends Controller
 {
@@ -60,11 +61,13 @@ class PaymentController extends Controller
             if (isset($data['redirect']['url'])) {
                 return redirect()->away($data['redirect']['url']);
             } else {
+                Log::error('Datatrans response: ' . json_encode($data));
                 return redirect()->route('payment.start')->with('error', 'No redirect URL received.');
             }
         }
 
-        return redirect()->route('payment.start')->with('error', 'Payment initiation failed.');
+        Log::error('Datatrans error response: ' . $response->body());
+        return redirect()->route('payment.start')->with('error', 'Payment initiation failed: ' . $response->body());
     }
 
     public function handleSuccess(Request $request)
