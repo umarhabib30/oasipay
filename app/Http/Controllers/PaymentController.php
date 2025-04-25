@@ -12,16 +12,16 @@ class PaymentController extends Controller
     public function initializeTransaction(Request $request)
     {
         // Prepare the API endpoint and credentials
-        $apiUrl = env('DATATRANS_API_URL');
-        $merchantId = env('DATATRANS_MERCHANT_ID');
-        $username = env('DATATRANS_USERNAME');
-        $password = env('DATATRANS_PASSWORD');
+        $apiUrl = 'https://api.sandbox.datatrans.com/v1/transactions';
+        $merchantId = '1110019573';
+        $username = '1110019573';
+        $password = 'boFPeNtfMfZfMn4X';
 
         // Prepare the payload for the API call
         $payload = [
             'merchantId' => $merchantId,
             'amount' => 1000, // Amount in cents (1000 = 10.00 USD)
-            'currency' => 'USD',
+            'currency' => 'EUR',
             'captureMode' => 'AUTOMATIC'
         ];
 
