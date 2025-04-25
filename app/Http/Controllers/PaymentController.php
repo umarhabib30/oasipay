@@ -38,7 +38,7 @@ class PaymentController extends Controller
                     "logoBorderColor" => "#A1A1A1",
                     "brandButton" => "#A1A1A1",
                     "payButtonTextColor" => "#FFFFFF",
-                    "logoSrc" => "https://oasipay.equestrianrc.com/assets/images/Logo.png",
+                    "logoSrc" => "{svg}",
                     "logoType" => "circle",
                     "initialView" => "list",
                      "bodyBackgroundColor" => "#FFFFFF",
