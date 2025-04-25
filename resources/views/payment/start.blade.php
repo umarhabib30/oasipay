@@ -3,7 +3,6 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Pay with Card</title>
 </head>
 <body>
@@ -20,35 +19,44 @@
     @endif
 
     <!-- Payment Form -->
-    <form action="{{ route('payment.initiate') }}" method="POST">
+    <form id="paymentForm">
         @csrf
         <label>Amount (EUR)</label>
-        <input type="number" name="amount" step="0.01" required><br>
-
-        <!-- Card Details will be handled by Secure Fields (not entered directly) -->
-
-        <div id="secureFields"></div> <!-- Placeholder for Secure Fields -->
-
-        <!-- Hidden Fields for handling DataTrans-specific values -->
-        <input type="hidden" name="currency" value="EUR">
-        <input type="hidden" name="paymentMethods" value="VIS,ECA,PAP,TWI">
-        <input type="hidden" name="autoSettle" value="true">
-        <input type="hidden" name="option[createAlias]" value="true">
-
+        <input type="number" name="amount" id="amount" step="0.01" required><br>
         <button type="submit">Pay Now</button>
     </form>
 
-    <!-- DataTrans Secure Fields Script Integration -->
-    <script src="https://pay.sandbox.datatrans.com/v1/secureFields.js"></script>
+    <!-- Datatrans Lightbox Script -->
+    <script src="https://pay.sandbox.datatrans.com/upp/payment/js/datatrans-2.0.0.js"></script>
     <script>
-        var secureFields = new SecureFields({
-            containerId: 'secureFields',  // ID of the div where Secure Fields should be rendered
-            returnUrl: 'https://oasipay.equestrianrc.com/payment/success',  // Redirect URL after 3D Secure authentication
-            cancelUrl: 'https://oasipay.equestrianrc.com/payment/cancel',  // Redirect URL on payment cancel
-            errorUrl: 'https://oasipay.equestrianrc.com/payment/error',  // Redirect URL on error
-        });
+        document.getElementById('paymentForm').addEventListener('submit', function(e) {
+            e.preventDefault();
 
-        secureFields.create(); // Initialize Secure Fields (this will embed the payment form in the specified container)
+            const amount = document.getElementById('amount').value;
+            const amountInCents = Math.round(parseFloat(amount) * 100);
+
+            var paymentConfig = {
+                merchantId: '1110019573',
+                amount: amountInCents,
+                currency: 'EUR',
+                refno: 'Order-' + Date.now(),
+                paymentMethods: ['VIS', 'ECA', 'PAP', 'TWI'],
+                autoSettle: true,
+                language: 'en',
+                success: {
+                    url: 'https://oasipay.equestrianrc.com/payment/success'
+                },
+                error: {
+                    url: 'https://oasipay.equestrianrc.com/payment/error'
+                },
+                cancel: {
+                    url: 'https://oasipay.equestrianrc.com/payment/cancel'
+                }
+            };
+
+            // Initialize Datatrans Lightbox
+            Datatrans.startPayment(paymentConfig);
+        });
     </script>
 </body>
 </html>
