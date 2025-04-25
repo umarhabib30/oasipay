@@ -41,7 +41,6 @@ class PaymentController extends Controller
                     "logoSrc" => "{svg}",
                     "logoType" => "circle",
                     "initialView" => "list",
-                     "bodyBackgroundColor" => "#FFFFFF",
                 ]
             ]
         ];
