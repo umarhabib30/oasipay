@@ -14,32 +14,68 @@ class PaymentController extends Controller
     private $password   = 'boFPeNtfMfZfMn4X';
 
     // Step 1: Initialize the transaction
+   
     public function initializeTransaction(Request $request)
     {
-        $apiUrl = 'https://api.sandbox.datatrans.com/v1/transactions';
-
         $payload = [
-            'merchantId'   => $this->merchantId,
-            'amount'       => 1000, // in cents (10.00 EUR)
-            'currency'     => 'EUR',
-            'captureMode'  => 'AUTOMATIC',
+            "currency" => "EUR",
+            "refno" => "Test-1234",
+            "amount" => 1000,
+            "paymentMethods" => ["VIS", "ECA", "PAP", "TWI"],
+            "autoSettle" => true,
+            "option" => [
+                "createAlias" => true
+            ],
+            "redirect" => [
+                "successUrl" => "https://oasipay.equestrianrc.com/payment/success",
+                "cancelUrl" => "https://oasipay.equestrianrc.com/payment/cancel",
+                "errorUrl" => "https://oasipay.equestrianrc.com/payment/error"
+            ],
+            "theme" => [
+                "name" => "DT2015",
+                "configuration" => [
+                    "brandColor" => "#FFFFFF",
+                    "logoBorderColor" => "#A1A1A1",
+                    "brandButton" => "#A1A1A1",
+                    "payButtonTextColor" => "#FFFFFF",
+                    "logoSrc" => "{svg}",
+                    "logoType" => "circle",
+                    "initialView" => "list"
+                ]
+            ]
         ];
 
-        $response = Http::withBasicAuth($this->username, $this->password)
-            ->post($apiUrl, $payload);
+        $ch = curl_init();
 
-            dd($response);
-        if ($response->successful()) {
-            $data = $response->json();
-            // Store transaction ID in session
-            session(['transactionId' => $data['transactionId']]);
+        curl_setopt_array($ch, [
+            CURLOPT_URL => 'https://api.sandbox.datatrans.com/v1/transactions',
+            CURLOPT_RETURNTRANSFER => true,
+            CURLOPT_POST => true,
+            CURLOPT_POSTFIELDS => json_encode($payload),
+            CURLOPT_HTTPHEADER => [
+                'Accept: application/json',
+                'Content-Type: application/json',
+                'Authorization: Basic ' . base64_encode(env('DATATRANS_USER') . ':' . env('DATATRANS_PASSWORD')),
+            ],
+        ]);
 
-            // Redirect to form with secureToken
-            return redirect()->route('payment.form', ['secureToken' => $data['secureToken']]);
-        } else {
-            Log::error('Transaction Init Failed: ' . $response->body());
-            return redirect()->route('payment.failed')->with('error', 'Transaction initialization failed.');
+        $response = curl_exec($ch);
+        $error = curl_error($ch);
+        curl_close($ch);
+
+        if ($error) {
+            return back()->withErrors(['message' => 'Payment setup failed: ' . $error]);
         }
+
+        $data = json_decode($response, true);
+
+        if (!isset($data['transactionId'])) {
+            return back()->withErrors(['message' => 'Transaction ID not received.']);
+        }
+
+        return view('payment.form', [
+            'transactionId' => $data['transactionId'],
+        ]);
     }
 
     // Step 2: Load the SecureFields form
