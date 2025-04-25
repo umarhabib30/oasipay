@@ -55,7 +55,7 @@ class PaymentController extends Controller
             return back()->with('error', 'Transaction ID not received.');
         }
 
-        dd($data['transactionId']);
+        
         return view('payment.form', [
             'transactionId' => $data['transactionId'],
         ]);
