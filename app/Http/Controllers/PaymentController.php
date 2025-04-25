@@ -66,7 +66,7 @@ class PaymentController extends Controller
                     return redirect()->away($data['redirect']['url']);
                 } else {
                     Log::warning('Missing redirect URL in Datatrans response:', $data);
-                    return redirect()->route('payment.start')->with('error', 'No redirect URL received.');
+                    return redirect()->route('payment.start')->with('error', $data);
                 }
             } else {
                 Log::error('Datatrans error response: ' . $response->body());
