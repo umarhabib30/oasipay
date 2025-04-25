@@ -18,31 +18,10 @@ class PaymentController extends Controller
     public function initializeTransaction(Request $request)
     {
         $payload = [
-            "currency" => "EUR",
-            "refno" => "Test-1234",
-            "amount" => 1000,
-            "paymentMethods" => ["VIS", "ECA", "PAP", "TWI"],
-            "autoSettle" => true,
-            "option" => [
-                "createAlias" => true
-            ],
-            "redirect" => [
-                "successUrl" => "https://oasipay.equestrianrc.com/payment/success",
-                "cancelUrl" => "https://oasipay.equestrianrc.com/payment/cancel",
-                "errorUrl" => "https://oasipay.equestrianrc.com/payment/error"
-            ],
-            "theme" => [
-                "name" => "DT2015",
-                "configuration" => [
-                    "brandColor" => "#FFFFFF",
-                    "logoBorderColor" => "#A1A1A1",
-                    "brandButton" => "#A1A1A1",
-                    "payButtonTextColor" => "#FFFFFF",
-                    "logoSrc" => "{svg}",
-                    "logoType" => "circle",
-                    "initialView" => "list"
-                ]
-            ]
+            "amount" => 100,
+            "currency" => "CHF",
+            "returnUrl" => "https://oasipay.equestrianrc.com/payment/success",
+
         ];
 
         $username = '1110019573';
@@ -51,7 +30,7 @@ class PaymentController extends Controller
         $ch = curl_init();
 
         curl_setopt_array($ch, [
-            CURLOPT_URL => 'https://api.sandbox.datatrans.com/v1/transactions',
+            CURLOPT_URL => 'https://api.sandbox.datatrans.com/v1/transactions/secureFields',
             CURLOPT_RETURNTRANSFER => true,
             CURLOPT_POST => true,
             CURLOPT_POSTFIELDS => json_encode($payload),
@@ -76,6 +55,7 @@ class PaymentController extends Controller
             return back()->with('error', 'Transaction ID not received.');
         }
 
+        dd($data['transactionId']);
         return view('payment.form', [
             'transactionId' => $data['transactionId'],
         ]);
