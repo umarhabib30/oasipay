@@ -8,6 +8,7 @@ use App\Http\Controllers\HomeController;
 use App\Http\Controllers\MakePaymentController;
 use App\Http\Controllers\MonitoringTransactionController;
 use App\Http\Controllers\OpenPositionController;
+use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\PaymentReceiveController;
 use App\Http\Controllers\SellerCodeController;
 use App\Http\Controllers\TellUsController;
@@ -71,3 +72,9 @@ Route::get('open-positions',[OpenPositionController::class, 'index'])->name('job
 Route::get('contact-us',[ContactUsController::class, 'index'])->name('contact-us');
 Route::post('contact-us/store',[ContactUsController::class, 'store'])->name('contact-us.store');
 
+//------ transaction routes ---------
+Route::get('/payment', [PaymentController::class, 'showPaymentForm'])->name('payment.start');
+Route::post('/payment/init', [PaymentController::class, 'initiatePayment'])->name('payment.init');
+Route::get('/payment/success', [PaymentController::class, 'handleSuccess'])->name('payment.success');
+Route::get('/payment/cancel', [PaymentController::class, 'handleCancel'])->name('payment.cancel');
+Route::get('/payment/error', [PaymentController::class, 'handleError'])->name('payment.error');
