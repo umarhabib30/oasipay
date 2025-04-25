@@ -28,7 +28,7 @@ class PaymentController extends Controller
             'Authorization' => 'Basic ' . $auth,
             'Content-Type' => 'application/json',
         ])->post('https://api.sandbox.datatrans.com/v1/transactions', [
-            'currency' => 'CHF',
+            'currency' => 'EUR',
             'refno' => 'Order-' . uniqid(),
             'amount' => $amount,
             'paymentMethods' => ['VIS', 'ECA', 'PAP', 'TWI'],
@@ -62,7 +62,7 @@ class PaymentController extends Controller
                 return redirect()->away($data['redirect']['url']);
             } else {
                 Log::error('Datatrans response: ' . json_encode($data));
-                return redirect()->route('payment.start')->with('error', 'No redirect URL received.');
+                return redirect()->route('payment.start')->with('error', $data);
             }
         }
 
