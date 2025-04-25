@@ -19,16 +19,12 @@ class PaymentController extends Controller
             'amount' => 'required|numeric|min:0.01',
         ]);
 
-        $amount = (int) ($request->input('amount') * 100); // CHF to minor units
+        $amount = (int) ($request->input('amount') * 100); // Convert to minor units (e.g., cents)
 
         $auth = base64_encode('1110019573:boFPeNtfMfZfMn4X');
 
-
-        $response = Http::withHeaders([
-            'Authorization' => 'Basic ' . $auth,
-            'Content-Type' => 'application/json',
-        ])->post('https://api.sandbox.datatrans.com/v1/transactions', [
-            'currency' => 'EUR',
+        $payload = [
+            'currency' => 'EUR', // Double-check if your account supports EUR
             'refno' => 'Order-' . uniqid(),
             'amount' => $amount,
             'paymentMethods' => ['VIS', 'ECA', 'PAP', 'TWI'],
@@ -41,6 +37,7 @@ class PaymentController extends Controller
                 'cancelUrl' => route('payment.cancel'),
                 'errorUrl' => route('payment.error'),
             ],
+            // Optional theme settings (can comment out to debug issues)
             'theme' => [
                 'name' => 'DT2015',
                 'configuration' => [
@@ -48,27 +45,40 @@ class PaymentController extends Controller
                     'logoBorderColor' => '#A1A1A1',
                     'brandButton' => '#A1A1A1',
                     'payButtonTextColor' => '#FFFFFF',
-                    'logoSrc' => asset('images/logo.svg'),
+                    'logoSrc' => asset('images/logo.svg'), // ensure this resolves to a full public URL
                     'logoType' => 'circle',
                     'initialView' => 'list',
                 ],
             ],
-        ]);
+        ];
 
-        if ($response->successful()) {
-            $data = $response->json();
+        try {
+            $response = Http::withHeaders([
+                'Authorization' => 'Basic ' . $auth,
+                'Content-Type' => 'application/json',
+            ])->post('https://api.sandbox.datatrans.com/v1/transactions', $payload);
 
-            if (isset($data['redirect']['url'])) {
-                return redirect()->away($data['redirect']['url']);
+            if ($response->successful()) {
+                $data = $response->json();
+                Log::info('Datatrans API success response:', $data);
+
+                if (!empty($data['redirect']['url'])) {
+                    return redirect()->away($data['redirect']['url']);
+                } else {
+                    Log::warning('Missing redirect URL in Datatrans response:', $data);
+                    return redirect()->route('payment.start')->with('error', 'No redirect URL received.');
+                }
             } else {
-                Log::error('Datatrans response: ' . json_encode($data));
-                return redirect()->route('payment.start')->with('error', $data);
+                Log::error('Datatrans error response: ' . $response->body());
+                return redirect()->route('payment.start')->with('error', 'Payment initiation failed.');
             }
-        }
 
-        Log::error('Datatrans error response: ' . $response->body());
-        return redirect()->route('payment.start')->with('error', 'Payment initiation failed: ' . $response->body());
+        } catch (\Exception $e) {
+            Log::error('Datatrans exception: ' . $e->getMessage());
+            return redirect()->route('payment.start')->with('error', 'An error occurred while initiating payment.');
+        }
     }
+
 
     public function handleSuccess(Request $request)
     {
