@@ -30,7 +30,7 @@ class PaymentController extends Controller
 
         if ($response->successful()) {
             $data = $response->json();
-
+dd($data);
             // Store transaction ID in session
             session(['transactionId' => $data['transactionId']]);
 
