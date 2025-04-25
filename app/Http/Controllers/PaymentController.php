@@ -28,9 +28,9 @@ class PaymentController extends Controller
         $response = Http::withBasicAuth($this->username, $this->password)
             ->post($apiUrl, $payload);
 
+            dd($response);
         if ($response->successful()) {
             $data = $response->json();
-dd($data);
             // Store transaction ID in session
             session(['transactionId' => $data['transactionId']]);
 
