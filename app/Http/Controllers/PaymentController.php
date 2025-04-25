@@ -29,7 +29,7 @@ class PaymentController extends Controller
             "redirect" => [
                 "successUrl" => "https://oasipay.equestrianrc.com/payment/success",
                 "cancelUrl" => "https://oasipay.equestrianrc.com/payment/cancel",
-                "errorUrl" => "https://oasipay.equestrianrc.com/payment/error"
+                "errorUrl" => "https://oasipay.equestrianrc.com/payment/failed"
             ],
             "theme" => [
                 "name" => "DT2015",
@@ -83,7 +83,7 @@ class PaymentController extends Controller
             'title' => 'Seller Code',
             'url' => $url
         ];
-        
+
         return view('payment.form',$data);
 
     }
