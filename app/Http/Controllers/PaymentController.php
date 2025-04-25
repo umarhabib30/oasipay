@@ -45,6 +45,9 @@ class PaymentController extends Controller
             ]
         ];
 
+        $username = '1110019573';
+        $password = 'boFPeNtfMfZfMn4X';
+
         $ch = curl_init();
 
         curl_setopt_array($ch, [
@@ -55,7 +58,7 @@ class PaymentController extends Controller
             CURLOPT_HTTPHEADER => [
                 'Accept: application/json',
                 'Content-Type: application/json',
-                'Authorization: Basic ' . base64_encode(env('DATATRANS_USER') . ':' . env('DATATRANS_PASSWORD')),
+                'Authorization: Basic ' . base64_encode($username . ':' . $password),
             ],
         ]);
 
@@ -70,13 +73,14 @@ class PaymentController extends Controller
         $data = json_decode($response, true);
 
         if (!isset($data['transactionId'])) {
-            return back()->with('error' , 'Transaction ID not received.');
+            return back()->with('error', 'Transaction ID not received.');
         }
 
         return view('payment.form', [
             'transactionId' => $data['transactionId'],
         ]);
     }
+
 
     // Step 2: Load the SecureFields form
     public function loadSecureFieldsForm($secureToken)
