@@ -10,89 +10,52 @@ class PaymentController extends Controller
 {
     public function showPaymentForm()
     {
-        return view('payment.start');
+        return view('payment.start'); // View to enter card details
     }
 
     public function initiatePayment(Request $request)
     {
         $request->validate([
             'amount' => 'required|numeric|min:0.01',
+            'card_number' => 'required|digits_between:13,19',
+            'expiry_month' => 'required|integer|between:1,12',
+            'expiry_year' => 'required|integer|min:' . date('y'),
+            'cvv' => 'required|digits_between:3,4',
         ]);
 
-        $amount = (int) ($request->input('amount') * 100); // Convert to minor units (e.g., cents)
-
         $auth = base64_encode('1110019573:boFPeNtfMfZfMn4X');
+        $amount = (int) ($request->input('amount') * 100); // in cents
 
         $payload = [
-            'currency' => 'EUR', // Double-check if your account supports EUR
+            'currency' => 'EUR',
             'refno' => 'Order-' . uniqid(),
             'amount' => $amount,
-            'paymentMethods' => ['VIS', 'ECA', 'PAP', 'TWI'],
+            'card' => [
+                'number' => $request->input('card_number'),
+                'expiryMonth' => (int) $request->input('expiry_month'),
+                'expiryYear' => (int) $request->input('expiry_year'),
+                'cvv' => $request->input('cvv'),
+            ],
             'autoSettle' => true,
-            'option' => [
-                'createAlias' => true,
-            ],
-            'redirect' => [
-                'successUrl' => route('payment.success'),
-                'cancelUrl' => route('payment.cancel'),
-                'errorUrl' => route('payment.error'),
-            ],
-            // Optional theme settings (can comment out to debug issues)
-            'theme' => [
-                'name' => 'DT2015',
-                'configuration' => [
-                    'brandColor' => '#FFFFFF',
-                    'logoBorderColor' => '#A1A1A1',
-                    'brandButton' => '#A1A1A1',
-                    'payButtonTextColor' => '#FFFFFF',
-                    'logoSrc' => asset('images/logo.svg'), // ensure this resolves to a full public URL
-                    'logoType' => 'circle',
-                    'initialView' => 'list',
-                ],
-            ],
         ];
 
         try {
             $response = Http::withHeaders([
                 'Authorization' => 'Basic ' . $auth,
                 'Content-Type' => 'application/json',
-            ])->post('https://api.sandbox.datatrans.com/v1/transactions', $payload);
+            ])->post('https://api.sandbox.datatrans.com/v1/transactions/authorize', $payload);
 
             if ($response->successful()) {
                 $data = $response->json();
-                Log::info('Datatrans API success response:', $data);
-
-                if (!empty($data['redirect']['url'])) {
-                    return redirect()->away($data['redirect']['url']);
-                } else {
-                    Log::warning('Missing redirect URL in Datatrans response:', $data);
-                    return redirect()->route('payment.start')->with('error', $data);
-                }
+                Log::info('Datatrans payment authorized:', $data);
+                return view('payment.status', ['message' => '✅ Payment successful!', 'status' => 'success']);
             } else {
                 Log::error('Datatrans error response: ' . $response->body());
-                return redirect()->route('payment.start')->with('error', 'Payment initiation failed.');
+                return redirect()->back()->withInput()->withErrors(['payment' => 'Payment failed: ' . $response->body()]);
             }
-
         } catch (\Exception $e) {
             Log::error('Datatrans exception: ' . $e->getMessage());
-            return redirect()->route('payment.start')->with('error', 'An error occurred while initiating payment.');
+            return redirect()->back()->withInput()->withErrors(['payment' => 'An error occurred: ' . $e->getMessage()]);
         }
-    }
-
-
-    public function handleSuccess(Request $request)
-    {
-        // Optionally verify payment here
-        return view('payment.status', ['message' => '✅ Payment successful!', 'status' => 'success']);
-    }
-
-    public function handleCancel()
-    {
-        return view('payment.status', ['message' => '❌ Payment was cancelled.', 'status' => 'cancel']);
-    }
-
-    public function handleError()
-    {
-        return view('payment.status', ['message' => '⚠️ An error occurred during payment.', 'status' => 'error']);
     }
 }
