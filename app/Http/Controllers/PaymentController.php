@@ -10,52 +10,86 @@ class PaymentController extends Controller
 {
     public function showPaymentForm()
     {
-        return view('payment.start'); // View to enter card details
+        return view('payment.start');
     }
 
     public function initiatePayment(Request $request)
     {
+        // Validate the amount being paid
         $request->validate([
             'amount' => 'required|numeric|min:0.01',
-            'card_number' => 'required|digits_between:13,19',
-            'expiry_month' => 'required|integer|between:1,12',
-            'expiry_year' => 'required|integer|min:' . date('y'),
-            'cvv' => 'required|digits_between:3,4',
         ]);
 
-        $auth = base64_encode('1110019573:boFPeNtfMfZfMn4X');
-        $amount = (int) ($request->input('amount') * 100); // in cents
+        $amount = (int) ($request->input('amount') * 100); // Convert to minor units (e.g., cents)
 
+        // Prepare the URL and Merchant ID for DataTrans API
+        $auth = base64_encode('1110019573:boFPeNtfMfZfMn4X');  // Merchant authentication credentials
+
+        // Prepare data for the request in x-www-form-urlencoded format
         $payload = [
-            'currency' => 'EUR',
-            'refno' => 'Order-' . uniqid(),
+            'currency' => 'EUR', // Specify the currency
             'amount' => $amount,
-            'card' => [
-                'number' => $request->input('card_number'),
-                'expiryMonth' => (int) $request->input('expiry_month'),
-                'expiryYear' => (int) $request->input('expiry_year'),
-                'cvv' => $request->input('cvv'),
+            'refno' => 'Order-' . uniqid(),  // Unique reference for the transaction
+            'paymentMethods' => 'VIS,ECA,PAP,TWI', // List of accepted payment methods
+            'autoSettle' => 'true',  // Enable automatic settlement
+            'option' => [
+                'createAlias' => 'true',
             ],
-            'autoSettle' => true,
+            'redirect' => [
+                'successUrl' => 'https://oasipay.equestrianrc.com/payment/success',
+                'cancelUrl' => 'https://oasipay.equestrianrc.com/payment/cancel',
+                'errorUrl' => 'https://oasipay.equestrianrc.com/payment/error',
+            ],
         ];
 
+        // Convert data to URL encoded form
+        $form_data = http_build_query($payload);
+
         try {
+            // Send request to DataTrans API endpoint (UPP) for payment initiation
             $response = Http::withHeaders([
                 'Authorization' => 'Basic ' . $auth,
-                'Content-Type' => 'application/json',
-            ])->post('https://api.sandbox.datatrans.com/v1/transactions/authorize', $payload);
+                'Content-Type' => 'application/x-www-form-urlencoded',
+            ])->post('https://pay.sandbox.datatrans.com/upp/jsp/upStart.jsp', $form_data);
 
+            // Check if the response is successful
             if ($response->successful()) {
                 $data = $response->json();
-                Log::info('Datatrans payment authorized:', $data);
-                return view('payment.status', ['message' => '✅ Payment successful!', 'status' => 'success']);
+                Log::info('Payment initiation success response:', $data);
+
+                // Assuming response contains a redirect URL (this depends on the response format)
+                if (!empty($data['redirectUrl'])) {
+                    return redirect()->away($data['redirectUrl']);
+                } else {
+                    Log::warning('Missing redirect URL in Datatrans response:', $data);
+                    return redirect()->route('payment.start')->with('error', 'No redirect URL in response.');
+                }
             } else {
                 Log::error('Datatrans error response: ' . $response->body());
-                return redirect()->back()->withInput()->withErrors(['payment' => 'Payment failed: ' . $response->body()]);
+                return redirect()->route('payment.start')->with('error', 'Payment initiation failed.');
             }
+
         } catch (\Exception $e) {
             Log::error('Datatrans exception: ' . $e->getMessage());
-            return redirect()->back()->withInput()->withErrors(['payment' => 'An error occurred: ' . $e->getMessage()]);
+            return redirect()->route('payment.start')->with('error', 'An error occurred while initiating payment.');
         }
+    }
+
+    public function handleSuccess(Request $request)
+    {
+        // Handle success after a successful payment
+        return view('payment.status', ['message' => '✅ Payment successful!', 'status' => 'success']);
+    }
+
+    public function handleCancel()
+    {
+        // Handle cancel after user cancels the payment
+        return view('payment.status', ['message' => '❌ Payment was cancelled.', 'status' => 'cancel']);
+    }
+
+    public function handleError()
+    {
+        // Handle error if something goes wrong during payment
+        return view('payment.status', ['message' => '⚠️ An error occurred during payment.', 'status' => 'error']);
     }
 }
