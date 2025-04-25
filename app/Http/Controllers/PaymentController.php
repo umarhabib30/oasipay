@@ -14,7 +14,7 @@ class PaymentController extends Controller
     private $password   = 'boFPeNtfMfZfMn4X';
 
     // Step 1: Initialize the transaction
-   
+
     public function initializeTransaction(Request $request)
     {
         $payload = [
@@ -64,13 +64,13 @@ class PaymentController extends Controller
         curl_close($ch);
 
         if ($error) {
-            return back()->withErrors(['message' => 'Payment setup failed: ' . $error]);
+            return back()->with('error', 'Payment setup failed: ' . $error);
         }
 
         $data = json_decode($response, true);
 
         if (!isset($data['transactionId'])) {
-            return back()->withErrors(['message' => 'Transaction ID not received.']);
+            return back()->with('error' , 'Transaction ID not received.');
         }
 
         return view('payment.form', [
