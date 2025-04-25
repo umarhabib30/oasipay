@@ -21,7 +21,7 @@ class PaymentController extends Controller
 
         $amount = (int) ($request->input('amount') * 100); // CHF to minor units
 
-        $auth = base64_encode('1110019573:Umar@77553366');
+        $auth = base64_encode('1110019573:boFPeNtfMfZfMn4X');
 
 
         $response = Http::withHeaders([
