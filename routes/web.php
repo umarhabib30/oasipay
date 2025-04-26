@@ -73,8 +73,8 @@ Route::get('contact-us',[ContactUsController::class, 'index'])->name('contact-us
 Route::post('contact-us/store',[ContactUsController::class, 'store'])->name('contact-us.store');
 
 //------ transaction routes ---------
-Route::get('/payment/initialize', [PaymentController::class, 'initializeTransaction'])->name('payment.initialize');
+Route::get('/payment/initialize/{seller_code}', [PaymentController::class, 'initializeTransaction'])->name('payment.initialize');
 Route::get('/payment/form/{secureToken}', [PaymentController::class, 'loadSecureFieldsForm'])->name('payment.form');
 Route::post('/payment/process', [PaymentController::class, 'processPayment'])->name('payment.process');
-Route::get('/payment/success', [PaymentController::class, 'paymentSuccess'])->name('payment.success');
-Route::get('/payment/failed', [PaymentController::class, 'paymentFailed'])->name('payment.failed');
+Route::get('/payment/success/{seller_code}', [PaymentController::class, 'paymentSuccess'])->name('payment.success');
+Route::get('/payment/failed/{seller_code}', [PaymentController::class, 'paymentFailed'])->name('payment.failed');

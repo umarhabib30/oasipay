@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Transaction;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Log;
@@ -15,21 +16,22 @@ class PaymentController extends Controller
 
     // Step 1: Initialize the transaction
 
-    public function initializeTransaction(Request $request)
+    public function initializeTransaction($seller_code)
     {
+        $transaction = Transaction::where('seller_code', $seller_code)->first();
         $payload = [
             "currency" => "EUR",
             "refno" => "Test-1234",
-            "amount" => 1000,
+            "amount" => $transaction->total * 100,
             "paymentMethods" => ["VIS", "ECA", "PAP", "TWI"],
             "autoSettle" => true,
             "option" => [
                 "createAlias" => true
             ],
             "redirect" => [
-                "successUrl" => "https://oasipay.equestrianrc.com/payment/success",
-                "cancelUrl" => "https://oasipay.equestrianrc.com/payment/cancel",
-                "errorUrl" => "https://oasipay.equestrianrc.com/payment/failed"
+                "successUrl" => "https://oasipay.equestrianrc.com/payment/success/$seller_code",
+                "cancelUrl" => "https://oasipay.equestrianrc.com/payment/cancel/$seller_code",
+                "errorUrl" => "https://oasipay.equestrianrc.com/payment/failed/$seller_code",
             ],
             "theme" => [
                 "name" => "DT2015",
@@ -121,13 +123,13 @@ class PaymentController extends Controller
     }
 
     // Step 4: Show payment success
-    public function paymentSuccess()
+    public function paymentSuccess($seller_code)
     {
         return view('payment.success');
     }
 
     // Step 5: Show payment failure
-    public function paymentFailed()
+    public function paymentFailed($seller_code)
     {
         return view('payment.failed');
     }
