@@ -18,8 +18,7 @@ class PaymentController extends Controller
     {
         $transaction = Transaction::where('seller_code', $seller_code)->first();
 
-        $logoUrl = 'https://oasipay.equestrianrc.com/assets/images/Logo.png';
-        $logoContent = file_get_contents($logoUrl);
+        $logoContent = file_get_contents('https://oasipay.equestrianrc.com/assets/images/Logo.png');
         $logoBase64 = base64_encode($logoContent);
 
         $payload = [
@@ -43,7 +42,7 @@ class PaymentController extends Controller
                     "logoBorderColor" => "#A1A1A1",
                     "brandButton" => "#A1A1A1",
                     "payButtonTextColor" => "#FFFFFF",
-                    "logoSrc" => "data:image/png;base64," . $logoBase64,
+                   "logoSrc" => "data:image/png;base64," . $logoBase64,
                     "logoType" => "circle",
                     "initialView" => "list",
                 ]
