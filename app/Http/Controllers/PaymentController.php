@@ -169,14 +169,13 @@ class PaymentController extends Controller
     // Step 5: Show payment failure
     public function paymentFailed($seller_code, $type)
     {
-        dd($seller_code);
-        return view('payment.failed');
+
+       return redirect('/')->with('error' ,'Payment failed please try again!');
     }
 
     public function paymentCancel($seller_code, $type)
     {
-        dd($seller_code);
-        return view('payment.failed');
+        return redirect('/')->with('success', 'Transaction cancelled successfully');
     }
 }
 // Compare this snippet from resources/views/payment/form.blade.php:
