@@ -28,6 +28,7 @@ class Transaction extends Model
         'paypal_link',
         'shipping_code',
         'is_cancelled',
+        'is_paid',
         'cancel_by_email',
         'cancel_by_name',
         'item_recieved',

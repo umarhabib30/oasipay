@@ -147,20 +147,7 @@ class MakePaymentController extends Controller
             'transaction_status' => 'Payment in charge of Oasipay',
         ]);
 
-        $data = [
-            'receiver_name' => $request->receiver_name,
-            'receiver_email' => $request->receiver_email,
-            'seller_code' => $code,
-            'price' => $price,
-            'fee_price' => $request->fee_price,
-            'total' => $request->total_price,
-            'currency' => $request->currency,
-            'currency_symbol' => $request->currency_symbol,
-            'words' => $request->words,
-            'title' => $request->title,
-        ];
-
-        Mail::to($request->receiver_email)->send(new PayWithoutCodeMail($data));
+       
         return redirect('/')->with('success', 'Transaction confirmed successfully');
     }
 }

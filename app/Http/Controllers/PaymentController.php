@@ -2,10 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Mail\PayWithoutCodeMail;
 use App\Models\Transaction;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Mail;
 
 class PaymentController extends Controller
 {
@@ -87,8 +89,6 @@ class PaymentController extends Controller
         ];
 
         return redirect()->away($url);
-
-
     }
 
 
@@ -126,8 +126,22 @@ class PaymentController extends Controller
     // Step 4: Show payment success
     public function paymentSuccess($seller_code)
     {
-        dd($seller_code);
-        return view('payment.success');
+        $transaction = Transaction::where('seller_code', $seller_code)->first();
+        $data = [
+            'receiver_name' => $transaction->receiver_name,
+            'receiver_email' => $transaction->receiver_email,
+            'seller_code' => $transaction->seller_code,
+            'price' => $transaction->price,
+            'fee_price' => $transaction->fee_price,
+            'total' => $transaction->total_price,
+            'currency' => $transaction->currency,
+            'currency_symbol' => $transaction->currency_symbol,
+            'words' => $transaction->words,
+            'title' => $transaction->title,
+        ];
+
+        Mail::to($transaction->receiver_email)->send(new PayWithoutCodeMail($data));
+        return redirect('/')->with('success', "Payment made successfully");
     }
 
     // Step 5: Show payment failure

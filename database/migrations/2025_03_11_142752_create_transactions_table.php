@@ -35,6 +35,7 @@ return new class extends Migration
             $table->enum('tracking_status', ['Item not yet shipped', 'Item Shipped', 'Item Delivered '])->default('Item not yet shipped');
             $table->enum('transaction_status', ['Payment to do', 'Payment in charge of Oasipay', 'Payment sent to seller'])->default('Payment to do');
             $table->boolean('without_code')->default(false);
+            $table->boolean('is_paid')->default(false);
             $table->boolean('is_cancelled')->default(false);
             $table->string('cancel_by_name')->nullable();
             $table->string('cancel_by_email')->nullable();
