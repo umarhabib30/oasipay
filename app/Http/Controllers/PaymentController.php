@@ -127,6 +127,9 @@ class PaymentController extends Controller
     public function paymentSuccess($seller_code)
     {
         $transaction = Transaction::where('seller_code', $seller_code)->first();
+        $transaction->update([
+            'is_paid' => true,
+        ]);
         $data = [
             'receiver_name' => $transaction->receiver_name,
             'receiver_email' => $transaction->receiver_email,
