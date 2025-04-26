@@ -147,7 +147,6 @@ class MakePaymentController extends Controller
             'transaction_status' => 'Payment in charge of Oasipay',
         ]);
 
-       
-        return redirect('/')->with('success', 'Transaction confirmed successfully');
+       return redirect()->route('payment.initialize',['seller_code'=> $code]);
     }
 }
