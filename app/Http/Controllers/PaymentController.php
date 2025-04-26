@@ -20,9 +20,9 @@ class PaymentController extends Controller
     {
         $transaction = Transaction::where('seller_code', $seller_code)->first();
         $payload = [
-            "currency" => "CHF",
+            "currency" => $transaction->currency,
             "refno" => "Test-1234",
-            "amount" => 840 * 100,
+            "amount" => $transaction->total * 100,
             "paymentMethods" => ["VIS", "ECA", "PAP", "TWI"],
             "autoSettle" => true,
             "option" => [
@@ -86,7 +86,8 @@ class PaymentController extends Controller
             'url' => $url
         ];
 
-        return  view('payment.form',$data);
+        return redirect()->away($url);
+
 
     }
 
