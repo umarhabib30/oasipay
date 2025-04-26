@@ -42,7 +42,7 @@ class PaymentController extends Controller
                     "logoBorderColor" => "#A1A1A1",
                     "brandButton" => "#A1A1A1",
                     "payButtonTextColor" => "#FFFFFF",
-                   "logoSrc" => "data:image/png;base64," . $logoBase64,
+                   
                     "logoType" => "circle",
                     "initialView" => "list",
                 ]
