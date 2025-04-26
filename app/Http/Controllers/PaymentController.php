@@ -125,12 +125,20 @@ class PaymentController extends Controller
     // Step 4: Show payment success
     public function paymentSuccess($seller_code)
     {
+        dd($seller_code);
         return view('payment.success');
     }
 
     // Step 5: Show payment failure
     public function paymentFailed($seller_code)
     {
+        dd($seller_code);
+        return view('payment.failed');
+    }
+
+    public function paymentCancel($seller_code)
+    {
+        dd($seller_code);
         return view('payment.failed');
     }
 }
