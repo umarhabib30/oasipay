@@ -12,16 +12,16 @@ use Illuminate\Support\Facades\Mail;
 
 class PaymentController extends Controller
 {
-    // DataTrans credentials (sandbox)
-    private $merchantId = '1110019573';
-    private $username   = '1110019573';
-    private $password   = 'boFPeNtfMfZfMn4X';
 
-    // Step 1: Initialize the transaction
-
+    // Initialize the transaction
     public function initializeTransaction($seller_code, $type)
     {
         $transaction = Transaction::where('seller_code', $seller_code)->first();
+
+        $logoUrl = 'https://oasipay.equestrianrc.com/assets/images/Logo.png';
+        $logoContent = file_get_contents($logoUrl);
+        $logoBase64 = base64_encode($logoContent);
+
         $payload = [
             "currency" => $transaction->currency,
             "refno" => "Test-1234",
@@ -43,7 +43,7 @@ class PaymentController extends Controller
                     "logoBorderColor" => "#A1A1A1",
                     "brandButton" => "#A1A1A1",
                     "payButtonTextColor" => "#FFFFFF",
-                    "logoSrc" => "{svg}",
+                    "logoSrc" => "data:image/png;base64," . $logoBase64,
                     "logoType" => "circle",
                     "initialView" => "list",
                 ]
@@ -54,7 +54,6 @@ class PaymentController extends Controller
         $password = 'boFPeNtfMfZfMn4X';
 
         $ch = curl_init();
-
         curl_setopt_array($ch, [
             CURLOPT_URL => 'https://api.sandbox.datatrans.com/v1/transactions',
             CURLOPT_RETURNTRANSFER => true,
@@ -81,7 +80,6 @@ class PaymentController extends Controller
             return back()->with('error', 'Transaction ID not received.');
         }
 
-
         $url = 'https://pay.sandbox.datatrans.com/v1/start/' . $data['transactionId'];
 
         $data = [
@@ -92,39 +90,7 @@ class PaymentController extends Controller
         return redirect()->away($url);
     }
 
-
-    // Step 2: Load the SecureFields form
-    public function loadSecureFieldsForm($secureToken)
-    {
-        $secureFieldsUrl = 'https://pay.sandbox.datatrans.com/v1/secureFields/' . $secureToken;
-        return view('payment.form', ['secureFieldsUrl' => $secureFieldsUrl]);
-    }
-
-    // Step 3: Authorize payment after card form submission
-    public function processPayment(Request $request)
-    {
-        $transactionId = session('transactionId');
-
-        if (!$transactionId) {
-            return redirect()->route('payment.failed')->with('error', 'Missing transaction ID.');
-        }
-
-        $authorizeUrl = "https://api.sandbox.datatrans.com/v1/transactions/{$transactionId}/authorize";
-
-        $response = Http::withBasicAuth($this->username, $this->password)
-            ->post($authorizeUrl, [
-                'merchantId' => $this->merchantId
-            ]);
-
-        if ($response->successful()) {
-            return redirect()->route('payment.success');
-        } else {
-            Log::error('Authorize Failed: ' . $response->body());
-            return redirect()->route('payment.failed')->with('error', 'Authorization failed.');
-        }
-    }
-
-    // Step 4: Show payment success
+    // Show payment success
     public function paymentSuccess($seller_code, $type)
     {
         $transaction = Transaction::where('seller_code', $seller_code)->first();
@@ -166,16 +132,16 @@ class PaymentController extends Controller
         return redirect('/')->with('success', "Payment made successfully");
     }
 
-    // Step 5: Show payment failure
+    // Show payment failure
     public function paymentFailed($seller_code, $type)
     {
 
        return redirect('/')->with('error' ,'Payment failed please try again!');
     }
 
+    // show payment cancel
     public function paymentCancel($seller_code, $type)
     {
         return redirect('/')->with('success', 'Transaction cancelled successfully');
     }
 }
-// Compare this snippet from resources/views/payment/form.blade.php:
