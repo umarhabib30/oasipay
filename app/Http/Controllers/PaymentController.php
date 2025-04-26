@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Mail\PayWithoutCodeMail;
+use App\Mail\TransactionConfirmMail;
 use App\Models\Transaction;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
@@ -18,7 +19,7 @@ class PaymentController extends Controller
 
     // Step 1: Initialize the transaction
 
-    public function initializeTransaction($seller_code)
+    public function initializeTransaction($seller_code, $type)
     {
         $transaction = Transaction::where('seller_code', $seller_code)->first();
         $payload = [
@@ -31,9 +32,9 @@ class PaymentController extends Controller
                 "createAlias" => true
             ],
             "redirect" => [
-                "successUrl" => "https://oasipay.equestrianrc.com/payment/success/$seller_code",
-                "cancelUrl" => "https://oasipay.equestrianrc.com/payment/cancel/$seller_code",
-                "errorUrl" => "https://oasipay.equestrianrc.com/payment/failed/$seller_code",
+                "successUrl" => "https://oasipay.equestrianrc.com/payment/success/$seller_code/$type",
+                "cancelUrl" => "https://oasipay.equestrianrc.com/payment/cancel/$seller_code/$type",
+                "errorUrl" => "https://oasipay.equestrianrc.com/payment/failed/$seller_code/$type",
             ],
             "theme" => [
                 "name" => "DT2015",
@@ -124,37 +125,55 @@ class PaymentController extends Controller
     }
 
     // Step 4: Show payment success
-    public function paymentSuccess($seller_code)
+    public function paymentSuccess($seller_code, $type)
     {
         $transaction = Transaction::where('seller_code', $seller_code)->first();
         $transaction->update([
             'is_paid' => true,
         ]);
-        $data = [
-            'receiver_name' => $transaction->receiver_name,
-            'receiver_email' => $transaction->receiver_email,
-            'seller_code' => $transaction->seller_code,
-            'price' => $transaction->price,
-            'fee_price' => $transaction->fee_price,
-            'total' => $transaction->total_price,
-            'currency' => $transaction->currency,
-            'currency_symbol' => $transaction->currency_symbol,
-            'words' => $transaction->words,
-            'title' => $transaction->title,
-        ];
+        if ($type == 'without_code') {
+            $data = [
+                'receiver_name' => $transaction->receiver_name,
+                'receiver_email' => $transaction->receiver_email,
+                'seller_code' => $transaction->seller_code,
+                'price' => $transaction->price,
+                'fee_price' => $transaction->fee_price,
+                'total' => $transaction->total_price,
+                'currency' => $transaction->currency,
+                'currency_symbol' => $transaction->currency_symbol,
+                'words' => $transaction->words,
+                'title' => $transaction->title,
+            ];
 
-        Mail::to($transaction->receiver_email)->send(new PayWithoutCodeMail($data));
+            Mail::to($transaction->receiver_email)->send(new PayWithoutCodeMail($data));
+        } else {
+            $data = [
+                'receiver_name' => $transaction->receiver_name,
+                'receiver_email' => $transaction->receiver_email,
+                'seller_code' => $transaction->seller_code,
+                'price' => $transaction->price,
+                'fee_price' => $transaction->fee_price,
+                'total' => $transaction->total,
+                'currency' => $transaction->currency,
+                'currency_symbol' => $transaction->currency_symbol,
+                'words' => $transaction->words,
+                'title' => $transaction->title,
+            ];
+
+            Mail::to($transaction->receiver_email)->send(new TransactionConfirmMail($data));
+        }
+
         return redirect('/')->with('success', "Payment made successfully");
     }
 
     // Step 5: Show payment failure
-    public function paymentFailed($seller_code)
+    public function paymentFailed($seller_code, $type)
     {
         dd($seller_code);
         return view('payment.failed');
     }
 
-    public function paymentCancel($seller_code)
+    public function paymentCancel($seller_code, $type)
     {
         dd($seller_code);
         return view('payment.failed');

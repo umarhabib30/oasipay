@@ -56,7 +56,7 @@ class MakePaymentController extends Controller
                     return redirect('/')->with('error', $message);
                 }
 
-                if($transaction->item_recieved){
+                if ($transaction->item_recieved) {
                     return response()->json([
                         'error' => true,
                         'message' => 'Item already received',
@@ -105,22 +105,7 @@ class MakePaymentController extends Controller
                 'transaction_status' => 'Payment in charge of Oasipay',
             ]);
 
-            $data = [
-                'receiver_name' => $transaction->receiver_name,
-                'receiver_email' => $transaction->receiver_email,
-                'seller_code' => $transaction->seller_code,
-                'price' => $transaction->price,
-                'fee_price' => $transaction->fee_price,
-                'total' => $transaction->total,
-                'currency' => $transaction->currency,
-                'currency_symbol' => $transaction->currency_symbol,
-                'words' => $transaction->words,
-                'title' => $transaction->title,
-            ];
-
-            Mail::to($transaction->receiver_email)->send(new TransactionConfirmMail($data));
-
-            return redirect('/')->with('success', 'Transaction made successfully');
+            return redirect()->route('payment.initialize', ['seller_code' => $transaction->seller_code, 'type' => 'with_code']);
         } catch (\Exception $e) {
             return redirect()->back()->with('error', $e->getMessage());
         }
@@ -136,7 +121,7 @@ class MakePaymentController extends Controller
             'receiver_name' => $request->receiver_name,
             'receiver_email' => $request->receiver_email,
             'seller_code' => $code,
-            'price' =>$price,
+            'price' => $price,
             'total' => $request->total_price,
             'fee_price' => $request->fee_price,
             'currency' => $request->currency,
@@ -147,6 +132,6 @@ class MakePaymentController extends Controller
             'transaction_status' => 'Payment in charge of Oasipay',
         ]);
 
-       return redirect()->route('payment.initialize',['seller_code'=> $code]);
+        return redirect()->route('payment.initialize', ['seller_code' => $code, 'type' => 'without_code']);
     }
 }
