@@ -25,7 +25,7 @@ class PaymentController extends Controller
             "currency" => $transaction->currency,
             "refno" => "Test-1234",
             "amount" => $transaction->total * 100,
-            "paymentMethods" => ["VIS", "ECA", "PAP", "TWI"],
+           
             "autoSettle" => true,
             "option" => [
                 "createAlias" => true
@@ -42,8 +42,7 @@ class PaymentController extends Controller
                     "logoBorderColor" => "#A1A1A1",
                     "brandButton" => "#A1A1A1",
                     "payButtonTextColor" => "#FFFFFF",
-                   "logoSrc" => "data:image/png;base64," . $logoBase64,
-                    "logoType" => "circle",
+                    "logoType" => "text",
                     "initialView" => "list",
                 ]
             ]
