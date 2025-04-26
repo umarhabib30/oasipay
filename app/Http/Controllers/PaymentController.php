@@ -20,9 +20,9 @@ class PaymentController extends Controller
     {
         $transaction = Transaction::where('seller_code', $seller_code)->first();
         $payload = [
-            "currency" => "EUR",
+            "currency" => "CHF",
             "refno" => "Test-1234",
-            "amount" => $transaction->total * 100,
+            "amount" => 840 * 100,
             "paymentMethods" => ["VIS", "ECA", "PAP", "TWI"],
             "autoSettle" => true,
             "option" => [
